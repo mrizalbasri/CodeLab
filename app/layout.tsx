@@ -4,6 +4,7 @@ import "@radix-ui/themes/styles.css";
 import "./globals.css";
 import { Theme, Box } from "@radix-ui/themes";
 import { Navbar } from "@/components/Navbar";
+import { ThemeProvider } from "next-themes";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -29,15 +30,15 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body
-        className={`${inter.variable} ${robotoMono.variable} antialiased`}
-      >
-        <Theme appearance="dark" accentColor="indigo" grayColor="slate" radius="medium" scaling="100%">
-          <Navbar />
-          <Box p="0" style={{ minHeight: "100vh" }}>
-            {children}
-          </Box>
-        </Theme>
+      <body className={`${inter.variable} ${robotoMono.variable} antialiased`}>
+        <ThemeProvider attribute="class">
+          <Theme accentColor="indigo" grayColor="slate" radius="medium" scaling="100%">
+            <Navbar />
+            <Box p="0" style={{ minHeight: "100vh" }}>
+              {children}
+            </Box>
+          </Theme>
+        </ThemeProvider>
       </body>
     </html>
   );
