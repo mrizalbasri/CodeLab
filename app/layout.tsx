@@ -2,8 +2,9 @@ import type { Metadata } from "next";
 import { Inter, Roboto_Mono } from "next/font/google"; // Use premium fonts
 import "@radix-ui/themes/styles.css";
 import "./globals.css";
-import { Theme, Box } from "@radix-ui/themes";
+import { Theme, Box, Flex } from "@radix-ui/themes";
 import { Navbar } from "@/components/Navbar";
+import { Footer } from "@/components/Footer";
 import { ThemeProvider } from "next-themes";
 
 const inter = Inter({
@@ -33,10 +34,13 @@ export default function RootLayout({
       <body className={`${inter.variable} ${robotoMono.variable} antialiased`}>
         <ThemeProvider attribute="class">
           <Theme accentColor="indigo" grayColor="slate" radius="medium" scaling="100%">
-            <Navbar />
-            <Box p="0" style={{ minHeight: "100vh" }}>
-              {children}
-            </Box>
+            <Flex direction="column" style={{ minHeight: "100vh", width: "100%" }}>
+              <Navbar />
+              <Box p="0" style={{ flex: 1, width: "100%" }}>
+                {children}
+              </Box>
+              <Footer />
+            </Flex>
           </Theme>
         </ThemeProvider>
       </body>

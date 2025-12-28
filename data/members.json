@@ -1,0 +1,37 @@
+[
+    {
+        "id": "1",
+        "name": "M. Rizal Basri",
+        "role": "Ketua",
+        "image": "/images/team/rizal.jpg",
+        "color": "indigo"
+    },
+    {
+        "id": "2",
+        "name": "Tiarma Ronauli Damanik",
+        "role": "Sekretaris 1",
+        "image": "/images/team/tiarma.jpg",
+        "color": "pink"
+    },
+    {
+        "id": "3",
+        "name": "Rika Enjery Effendy",
+        "role": "Sekretaris 2",
+        "image": "/images/team/rika.jpg",
+        "color": "pink"
+    },
+    {
+        "id": "4",
+        "name": "Bunga Amelya Zulferi",
+        "role": "Bendahara 1",
+        "image": "/images/team/bunga.jpg",
+        "color": "teal"
+    },
+    {
+        "id": "5",
+        "name": "Margareth Talita Olivia Siagian",
+        "role": "Bendahara 2",
+        "image": "/images/team/margareth.jpg",
+        "color": "teal"
+    }
+]

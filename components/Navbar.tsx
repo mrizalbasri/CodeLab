@@ -61,7 +61,7 @@ export function Navbar() {
             >
                 <Flex justify="between" align="center" style={{ height: '48px' }}>
                     {/* Logo Section */}
-                    <Link href="/" className="no-underline">
+                    <Link href="/" className="no-underline" style={{ textDecoration: 'none' }}>
                         <Flex align="center" gap="3" style={{ cursor: 'pointer' }}>
                             <Box style={{ borderRadius: "50%", overflow: "hidden", height: 36, width: 36, border: "2px solid var(--indigo-9)" }}>
                                 <img src="/logo.jpeg" alt="PUPCL Logo" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
@@ -75,7 +75,7 @@ export function Navbar() {
                     {/* Desktop Navigation */}
                     <Flex gap="1" display={{ initial: "none", md: "flex" }} align="center" style={{ backgroundColor: "var(--gray-a3)", padding: '4px', borderRadius: "9999px" }}>
                         {navItems.map((item) => (
-                            <Link key={item.href} href={item.href} className="no-underline">
+                            <Link key={item.href} href={item.href} className="no-underline" style={{ textDecoration: 'none' }}>
                                 <Box
                                     px="3" py="1"
                                     style={{

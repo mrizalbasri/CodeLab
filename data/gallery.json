@@ -1,0 +1,44 @@
+[
+    {
+        "id": "1",
+        "src": "https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&w=800&q=80",
+        "category": "kegiatan",
+        "title": "Workshop React JS",
+        "date": "Feb 2024"
+    },
+    {
+        "id": "2",
+        "src": "https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=800&q=80",
+        "category": "kegiatan",
+        "title": "Gathering Anggota",
+        "date": "Jan 2024"
+    },
+    {
+        "id": "3",
+        "src": "https://images.unsplash.com/photo-1531482615713-2afd69097998?auto=format&fit=crop&w=800&q=80",
+        "category": "proyek",
+        "title": "Presentasi Proyek Akhir",
+        "date": "Mar 2024"
+    },
+    {
+        "id": "4",
+        "src": "https://images.unsplash.com/photo-1504384308090-c54be3855463?auto=format&fit=crop&w=800&q=80",
+        "category": "prestasi",
+        "title": "Juara 1 Hackathon",
+        "date": "Dec 2023"
+    },
+    {
+        "id": "5",
+        "src": "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=800&q=80",
+        "category": "kegiatan",
+        "title": "Mentoring Sesi 1",
+        "date": "Feb 2024"
+    },
+    {
+        "id": "6",
+        "src": "https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&w=800&q=80",
+        "category": "proyek",
+        "title": "Diskusi Tim Dev",
+        "date": "Jan 2024"
+    }
+]

@@ -1,51 +1,42 @@
-@import "tailwindcss";
+@import "@radix-ui/themes/styles.css";
 
-@theme {
-  --font-sans: var(--font-inter), system-ui, sans-serif;
-  --font-mono: var(--font-roboto-mono), monospace;
-
-  /* Use Radix Theme variables */
-  --color-background: var(--color-page-background);
-  /* Radix provides this */
-  --color-foreground: var(--gray-12);
-
-  --color-primary: var(--accent-9);
-  --color-primary-foreground: #ffffff;
-
-  --color-secondary: var(--pink-9);
-  --color-secondary-foreground: #ffffff;
-
-  --color-card: var(--gray-2);
-  --color-card-foreground: var(--gray-12);
-
-  --color-muted: var(--gray-3);
-  --color-muted-foreground: var(--gray-11);
-
-  --color-border: var(--gray-6);
-  --color-input: var(--gray-4);
-
-  --color-accent: var(--accent-3);
-  --color-accent-foreground: var(--accent-11);
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
 }
 
-/* Base Styles */
-:root {
-  /* Radix Themes handles the data-is-root-theme attribute stuff usually, 
-     but we ensure base styles are set */
+[data-theme="dark"] {
+  --background: #0a0a0a;
+  --foreground: #ededed;
 }
 
 body {
-  background-color: var(--color-background);
-  color: var(--color-foreground);
-  font-family: var(--font-sans);
+  color: var(--foreground);
+  background: var(--background);
+  font-family: var(--font-inter), sans-serif;
+  margin: 0;
+  padding: 0;
 }
 
-@layer utilities {
-  .container-width {
-    max-width: 1280px;
-    margin-left: auto;
-    margin-right: auto;
-    padding-left: 1.5rem;
-    padding-right: 1.5rem;
-  }
+/* Custom Utilities */
+.glass-panel {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.dark .glass-panel {
+  background: rgba(20, 20, 20, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Tech Grid Background Pattern */
+.bg-grid {
+  background-size: 50px 50px;
+  background-image:
+    linear-gradient(to right, rgba(128, 128, 128, 0.1) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(128, 128, 128, 0.1) 1px, transparent 1px);
+  mask-image: linear-gradient(to bottom, black 40%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to bottom, black 40%, transparent 100%);
 }
