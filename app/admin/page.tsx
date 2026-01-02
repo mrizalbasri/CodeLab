@@ -17,10 +17,11 @@ import {
   IconButton,
   Tabs,
 } from "@radix-ui/themes";
-import { Plus, Trash, LayoutDashboard, Image as ImageIcon } from "lucide-react";
+import { Plus, Trash, LayoutDashboard, Pencil, Image } from "lucide-react";
 import {
   addMember,
   deleteMember,
+  updateMember,
   getMembers,
   Member,
   getGalleryItems,
@@ -40,6 +41,8 @@ export default function AdminPage() {
   const [programs, setPrograms] = useState<Program[]>([]);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [password, setPassword] = useState("");
+  const [editingMember, setEditingMember] = useState<Member | null>(null);
+  const [selectedColor, setSelectedColor] = useState<string>("indigo");
 
   const refreshData = async () => {
     const mData = await getMembers();
@@ -126,16 +129,23 @@ export default function AdminPage() {
           <Box pt="5">
             <Tabs.Content value="team">
               <Grid columns={{ initial: "1", md: "1fr 2fr" }} gap="6">
-                {/* Form Tambah Anggota */}
+                {/* Form Tambah/Edit Anggota */}
                 <Card>
                   <Heading size="4" mb="4">
-                    Add New Member
+                    {editingMember ? "Edit Member" : "Add New Member"}
                   </Heading>
                   <form
                     action={async (formData) => {
-                      await addMember(formData);
+                      if (editingMember) {
+                        formData.append("id", editingMember.id);
+                        await updateMember(formData);
+                        setEditingMember(null);
+                        alert("Member updated!");
+                      } else {
+                        await addMember(formData);
+                        alert("Member added!");
+                      }
                       await refreshData();
-                      alert("Member added!");
                     }}
                   >
                     <Flex direction="column" gap="4">
@@ -146,6 +156,7 @@ export default function AdminPage() {
                         <TextField.Root
                           name="name"
                           placeholder="e.g. John Doe"
+                          defaultValue={editingMember?.name || ""}
                           required
                         />
                       </Box>
@@ -157,20 +168,35 @@ export default function AdminPage() {
                         <TextField.Root
                           name="role"
                           placeholder="e.g. Event Coordinator"
+                          defaultValue={editingMember?.role || ""}
                           required
                         />
                       </Box>
 
                       <Box>
                         <Text size="2" weight="bold">
-                          Photo URL
+                          Photo
                         </Text>
-                        <TextField.Root
+                        <input
                           name="image"
-                          placeholder="https://..."
+                          type="file"
+                          accept="image/*"
+                          style={{
+                            padding: "6px 8px",
+                            borderRadius: "4px",
+                            border: "1px solid var(--gray-7)",
+                            backgroundColor: "var(--gray-3)",
+                            fontSize: "12px",
+                            cursor: "pointer",
+                            width: "100%",
+                            maxWidth: "100%",
+                            boxSizing: "border-box",
+                          }}
                         />
                         <Text size="1" color="gray">
-                          Leave empty for default avatar
+                          {editingMember
+                            ? "Upload new JPG, PNG, HEIC, WebP (optional)"
+                            : "Upload JPG, PNG, HEIC, WebP"}
                         </Text>
                       </Box>
 
@@ -178,7 +204,13 @@ export default function AdminPage() {
                         <Text size="2" weight="bold" mb="1" as="div">
                           Theme Color
                         </Text>
-                        <Select.Root name="color" defaultValue="indigo">
+                        <Select.Root
+                          name="color"
+                          value={
+                            editingMember ? editingMember.color : selectedColor
+                          }
+                          onValueChange={(val) => setSelectedColor(val)}
+                        >
                           <Select.Trigger />
                           <Select.Content>
                             <Select.Item value="indigo">
@@ -199,14 +231,32 @@ export default function AdminPage() {
                         </Select.Root>
                       </Box>
 
-                      <Button
-                        type="submit"
-                        size="3"
-                        variant="solid"
-                        style={{ cursor: "pointer" }}
-                      >
-                        <Plus size={16} /> Add Member
-                      </Button>
+                      <Flex gap="2">
+                        <Button
+                          type="submit"
+                          size="3"
+                          variant="solid"
+                          style={{ cursor: "pointer" }}
+                        >
+                          <Plus size={16} />
+                          {editingMember ? "Update Member" : "Add Member"}
+                        </Button>
+                        {editingMember && (
+                          <Button
+                            type="button"
+                            size="3"
+                            variant="soft"
+                            color="gray"
+                            style={{ cursor: "pointer" }}
+                            onClick={() => {
+                              setEditingMember(null);
+                              setSelectedColor("indigo");
+                            }}
+                          >
+                            Cancel
+                          </Button>
+                        )}
+                      </Flex>
                     </Flex>
                   </form>
                 </Card>
@@ -253,19 +303,32 @@ export default function AdminPage() {
                             <Badge color={member.color}>{member.color}</Badge>
                           </Table.Cell>
                           <Table.Cell>
-                            <IconButton
-                              color="red"
-                              variant="soft"
-                              style={{ cursor: "pointer" }}
-                              onClick={async () => {
-                                if (confirm("Delete this member?")) {
-                                  await deleteMember(member.id);
-                                  await refreshData();
-                                }
-                              }}
-                            >
-                              <Trash size={16} />
-                            </IconButton>
+                            <Flex gap="2">
+                              <IconButton
+                                color="blue"
+                                variant="soft"
+                                style={{ cursor: "pointer" }}
+                                onClick={() => {
+                                  setEditingMember(member);
+                                  setSelectedColor(member.color);
+                                }}
+                              >
+                                <Pencil size={16} />
+                              </IconButton>
+                              <IconButton
+                                color="red"
+                                variant="soft"
+                                style={{ cursor: "pointer" }}
+                                onClick={async () => {
+                                  if (confirm("Delete this member?")) {
+                                    await deleteMember(member.id);
+                                    await refreshData();
+                                  }
+                                }}
+                              >
+                                <Trash size={16} />
+                              </IconButton>
+                            </Flex>
                           </Table.Cell>
                         </Table.Row>
                       ))}
@@ -314,13 +377,26 @@ export default function AdminPage() {
 
                       <Box>
                         <Text size="2" weight="bold">
-                          Image URL
+                          Image
                         </Text>
-                        <TextField.Root
+                        <input
                           name="src"
-                          placeholder="https://..."
+                          type="file"
+                          accept="image/*"
                           required
+                          style={{
+                            padding: "6px 8px",
+                            borderRadius: "4px",
+                            border: "1px solid var(--gray-7)",
+                            backgroundColor: "var(--gray-3)",
+                            fontSize: "12px",
+                            cursor: "pointer",
+                            width: "100%",
+                          }}
                         />
+                        <Text size="1" color="gray">
+                          Upload JPG, PNG, HEIC, WebP
+                        </Text>
                       </Box>
 
                       <Box>
@@ -344,7 +420,7 @@ export default function AdminPage() {
                         color="plum"
                         style={{ cursor: "pointer" }}
                       >
-                        <ImageIcon size={16} /> Add Photo
+                        <Image size={16} /> Add Photo
                       </Button>
                     </Flex>
                   </form>
@@ -521,12 +597,25 @@ export default function AdminPage() {
 
                       <Box>
                         <Text size="2" weight="bold">
-                          Image URL
+                          Image
                         </Text>
-                        <TextField.Root
+                        <input
                           name="image_url"
-                          placeholder="https://..."
+                          type="file"
+                          accept="image/*"
+                          style={{
+                            padding: "6px 8px",
+                            borderRadius: "4px",
+                            border: "1px solid var(--gray-7)",
+                            backgroundColor: "var(--gray-3)",
+                            fontSize: "12px",
+                            cursor: "pointer",
+                            width: "100%",
+                          }}
                         />
+                        <Text size="1" color="gray">
+                          Upload JPG, PNG, HEIC, WebP (optional)
+                        </Text>
                       </Box>
 
                       <Box>

@@ -1,7 +1,7 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
-import { supabase } from "@/lib/supabase";
+import { supabase, uploadFile } from "@/lib/supabase";
 
 export type Member = {
   id: string;
@@ -86,10 +86,21 @@ export async function getPrograms(): Promise<Program[]> {
 export async function addMember(formData: FormData) {
   const name = formData.get("name") as string;
   const role = formData.get("role") as string;
-  const image =
-    (formData.get("image") as string) ||
-    "https://images.unsplash.com/photo-1511367461989-f85a21fda167?w=300&q=80";
+  const imageFile = formData.get("image") as File | null;
   const color = (formData.get("color") as Member["color"]) || "indigo";
+
+  let image =
+    "https://images.unsplash.com/photo-1511367461989-f85a21fda167?w=300&q=80";
+
+  // Handle image upload if file provided
+  if (imageFile && imageFile.size > 0) {
+    try {
+      image = await uploadFile(imageFile, "pupcl-uploads", "members");
+    } catch (error) {
+      console.error("Error uploading image:", error);
+      // Fall back to default if upload fails
+    }
+  }
 
   try {
     const { error } = await supabase
@@ -106,13 +117,64 @@ export async function addMember(formData: FormData) {
   }
 }
 
+export async function updateMember(formData: FormData) {
+  const id = formData.get("id") as string;
+  const name = formData.get("name") as string;
+  const role = formData.get("role") as string;
+  const color = (formData.get("color") as Member["color"]) || "indigo";
+  const imageFile = formData.get("image") as File | null;
+
+  const updateData: any = { name, role, color };
+
+  // Handle image upload if file provided
+  if (imageFile && imageFile.size > 0) {
+    try {
+      updateData.image = await uploadFile(
+        imageFile,
+        "pupcl-uploads",
+        "members"
+      );
+    } catch (error) {
+      console.error("Error uploading image:", error);
+      // Keep existing image if upload fails
+    }
+  }
+  // If no file, don't update the image field
+
+  try {
+    const { error } = await supabase
+      .from("members")
+      .update(updateData)
+      .eq("id", id);
+
+    if (error) throw error;
+
+    revalidatePath("/about");
+    revalidatePath("/admin");
+  } catch (error) {
+    console.error("Error updating member:", error);
+    throw error;
+  }
+}
+
 export async function addGalleryItem(formData: FormData) {
   const title = formData.get("title") as string;
   const category = formData.get("category") as GalleryItem["category"];
   const date = formData.get("date") as string;
-  const src =
-    (formData.get("src") as string) ||
+  const imageFile = formData.get("src") as File | null;
+
+  let src =
     "https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&w=800&q=80";
+
+  // Handle image upload if file provided
+  if (imageFile && imageFile.size > 0) {
+    try {
+      src = await uploadFile(imageFile, "pupcl-uploads", "gallery");
+    } catch (error) {
+      console.error("Error uploading image:", error);
+      // Fall back to default if upload fails
+    }
+  }
 
   try {
     const { error } = await supabase
@@ -167,8 +229,21 @@ export async function addProgram(formData: FormData) {
   const time = formData.get("time") as string;
   const location = formData.get("location") as string;
   const speaker = formData.get("speaker") as string;
-  const image_url = formData.get("image_url") as string;
+  const imageFile = formData.get("image_url") as File | null;
   const status = (formData.get("status") as string) || "Upcoming";
+
+  let image_url =
+    "https://images.unsplash.com/photo-1542831371-d531d513ef56?auto=format&fit=crop&w=800&q=80";
+
+  // Handle image upload if file provided
+  if (imageFile && imageFile.size > 0) {
+    try {
+      image_url = await uploadFile(imageFile, "pupcl-uploads", "programs");
+    } catch (error) {
+      console.error("Error uploading image:", error);
+      // Fall back to default if upload fails
+    }
+  }
 
   try {
     const { error } = await supabase.from("programs").insert([

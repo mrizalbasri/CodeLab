@@ -11,6 +11,37 @@ if (!supabaseUrl || !supabaseAnonKey) {
 
 export const supabase = createClient(supabaseUrl, supabaseAnonKey);
 
+// File upload helper
+export async function uploadFile(
+  file: File,
+  bucket: string,
+  folder: string
+): Promise<string> {
+  try {
+    const timestamp = Date.now();
+    const fileName = `${folder}/${timestamp}-${file.name.replace(/\s+/g, "-")}`;
+
+    const { data, error } = await supabase.storage
+      .from(bucket)
+      .upload(fileName, file, {
+        cacheControl: "3600",
+        upsert: false,
+      });
+
+    if (error) throw error;
+
+    // Get public URL
+    const { data: publicUrlData } = supabase.storage
+      .from(bucket)
+      .getPublicUrl(fileName);
+
+    return publicUrlData.publicUrl;
+  } catch (error) {
+    console.error("Error uploading file:", error);
+    throw error;
+  }
+}
+
 // Types for database tables
 export interface Database {
   public: {
