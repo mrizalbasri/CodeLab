@@ -17,7 +17,14 @@ import {
   IconButton,
   Tabs,
 } from "@radix-ui/themes";
-import { Plus, Trash, LayoutDashboard, Pencil, Image } from "lucide-react";
+import Image from "next/image";
+import {
+  Plus,
+  Trash,
+  LayoutDashboard,
+  Pencil,
+  Image as ImageIcon,
+} from "lucide-react";
 import {
   addMember,
   deleteMember,
@@ -26,9 +33,11 @@ import {
   Member,
   getGalleryItems,
   addGalleryItem,
+  updateGalleryItem,
   deleteGalleryItem,
   GalleryItem,
   addProgram,
+  updateProgram,
   deleteProgram,
   getPrograms,
   Program,
@@ -43,6 +52,13 @@ export default function AdminPage() {
   const [password, setPassword] = useState("");
   const [editingMember, setEditingMember] = useState<Member | null>(null);
   const [selectedColor, setSelectedColor] = useState<string>("indigo");
+  const [editingGallery, setEditingGallery] = useState<GalleryItem | null>(
+    null
+  );
+  const [galleryCategory, setGalleryCategory] =
+    useState<GalleryItem["category"]>("kegiatan");
+  const [editingProgram, setEditingProgram] = useState<Program | null>(null);
+  const [programStatus, setProgramStatus] = useState<string>("Upcoming");
 
   const refreshData = async () => {
     const mData = await getMembers();
@@ -54,7 +70,10 @@ export default function AdminPage() {
   };
 
   useEffect(() => {
-    refreshData();
+    const load = async () => {
+      await refreshData();
+    };
+    void load();
   }, []);
 
   // Simple client-side protection
@@ -135,14 +154,17 @@ export default function AdminPage() {
                     {editingMember ? "Edit Member" : "Add New Member"}
                   </Heading>
                   <form
+                    key={editingMember?.id ?? "member-new"}
                     action={async (formData) => {
                       if (editingMember) {
                         formData.append("id", editingMember.id);
                         await updateMember(formData);
                         setEditingMember(null);
+                        setSelectedColor("indigo");
                         alert("Member updated!");
                       } else {
                         await addMember(formData);
+                        setSelectedColor("indigo");
                         alert("Member added!");
                       }
                       await refreshData();
@@ -206,9 +228,7 @@ export default function AdminPage() {
                         </Text>
                         <Select.Root
                           name="color"
-                          value={
-                            editingMember ? editingMember.color : selectedColor
-                          }
+                          value={selectedColor}
                           onValueChange={(val) => setSelectedColor(val)}
                         >
                           <Select.Trigger />
@@ -303,10 +323,11 @@ export default function AdminPage() {
                             <Badge color={member.color}>{member.color}</Badge>
                           </Table.Cell>
                           <Table.Cell>
-                            <Flex gap="2">
+                            <Flex gap="2" align="center" justify="center">
                               <IconButton
                                 color="blue"
-                                variant="soft"
+                                variant="solid"
+                                size="2"
                                 style={{ cursor: "pointer" }}
                                 onClick={() => {
                                   setEditingMember(member);
@@ -317,7 +338,8 @@ export default function AdminPage() {
                               </IconButton>
                               <IconButton
                                 color="red"
-                                variant="soft"
+                                variant="solid"
+                                size="2"
                                 style={{ cursor: "pointer" }}
                                 onClick={async () => {
                                   if (confirm("Delete this member?")) {
@@ -340,16 +362,26 @@ export default function AdminPage() {
 
             <Tabs.Content value="gallery">
               <Grid columns={{ initial: "1", md: "1fr 2fr" }} gap="6">
-                {/* Form Tambah Galeri */}
+                {/* Form Tambah/Update Galeri */}
                 <Card>
                   <Heading size="4" mb="4">
-                    Add Gallery Item
+                    {editingGallery ? "Edit Gallery Item" : "Add Gallery Item"}
                   </Heading>
                   <form
+                    key={editingGallery?.id ?? "gallery-new"}
                     action={async (formData) => {
-                      await addGalleryItem(formData);
+                      if (editingGallery) {
+                        formData.append("id", editingGallery.id);
+                        await updateGalleryItem(formData);
+                        setEditingGallery(null);
+                        setGalleryCategory("kegiatan");
+                        alert("Photo updated!");
+                      } else {
+                        await addGalleryItem(formData);
+                        setGalleryCategory("kegiatan");
+                        alert("Photo added!");
+                      }
                       await refreshData();
-                      alert("Photo added!");
                     }}
                   >
                     <Flex direction="column" gap="4">
@@ -360,6 +392,7 @@ export default function AdminPage() {
                         <TextField.Root
                           name="title"
                           placeholder="e.g. Workshop React JS"
+                          defaultValue={editingGallery?.title || ""}
                           required
                         />
                       </Box>
@@ -370,7 +403,8 @@ export default function AdminPage() {
                         </Text>
                         <TextField.Root
                           name="date"
-                          placeholder="e.g. Feb 2024"
+                          type="date"
+                          defaultValue={editingGallery?.date || ""}
                           required
                         />
                       </Box>
@@ -383,7 +417,6 @@ export default function AdminPage() {
                           name="src"
                           type="file"
                           accept="image/*"
-                          required
                           style={{
                             padding: "6px 8px",
                             borderRadius: "4px",
@@ -392,10 +425,15 @@ export default function AdminPage() {
                             fontSize: "12px",
                             cursor: "pointer",
                             width: "100%",
+                            maxWidth: "100%",
+                            boxSizing: "border-box",
+                            display: "block",
                           }}
                         />
                         <Text size="1" color="gray">
-                          Upload JPG, PNG, HEIC, WebP
+                          {editingGallery
+                            ? "Upload new image (optional)"
+                            : "Upload JPG, PNG, HEIC, WebP"}
                         </Text>
                       </Box>
 
@@ -403,7 +441,14 @@ export default function AdminPage() {
                         <Text size="2" weight="bold" mb="1" as="div">
                           Category
                         </Text>
-                        <Select.Root name="category" defaultValue="kegiatan">
+                        <Select.Root
+                          key={editingGallery?.id ?? "gallery-select"}
+                          name="category"
+                          value={galleryCategory}
+                          onValueChange={(val) =>
+                            setGalleryCategory(val as GalleryItem["category"])
+                          }
+                        >
                           <Select.Trigger />
                           <Select.Content>
                             <Select.Item value="kegiatan">Kegiatan</Select.Item>
@@ -413,15 +458,33 @@ export default function AdminPage() {
                         </Select.Root>
                       </Box>
 
-                      <Button
-                        type="submit"
-                        size="3"
-                        variant="solid"
-                        color="plum"
-                        style={{ cursor: "pointer" }}
-                      >
-                        <Image size={16} /> Add Photo
-                      </Button>
+                      <Flex gap="2">
+                        <Button
+                          type="submit"
+                          size="3"
+                          variant="solid"
+                          color="plum"
+                          style={{ cursor: "pointer" }}
+                        >
+                          <ImageIcon size={16} />
+                          {editingGallery ? "Update Photo" : "Add Photo"}
+                        </Button>
+                        {editingGallery && (
+                          <Button
+                            type="button"
+                            size="3"
+                            variant="soft"
+                            color="gray"
+                            style={{ cursor: "pointer" }}
+                            onClick={() => {
+                              setEditingGallery(null);
+                              setGalleryCategory("kegiatan");
+                            }}
+                          >
+                            Cancel
+                          </Button>
+                        )}
+                      </Flex>
                     </Flex>
                   </form>
                 </Card>
@@ -457,8 +520,13 @@ export default function AdminPage() {
                                 overflow: "hidden",
                               }}
                             >
-                              <img
+                              <Image
                                 src={item.src}
+                                alt={item.title}
+                                width={48}
+                                height={48}
+                                loader={({ src }) => src}
+                                unoptimized
                                 style={{
                                   width: "100%",
                                   height: "100%",
@@ -483,19 +551,34 @@ export default function AdminPage() {
                             </Badge>
                           </Table.Cell>
                           <Table.Cell>
-                            <IconButton
-                              color="red"
-                              variant="soft"
-                              style={{ cursor: "pointer" }}
-                              onClick={async () => {
-                                if (confirm("Delete this photo?")) {
-                                  await deleteGalleryItem(item.id);
-                                  await refreshData();
-                                }
-                              }}
-                            >
-                              <Trash size={16} />
-                            </IconButton>
+                            <Flex gap="2" align="center" justify="center">
+                              <IconButton
+                                color="blue"
+                                variant="solid"
+                                size="2"
+                                style={{ cursor: "pointer" }}
+                                onClick={() => {
+                                  setEditingGallery(item);
+                                  setGalleryCategory(item.category);
+                                }}
+                              >
+                                <Pencil size={16} />
+                              </IconButton>
+                              <IconButton
+                                color="red"
+                                variant="solid"
+                                size="2"
+                                style={{ cursor: "pointer" }}
+                                onClick={async () => {
+                                  if (confirm("Delete this photo?")) {
+                                    await deleteGalleryItem(item.id);
+                                    await refreshData();
+                                  }
+                                }}
+                              >
+                                <Trash size={16} />
+                              </IconButton>
+                            </Flex>
                           </Table.Cell>
                         </Table.Row>
                       ))}
@@ -507,16 +590,26 @@ export default function AdminPage() {
 
             <Tabs.Content value="programs">
               <Grid columns={{ initial: "1", md: "1fr 2fr" }} gap="6">
-                {/* Form Tambah Program */}
+                {/* Form Tambah/Update Program */}
                 <Card>
                   <Heading size="4" mb="4">
-                    Add New Program
+                    {editingProgram ? "Edit Program" : "Add New Program"}
                   </Heading>
                   <form
+                    key={editingProgram?.id ?? "program-new"}
                     action={async (formData) => {
-                      await addProgram(formData);
+                      if (editingProgram) {
+                        formData.append("id", editingProgram.id);
+                        await updateProgram(formData);
+                        setEditingProgram(null);
+                        setProgramStatus("Upcoming");
+                        alert("Program updated!");
+                      } else {
+                        await addProgram(formData);
+                        setProgramStatus("Upcoming");
+                        alert("Program added!");
+                      }
                       await refreshData();
-                      alert("Program added!");
                     }}
                   >
                     <Flex direction="column" gap="4">
@@ -527,25 +620,21 @@ export default function AdminPage() {
                         <TextField.Root
                           name="title"
                           placeholder="e.g. Workshop React JS"
+                          defaultValue={editingProgram?.title || ""}
                           required
                         />
                       </Box>
 
                       <Box>
-                        <Text size="2" weight="bold" mb="1" as="div">
+                        <Text size="2" weight="bold">
                           Category
                         </Text>
-                        <Select.Root name="category" defaultValue="Workshop">
-                          <Select.Trigger />
-                          <Select.Content>
-                            <Select.Item value="Webinar">Webinar</Select.Item>
-                            <Select.Item value="Workshop">Workshop</Select.Item>
-                            <Select.Item value="Meetup">Meetup</Select.Item>
-                            <Select.Item value="Hackathon">
-                              Hackathon
-                            </Select.Item>
-                          </Select.Content>
-                        </Select.Root>
+                        <TextField.Root
+                          name="category"
+                          placeholder="e.g. Workshop / Seminar / Bootcamp"
+                          defaultValue={editingProgram?.category || ""}
+                          required
+                        />
                       </Box>
 
                       <Box>
@@ -555,6 +644,7 @@ export default function AdminPage() {
                         <TextField.Root
                           name="description"
                           placeholder="Program description..."
+                          defaultValue={editingProgram?.description || ""}
                         />
                       </Box>
 
@@ -564,7 +654,8 @@ export default function AdminPage() {
                         </Text>
                         <TextField.Root
                           name="date"
-                          placeholder="e.g. 2024-02-15"
+                          type="date"
+                          defaultValue={editingProgram?.date || ""}
                         />
                       </Box>
 
@@ -572,7 +663,11 @@ export default function AdminPage() {
                         <Text size="2" weight="bold">
                           Time
                         </Text>
-                        <TextField.Root name="time" placeholder="e.g. 14:00" />
+                        <TextField.Root
+                          name="time"
+                          type="time"
+                          defaultValue={editingProgram?.time || ""}
+                        />
                       </Box>
 
                       <Box>
@@ -582,6 +677,7 @@ export default function AdminPage() {
                         <TextField.Root
                           name="location"
                           placeholder="e.g. Lab Komputer Lantai 3"
+                          defaultValue={editingProgram?.location || ""}
                         />
                       </Box>
 
@@ -592,6 +688,7 @@ export default function AdminPage() {
                         <TextField.Root
                           name="speaker"
                           placeholder="e.g. Rizal Basri"
+                          defaultValue={editingProgram?.speaker || ""}
                         />
                       </Box>
 
@@ -611,10 +708,15 @@ export default function AdminPage() {
                             fontSize: "12px",
                             cursor: "pointer",
                             width: "100%",
+                            maxWidth: "100%",
+                            boxSizing: "border-box",
+                            display: "block",
                           }}
                         />
                         <Text size="1" color="gray">
-                          Upload JPG, PNG, HEIC, WebP (optional)
+                          {editingProgram
+                            ? "Upload new image (optional)"
+                            : "Upload JPG, PNG, HEIC, WebP (optional)"}
                         </Text>
                       </Box>
 
@@ -622,7 +724,12 @@ export default function AdminPage() {
                         <Text size="2" weight="bold" mb="1" as="div">
                           Status
                         </Text>
-                        <Select.Root name="status" defaultValue="Upcoming">
+                        <Select.Root
+                          key={editingProgram?.id ?? "program-status"}
+                          name="status"
+                          value={programStatus}
+                          onValueChange={(val) => setProgramStatus(val)}
+                        >
                           <Select.Trigger />
                           <Select.Content>
                             <Select.Item value="Upcoming">Upcoming</Select.Item>
@@ -637,14 +744,32 @@ export default function AdminPage() {
                         </Select.Root>
                       </Box>
 
-                      <Button
-                        type="submit"
-                        size="3"
-                        variant="solid"
-                        style={{ cursor: "pointer" }}
-                      >
-                        <Plus size={16} /> Add Program
-                      </Button>
+                      <Flex gap="2">
+                        <Button
+                          type="submit"
+                          size="3"
+                          variant="solid"
+                          style={{ cursor: "pointer" }}
+                        >
+                          <Plus size={16} />
+                          {editingProgram ? "Update Program" : "Add Program"}
+                        </Button>
+                        {editingProgram && (
+                          <Button
+                            type="button"
+                            size="3"
+                            variant="soft"
+                            color="gray"
+                            style={{ cursor: "pointer" }}
+                            onClick={() => {
+                              setEditingProgram(null);
+                              setProgramStatus("Upcoming");
+                            }}
+                          >
+                            Cancel
+                          </Button>
+                        )}
+                      </Flex>
                     </Flex>
                   </form>
                 </Card>
@@ -685,18 +810,34 @@ export default function AdminPage() {
                             <Badge color="cyan">{program.status}</Badge>
                           </Table.Cell>
                           <Table.Cell>
-                            <IconButton
-                              variant="ghost"
-                              color="red"
-                              onClick={async () => {
-                                if (confirm("Delete this program?")) {
-                                  await deleteProgram(program.id);
-                                  await refreshData();
-                                }
-                              }}
-                            >
-                              <Trash size={16} />
-                            </IconButton>
+                            <Flex gap="2" align="center" justify="center">
+                              <IconButton
+                                variant="solid"
+                                color="blue"
+                                size="2"
+                                onClick={() => {
+                                  setEditingProgram(program);
+                                  setProgramStatus(
+                                    program.status || "Upcoming"
+                                  );
+                                }}
+                              >
+                                <Pencil size={16} />
+                              </IconButton>
+                              <IconButton
+                                variant="solid"
+                                color="red"
+                                size="2"
+                                onClick={async () => {
+                                  if (confirm("Delete this program?")) {
+                                    await deleteProgram(program.id);
+                                    await refreshData();
+                                  }
+                                }}
+                              >
+                                <Trash size={16} />
+                              </IconButton>
+                            </Flex>
                           </Table.Cell>
                         </Table.Row>
                       ))}

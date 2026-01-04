@@ -22,7 +22,7 @@ export type GalleryItem = {
 export type Program = {
   id: string;
   title: string;
-  category: "Webinar" | "Workshop" | "Meetup" | "Hackathon";
+  category: string;
   description?: string;
   date?: string;
   time?: string;
@@ -191,6 +191,43 @@ export async function addGalleryItem(formData: FormData) {
   }
 }
 
+export async function updateGalleryItem(formData: FormData) {
+  const id = formData.get("id") as string;
+  const title = formData.get("title") as string;
+  const category = formData.get("category") as GalleryItem["category"];
+  const date = formData.get("date") as string;
+  const imageFile = formData.get("src") as File | null;
+
+  const updateData: Partial<GalleryItem> = {
+    title,
+    category,
+    date,
+  };
+
+  if (imageFile && imageFile.size > 0) {
+    try {
+      updateData.src = await uploadFile(imageFile, "pupcl-uploads", "gallery");
+    } catch (error) {
+      console.error("Error uploading gallery image:", error);
+    }
+  }
+
+  try {
+    const { error } = await supabase
+      .from("gallery")
+      .update(updateData)
+      .eq("id", id);
+
+    if (error) throw error;
+
+    revalidatePath("/gallery");
+    revalidatePath("/admin");
+  } catch (error) {
+    console.error("Error updating gallery item:", error);
+    throw error;
+  }
+}
+
 export async function deleteMember(id: string) {
   try {
     const { error } = await supabase.from("members").delete().eq("id", id);
@@ -223,7 +260,7 @@ export async function deleteGalleryItem(id: string) {
 
 export async function addProgram(formData: FormData) {
   const title = formData.get("title") as string;
-  const category = formData.get("category") as Program["category"];
+  const category = formData.get("category") as string;
   const description = formData.get("description") as string;
   const date = formData.get("date") as string;
   const time = formData.get("time") as string;
@@ -266,6 +303,57 @@ export async function addProgram(formData: FormData) {
     revalidatePath("/admin");
   } catch (error) {
     console.error("Error adding program:", error);
+    throw error;
+  }
+}
+
+export async function updateProgram(formData: FormData) {
+  const id = formData.get("id") as string;
+  const title = formData.get("title") as string;
+  const category = formData.get("category") as string;
+  const description = formData.get("description") as string;
+  const date = formData.get("date") as string;
+  const time = formData.get("time") as string;
+  const location = formData.get("location") as string;
+  const speaker = formData.get("speaker") as string;
+  const imageFile = formData.get("image_url") as File | null;
+  const status = (formData.get("status") as string) || "Upcoming";
+
+  const updateData: Partial<Program> = {
+    title,
+    category,
+    description,
+    date,
+    time,
+    location,
+    speaker,
+    status,
+  };
+
+  if (imageFile && imageFile.size > 0) {
+    try {
+      updateData.image_url = await uploadFile(
+        imageFile,
+        "pupcl-uploads",
+        "programs"
+      );
+    } catch (error) {
+      console.error("Error uploading program image:", error);
+    }
+  }
+
+  try {
+    const { error } = await supabase
+      .from("programs")
+      .update(updateData)
+      .eq("id", id);
+
+    if (error) throw error;
+
+    revalidatePath("/programs");
+    revalidatePath("/admin");
+  } catch (error) {
+    console.error("Error updating program:", error);
     throw error;
   }
 }
