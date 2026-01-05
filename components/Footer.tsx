@@ -95,26 +95,18 @@ export function Footer() {
                   Explore
                 </Heading>
                 <Flex direction="column" gap="2">
-                  <Link href="/" passHref legacyBehavior>
-                    <RadixLink size="2" color="gray">
-                      Home
-                    </RadixLink>
-                  </Link>
-                  <Link href="/about" passHref legacyBehavior>
-                    <RadixLink size="2" color="gray">
-                      About Us
-                    </RadixLink>
-                  </Link>
-                  <Link href="/programs" passHref legacyBehavior>
-                    <RadixLink size="2" color="gray">
-                      Programs
-                    </RadixLink>
-                  </Link>
-                  <Link href="/gallery" passHref legacyBehavior>
-                    <RadixLink size="2" color="gray">
-                      Gallery
-                    </RadixLink>
-                  </Link>
+                  <RadixLink asChild size="2" color="gray">
+                    <Link href="/">Home</Link>
+                  </RadixLink>
+                  <RadixLink asChild size="2" color="gray">
+                    <Link href="/about">About Us</Link>
+                  </RadixLink>
+                  <RadixLink asChild size="2" color="gray">
+                    <Link href="/programs">Programs</Link>
+                  </RadixLink>
+                  <RadixLink asChild size="2" color="gray">
+                    <Link href="/gallery">Gallery</Link>
+                  </RadixLink>
                 </Flex>
               </Box>
 
@@ -124,22 +116,18 @@ export function Footer() {
                   Resources
                 </Heading>
                 <Flex direction="column" gap="2">
-                  <Link href="/contact" passHref legacyBehavior>
-                    <RadixLink size="2" color="gray">
-                      Contact Support
-                    </RadixLink>
-                  </Link>
+                  <RadixLink asChild size="2" color="gray">
+                    <Link href="/contact">Contact Support</Link>
+                  </RadixLink>
                   <RadixLink size="2" color="gray" href="#">
                     Privacy Policy
                   </RadixLink>
                   <RadixLink size="2" color="gray" href="#">
                     Terms of Service
                   </RadixLink>
-                  <Link href="/admin" passHref legacyBehavior>
-                    <RadixLink size="2" color="gray">
-                      Admin Login
-                    </RadixLink>
-                  </Link>
+                  <RadixLink asChild size="2" color="gray">
+                    <Link href="/admin">Admin Login</Link>
+                  </RadixLink>
                 </Flex>
               </Box>
 
