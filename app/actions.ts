@@ -1,7 +1,8 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
-import { supabase, uploadFile } from "@/lib/supabase";
+import { uploadFile } from "@/lib/supabase-helpers";
+import { createClient } from "@/lib/supabase/server";
 
 export type Member = {
   id: string;
@@ -36,6 +37,7 @@ export type Program = {
 
 export async function getMembers(): Promise<Member[]> {
   try {
+    const supabase = await createClient();
     const { data, error } = await supabase
       .from("members")
       .select("*")
@@ -53,6 +55,7 @@ export async function getMembers(): Promise<Member[]> {
 
 export async function getGalleryItems(): Promise<GalleryItem[]> {
   try {
+    const supabase = await createClient();
     const { data, error } = await supabase
       .from("gallery")
       .select("*")
@@ -70,6 +73,7 @@ export async function getGalleryItems(): Promise<GalleryItem[]> {
 
 export async function getPrograms(): Promise<Program[]> {
   try {
+    const supabase = await createClient();
     const { data, error } = await supabase
       .from("programs")
       .select("*")
@@ -83,7 +87,23 @@ export async function getPrograms(): Promise<Program[]> {
   }
 }
 
+// ============ PROTECTED ACTIONS ============
+
+async function checkAuth() {
+  const supabase = await createClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  if (!user) {
+    throw new Error("Unauthorized");
+  }
+  return supabase;
+}
+
 export async function addMember(formData: FormData) {
+  const supabase = await checkAuth();
+  
   const name = formData.get("name") as string;
   const role = formData.get("role") as string;
   const imageFile = formData.get("image") as File | null;
@@ -95,10 +115,9 @@ export async function addMember(formData: FormData) {
   // Handle image upload if file provided
   if (imageFile && imageFile.size > 0) {
     try {
-      image = await uploadFile(imageFile, "pupcl-uploads", "members");
+      image = await uploadFile(supabase, imageFile, "pupcl-uploads", "members");
     } catch (error) {
       console.error("Error uploading image:", error);
-      // Fall back to default if upload fails
     }
   }
 
@@ -118,6 +137,8 @@ export async function addMember(formData: FormData) {
 }
 
 export async function updateMember(formData: FormData) {
+  const supabase = await checkAuth();
+
   const id = formData.get("id") as string;
   const name = formData.get("name") as string;
   const role = formData.get("role") as string;
@@ -126,20 +147,18 @@ export async function updateMember(formData: FormData) {
 
   const updateData: any = { name, role, color };
 
-  // Handle image upload if file provided
   if (imageFile && imageFile.size > 0) {
     try {
       updateData.image = await uploadFile(
+        supabase,
         imageFile,
         "pupcl-uploads",
         "members"
       );
     } catch (error) {
       console.error("Error uploading image:", error);
-      // Keep existing image if upload fails
     }
   }
-  // If no file, don't update the image field
 
   try {
     const { error } = await supabase
@@ -158,6 +177,8 @@ export async function updateMember(formData: FormData) {
 }
 
 export async function addGalleryItem(formData: FormData) {
+  const supabase = await checkAuth();
+
   const title = formData.get("title") as string;
   const category = formData.get("category") as GalleryItem["category"];
   const date = formData.get("date") as string;
@@ -166,13 +187,11 @@ export async function addGalleryItem(formData: FormData) {
   let src =
     "https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&w=800&q=80";
 
-  // Handle image upload if file provided
   if (imageFile && imageFile.size > 0) {
     try {
-      src = await uploadFile(imageFile, "pupcl-uploads", "gallery");
+      src = await uploadFile(supabase, imageFile, "pupcl-uploads", "gallery");
     } catch (error) {
       console.error("Error uploading image:", error);
-      // Fall back to default if upload fails
     }
   }
 
@@ -192,6 +211,8 @@ export async function addGalleryItem(formData: FormData) {
 }
 
 export async function updateGalleryItem(formData: FormData) {
+  const supabase = await checkAuth();
+
   const id = formData.get("id") as string;
   const title = formData.get("title") as string;
   const category = formData.get("category") as GalleryItem["category"];
@@ -206,7 +227,7 @@ export async function updateGalleryItem(formData: FormData) {
 
   if (imageFile && imageFile.size > 0) {
     try {
-      updateData.src = await uploadFile(imageFile, "pupcl-uploads", "gallery");
+      updateData.src = await uploadFile(supabase, imageFile, "pupcl-uploads", "gallery");
     } catch (error) {
       console.error("Error uploading gallery image:", error);
     }
@@ -229,6 +250,8 @@ export async function updateGalleryItem(formData: FormData) {
 }
 
 export async function deleteMember(id: string) {
+  const supabase = await checkAuth();
+  
   try {
     const { error } = await supabase.from("members").delete().eq("id", id);
 
@@ -243,6 +266,8 @@ export async function deleteMember(id: string) {
 }
 
 export async function deleteGalleryItem(id: string) {
+  const supabase = await checkAuth();
+
   try {
     const { error } = await supabase.from("gallery").delete().eq("id", id);
 
@@ -259,6 +284,8 @@ export async function deleteGalleryItem(id: string) {
 // ============ PROGRAMS CRUD ============
 
 export async function addProgram(formData: FormData) {
+  const supabase = await checkAuth();
+
   const title = formData.get("title") as string;
   const category = formData.get("category") as string;
   const description = formData.get("description") as string;
@@ -272,13 +299,11 @@ export async function addProgram(formData: FormData) {
   let image_url =
     "https://images.unsplash.com/photo-1542831371-d531d513ef56?auto=format&fit=crop&w=800&q=80";
 
-  // Handle image upload if file provided
   if (imageFile && imageFile.size > 0) {
     try {
-      image_url = await uploadFile(imageFile, "pupcl-uploads", "programs");
+      image_url = await uploadFile(supabase, imageFile, "pupcl-uploads", "programs");
     } catch (error) {
       console.error("Error uploading image:", error);
-      // Fall back to default if upload fails
     }
   }
 
@@ -308,6 +333,8 @@ export async function addProgram(formData: FormData) {
 }
 
 export async function updateProgram(formData: FormData) {
+  const supabase = await checkAuth();
+
   const id = formData.get("id") as string;
   const title = formData.get("title") as string;
   const category = formData.get("category") as string;
@@ -333,6 +360,7 @@ export async function updateProgram(formData: FormData) {
   if (imageFile && imageFile.size > 0) {
     try {
       updateData.image_url = await uploadFile(
+        supabase,
         imageFile,
         "pupcl-uploads",
         "programs"
@@ -359,6 +387,8 @@ export async function updateProgram(formData: FormData) {
 }
 
 export async function deleteProgram(id: string) {
+  const supabase = await checkAuth();
+
   try {
     const { error } = await supabase.from("programs").delete().eq("id", id);
 

@@ -10,17 +10,12 @@ import {
   Card,
   Badge,
   Button,
-  Separator,
-  Avatar,
 } from "@radix-ui/themes";
 import {
-  Laptop,
   Calendar,
   Users,
   Zap,
-  Video,
   MapPin,
-  ArrowRight,
   MonitorPlay,
   Clock,
 } from "lucide-react";
@@ -65,7 +60,7 @@ export default function ProgramsPage() {
   };
 
   // Category color mapping
-  const categoryColors: Record<string, string> = {
+  const categoryColors: Record<string, "purple" | "blue" | "crimson" | "orange"> = {
     Webinar: "purple",
     Workshop: "blue",
     Meetup: "crimson",
@@ -203,21 +198,22 @@ export default function ProgramsPage() {
                 whileHover={{ y: -10 }}
                 transition={{ type: "spring", stiffness: 300 }}
               >
-                <Card size="3" style={{ padding: 0, overflow: "hidden" }}>
-                  <Box
-                    height="200px"
-                    style={{
-                      backgroundImage: `url('${
-                        program.image_url ||
-                        "https://images.unsplash.com/photo-1542831371-d531d513ef56?auto=format&fit=crop&w=800&q=80"
-                      }')`,
-                      backgroundSize: "cover",
-                      backgroundPosition: "center",
-                    }}
-                  />
+                <Card size="3">
+                  <div style={{ padding: 0, overflow: "hidden" }}>
+                    <Box
+                      height="200px"
+                      style={{
+                        backgroundImage: `url('${
+                          program.image_url ||
+                          "https://images.unsplash.com/photo-1542831371-d531d513ef56?auto=format&fit=crop&w=800&q=80"
+                        }')`,
+                        backgroundSize: "cover",
+                        backgroundPosition: "center",
+                      }}
+                    />
                   <Box p="4">
                     <Flex gap="2" mb="3">
-                      <Badge color={categoryColors[program.category] as any}>
+                      <Badge color={categoryColors[program.category]}>
                         {program.category}
                       </Badge>
                       {program.status && (
@@ -287,6 +283,7 @@ export default function ProgramsPage() {
                       Daftar Sekarang
                     </Button>
                   </Box>
+                  </div>
                 </Card>
               </motion.div>
             ))}

@@ -1,11 +1,12 @@
 import type { Metadata } from "next";
-import { Inter, Roboto_Mono } from "next/font/google"; // Use premium fonts
+import { Inter, Roboto_Mono } from "next/font/google";
 import "@radix-ui/themes/styles.css";
 import "./globals.css";
 import { Theme, Box, Flex } from "@radix-ui/themes";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { ThemeProvider } from "next-themes";
+import { Toaster } from "sonner";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -20,8 +21,9 @@ const robotoMono = Roboto_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Club Website",
-  description: "Official website for the club",
+  title: "PUPCL - PU Pekanbaru Code Lab",
+  description: "Official community website for Polytechnic Computer Club at President University Pekanbaru. A place to learn, build, and innovate together.",
+  keywords: ["PUPCL", "Coding Club", "Polytechnic", "Pekanbaru", "President University", "Programming", "Community"],
 };
 
 export default function RootLayout({
@@ -41,6 +43,7 @@ export default function RootLayout({
               </Box>
               <Footer />
             </Flex>
+            <Toaster position="top-center" />
           </Theme>
         </ThemeProvider>
       </body>
