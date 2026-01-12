@@ -1,5 +1,3 @@
-"use client";
-
 import {
   Box,
   Button,
@@ -16,7 +14,6 @@ import {
   ArrowRight,
   Code,
   Terminal,
-  Cpu,
   Globe,
   Zap,
   Users,
@@ -25,109 +22,25 @@ import {
   Calendar,
 } from "lucide-react";
 import Link from "next/link";
-import { motion } from "framer-motion";
-import { useEffect, useState } from "react";
-
-// Komponen simulasi mengetik kode (Looping)
-const CodeBlock = () => {
-  const lines = [
-    { text: "function PUPCL_Welcome() {", indent: 0, color: "pink" },
-    { text: "  return (", indent: 2, color: "gray" },
-    { text: '    <div className="future-leaders">', indent: 4, color: "plum" },
-    { text: "      <h1>Hello, World!</h1>", indent: 6, color: "indigo" },
-    { text: "      <p>Join the Revolution 🚀</p>", indent: 6, color: "indigo" },
-    { text: "    </div>", indent: 4, color: "plum" },
-    { text: "  );", indent: 2, color: "gray" },
-    { text: "}", indent: 0, color: "pink" },
-  ];
-
-  const [visibleLines, setVisibleLines] = useState(0);
-
-  useEffect(() => {
-    let timeout: NodeJS.Timeout;
-
-    if (visibleLines < lines.length) {
-      timeout = setTimeout(() => {
-        setVisibleLines((prev) => prev + 1);
-      }, 400); // Kecepatan ngetik
-    } else {
-      // Tunggu 3 detik setelah selesai, lalu restart
-      timeout = setTimeout(() => {
-        setVisibleLines(0);
-      }, 3000);
-    }
-
-    return () => clearTimeout(timeout);
-  }, [visibleLines, lines.length]);
-
-  return (
-    <Box
-      p="4"
-      style={{ fontFamily: "monospace", fontSize: "14px", lineHeight: "1.6" }}
-    >
-      {lines.map((line, i) => (
-        <motion.div
-          key={i}
-          initial={{ opacity: 0, x: -10 }}
-          animate={{
-            opacity: i < visibleLines ? 1 : 0,
-            x: i < visibleLines ? 0 : -10,
-          }}
-          transition={{ duration: 0.2 }}
-        >
-          <div style={{ paddingLeft: line.indent * 8 }}>
-            <Text color={line.color as any} style={{ fontFamily: "monospace" }}>
-              {line.text}
-            </Text>
-          </div>
-        </motion.div>
-      ))}
-      {visibleLines >= lines.length && (
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          style={{ paddingLeft: 16, marginTop: 4 }}
-        >
-          <Text color="green" style={{ fontFamily: "monospace" }}>
-            // Code your future...
-          </Text>
-          <span className="inline-block w-2 h-4 bg-green-500 ml-2 animate-pulse align-middle" />
-        </motion.div>
-      )}
-    </Box>
-  );
-};
+import {
+  MotionWrapper,
+  CodeBlock,
+  FloatingCodeWindow,
+  AnimatedCard,
+  AnimatedFeatureCard,
+} from "@/components/HeroAnimations";
 
 export default function Home() {
   return (
     <Box>
       {/* Hero Section */}
-      <Box
-        style={{
-          background:
-            "radial-gradient(circle at top center, var(--indigo-4), var(--color-background) 80%)",
-          position: "relative",
-          overflow: "hidden",
-          paddingTop: "140px",
-          paddingBottom: "var(--space-9)",
-        }}
-      >
+      <Box className="radial-gradient-bg hero-container">
         {/* Background Grid Pattern */}
-        <Box
-          className="bg-grid"
-          style={{
-            position: "absolute",
-            top: 0,
-            left: 0,
-            right: 0,
-            bottom: 0,
-            zIndex: 0,
-          }}
-        />
+        <Box className="bg-grid absolute-center z-0" />
 
-        <Container size="3" style={{ position: "relative", zIndex: 1 }}>
+        <Container size="3" className="relative z-1">
           <Flex direction="column" align="center" gap="6">
-            <motion.div
+            <MotionWrapper
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8 }}
@@ -145,49 +58,30 @@ export default function Home() {
               >
                 🚀 The Future of Tech in Riau starts here.
               </Badge>
-            </motion.div>
+            </MotionWrapper>
 
-            <motion.div
+            <MotionWrapper
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.8, delay: 0.2 }}
               style={{ textAlign: "center" }}
             >
-              <Heading
-                size="9"
-                align="center"
-                style={{
-                  fontWeight: 800,
-                  letterSpacing: "-0.02em",
-                  lineHeight: 1.1,
-                }}
-              >
-                <Text
-                  style={{
-                    background:
-                      "linear-gradient(to right, var(--indigo-9), var(--plum-9))",
-                    WebkitBackgroundClip: "text",
-                    WebkitTextFillColor: "transparent",
-                  }}
-                >
+              <Heading size="9" align="center" className="text-heading">
+                <Text className="gradient-text">
                   PU PEKANBARU CODE LAB
                 </Text>
               </Heading>
               <Heading
                 size="9"
                 align="center"
-                style={{
-                  fontWeight: 800,
-                  letterSpacing: "-0.02em",
-                  lineHeight: 1.1,
-                  marginTop: "-10px",
-                }}
+                className="text-heading"
+                style={{ marginTop: "-10px" }}
               >
                 (PUPCL)
               </Heading>
-            </motion.div>
+            </MotionWrapper>
 
-            <motion.div
+            <MotionWrapper
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 1, delay: 0.5 }}
@@ -196,15 +90,16 @@ export default function Home() {
                 size="5"
                 align="center"
                 color="gray"
-                style={{ maxWidth: 600, lineHeight: 1.6, marginTop: "20px" }}
+                className="max-w-content text-body"
+                style={{ marginTop: "20px" }}
               >
                 Join the most active student tech community. Build real-world
                 projects, connect with industry mentors, and accelerate your
                 career.
               </Text>
-            </motion.div>
+            </MotionWrapper>
 
-            <motion.div
+            <MotionWrapper
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.8 }}
@@ -215,7 +110,7 @@ export default function Home() {
                     size="4"
                     variant="solid"
                     highContrast
-                    style={{ cursor: "pointer", borderRadius: "12px" }}
+                    className="btn-primary"
                   >
                     Explore Events <ArrowRight size={18} />
                   </Button>
@@ -225,102 +120,40 @@ export default function Home() {
                     size="4"
                     variant="outline"
                     highContrast
-                    style={{
-                      cursor: "pointer",
-                      borderRadius: "12px",
-                      background: "white",
-                      color: "#111827",
-                      borderColor: "rgba(17, 24, 39, 0.18)",
-                    }}
+                    className="btn-outline-dark"
                   >
                     Learn More
                   </Button>
                 </Link>
               </Flex>
-            </motion.div>
+            </MotionWrapper>
 
             {/* Visual Content (Code Mockup) */}
-            <motion.div
-              initial={{ y: 50, opacity: 0 }}
-              animate={{ y: [0, -15, 0], opacity: 1 }}
-              transition={{
-                y: { repeat: Infinity, duration: 6, ease: "easeInOut" },
-                opacity: { duration: 1, delay: 0.5 },
-              }}
-              style={{ width: "100%", maxWidth: "800px" }}
-            >
-              <Box
-                mt="8"
-                mb="9"
-                style={{
-                  width: "100%",
-                  height: "320px", // Fixed height to prevent layout shift
-                  background: "var(--gray-2)",
-                  border: "1px solid var(--gray-6)",
-                  borderRadius: "12px",
-                  boxShadow: "0 20px 50px -10px var(--indigo-a4)",
-                  overflow: "hidden",
-                }}
-              >
+            <FloatingCodeWindow>
+              <Box mt="8" mb="9" className="code-window">
                 {/* Window Controls */}
-                <Flex
-                  gap="2"
-                  p="3"
-                  style={{
-                    borderBottom: "1px solid var(--gray-4)",
-                    background: "var(--gray-3)",
-                  }}
-                >
-                  <Box
-                    style={{
-                      width: 12,
-                      height: 12,
-                      borderRadius: "50%",
-                      background: "#FF5F56",
-                    }}
-                  />
-                  <Box
-                    style={{
-                      width: 12,
-                      height: 12,
-                      borderRadius: "50%",
-                      background: "#FFBD2E",
-                    }}
-                  />
-                  <Box
-                    style={{
-                      width: 12,
-                      height: 12,
-                      borderRadius: "50%",
-                      background: "#27C93F",
-                    }}
-                  />
+                <Flex gap="2" className="code-window-header">
+                  <Box className="window-control window-control-red" />
+                  <Box className="window-control window-control-yellow" />
+                  <Box className="window-control window-control-green" />
                 </Flex>
 
                 {/* Animated Code Content */}
                 <CodeBlock />
               </Box>
-            </motion.div>
+            </FloatingCodeWindow>
           </Flex>
         </Container>
       </Box>
 
-      {/* Modern Stats Grid - Added Margin Top to separate from Mockup */}
-      <Box style={{ backgroundColor: "var(--gray-1)" }} py="9">
+      {/* Modern Stats Grid */}
+      <Box className="section-bg-gray" py="9">
         <Container size="4">
           <Grid columns={{ initial: "1", md: "3" }} gap="6">
-            <motion.div whileHover={{ translateY: -5 }}>
-              <Card
-                style={{ backgroundColor: "var(--gray-2)", border: "none" }}
-              >
+            <AnimatedCard>
+              <Card className="card-elevated">
                 <Flex align="center" gap="4" p="2">
-                  <Box
-                    p="3"
-                    style={{
-                      backgroundColor: "var(--indigo-3)",
-                      borderRadius: "12px",
-                    }}
-                  >
+                  <Box className="icon-container" style={{ backgroundColor: "var(--indigo-3)" }}>
                     <Users size={24} color="var(--indigo-11)" />
                   </Box>
                   <Box>
@@ -333,23 +166,12 @@ export default function Home() {
                   </Box>
                 </Flex>
               </Card>
-            </motion.div>
+            </AnimatedCard>
 
-            <motion.div
-              whileHover={{ translateY: -5 }}
-              transition={{ delay: 0.1 }}
-            >
-              <Card
-                style={{ backgroundColor: "var(--gray-2)", border: "none" }}
-              >
+            <AnimatedCard>
+              <Card className="card-elevated">
                 <Flex align="center" gap="4" p="2">
-                  <Box
-                    p="3"
-                    style={{
-                      backgroundColor: "var(--plum-3)",
-                      borderRadius: "12px",
-                    }}
-                  >
+                  <Box className="icon-container" style={{ backgroundColor: "var(--plum-3)" }}>
                     <Code size={24} color="var(--plum-11)" />
                   </Box>
                   <Box>
@@ -362,23 +184,12 @@ export default function Home() {
                   </Box>
                 </Flex>
               </Card>
-            </motion.div>
+            </AnimatedCard>
 
-            <motion.div
-              whileHover={{ translateY: -5 }}
-              transition={{ delay: 0.2 }}
-            >
-              <Card
-                style={{ backgroundColor: "var(--gray-2)", border: "none" }}
-              >
+            <AnimatedCard>
+              <Card className="card-elevated">
                 <Flex align="center" gap="4" p="2">
-                  <Box
-                    p="3"
-                    style={{
-                      backgroundColor: "var(--teal-3)",
-                      borderRadius: "12px",
-                    }}
-                  >
+                  <Box className="icon-container" style={{ backgroundColor: "var(--teal-3)" }}>
                     <Trophy size={24} color="var(--teal-11)" />
                   </Box>
                   <Box>
@@ -391,7 +202,7 @@ export default function Home() {
                   </Box>
                 </Flex>
               </Card>
-            </motion.div>
+            </AnimatedCard>
           </Grid>
         </Container>
       </Box>
@@ -403,12 +214,7 @@ export default function Home() {
             <Heading size="8" align="center" weight="bold">
               Why Join PUPCL?
             </Heading>
-            <Text
-              color="gray"
-              size="4"
-              align="center"
-              style={{ maxWidth: 600 }}
-            >
+            <Text color="gray" size="4" align="center" className="max-w-content">
               We provide the ecosystem you need to go from zero to hero in the
               tech industry.
             </Text>
@@ -453,49 +259,26 @@ export default function Home() {
                 desc: "Compete and win cash prizes.",
               },
             ].map((feature, i) => (
-              <motion.div
-                key={i}
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                <Card
-                  size="3"
-                  style={{
-                    background: "var(--gray-2)",
-                    cursor: "pointer",
-                    height: "100%",
-                  }}
-                >
+              <AnimatedFeatureCard key={i}>
+                <Card size="3" className="card-feature">
                   <Flex gap="4" direction="column">
                     <Box
-                      p="3"
-                      width="max-content"
-                      style={{
-                        borderRadius: 12,
-                        backgroundColor: `var(--${feature.color}-3)`,
-                      }}
+                      className="icon-container-sm"
+                      style={{ backgroundColor: `var(--${feature.color}-3)` }}
                     >
-                      <feature.icon
-                        size={28}
-                        color={`var(--${feature.color}-11)`}
-                      />
+                      <feature.icon size={28} color={`var(--${feature.color}-11)`} />
                     </Box>
                     <Box>
                       <Heading size="4" mb="2">
                         {feature.title}
                       </Heading>
-                      <Text
-                        as="p"
-                        color="gray"
-                        size="2"
-                        style={{ lineHeight: 1.6 }}
-                      >
+                      <Text as="p" color="gray" size="2" className="text-body">
                         {feature.desc}
                       </Text>
                     </Box>
                   </Flex>
                 </Card>
-              </motion.div>
+              </AnimatedFeatureCard>
             ))}
           </Grid>
         </Container>

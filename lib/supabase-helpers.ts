@@ -1,33 +1,70 @@
 import { SupabaseClient } from "@supabase/supabase-js";
 
-// File upload helper
+// File upload helper with better error handling
 export async function uploadFile(
   supabase: SupabaseClient,
   file: File,
   bucket: string,
   folder: string
 ): Promise<string> {
-  try {
-    const timestamp = Date.now();
-    const fileName = `${folder}/${timestamp}-${file.name.replace(/\s+/g, "-")}`;
+  const timestamp = Date.now();
+  const sanitizedFileName = file.name.replace(/\s+/g, "-");
+  const fileName = `${folder}/${timestamp}-${sanitizedFileName}`;
 
-    const { data, error } = await supabase.storage
-      .from(bucket)
-      .upload(fileName, file, {
-        cacheControl: "3600",
-        upsert: false,
-      });
+  const { error } = await supabase.storage
+    .from(bucket)
+    .upload(fileName, file, {
+      cacheControl: "3600",
+      upsert: false,
+    });
 
-    if (error) throw error;
-
-    // Get public URL
-    const { data: publicUrlData } = supabase.storage
-      .from(bucket)
-      .getPublicUrl(fileName);
-
-    return publicUrlData.publicUrl;
-  } catch (error) {
+  if (error) {
     console.error("Error uploading file:", error);
+    throw new Error(`Upload failed: ${error.message}`);
+  }
+
+  // Get public URL
+  const { data: publicUrlData } = supabase.storage
+    .from(bucket)
+    .getPublicUrl(fileName);
+
+  return publicUrlData.publicUrl;
+}
+
+// Helper to safely handle file upload with optional file
+export async function handleFileUpload(
+  supabase: SupabaseClient,
+  file: File | null,
+  bucket: string,
+  folder: string,
+  fallbackUrl: string
+): Promise<string> {
+  if (!file || file.size === 0) {
+    return fallbackUrl;
+  }
+
+  try {
+    return await uploadFile(supabase, file, bucket, folder);
+  } catch (error) {
+    console.error("Error handling file upload:", error);
+    return fallbackUrl;
+  }
+}
+
+// Generic function to handle database operations with consistent error handling
+export async function handleDatabaseOperation<T>(
+  operation: () => Promise<{ data: T | null; error: Error | null }>,
+  errorMessage: string
+): Promise<T | null> {
+  try {
+    const { data, error } = await operation();
+    if (error) {
+      console.error(errorMessage, error);
+      throw new Error(error.message);
+    }
+    return data;
+  } catch (error) {
+    console.error(errorMessage, error);
     throw error;
   }
 }

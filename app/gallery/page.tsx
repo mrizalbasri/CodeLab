@@ -5,9 +5,13 @@ import { Image as ImageIcon } from "lucide-react";
 import { getGalleryItems, GalleryItem } from "../actions";
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
+import { SearchBar } from "@/components/SearchBar";
+import { Pagination } from "@/components/Pagination";
+import { useSearchAndPagination } from "@/lib/hooks/useSearchAndPagination";
 
 export default function GalleryPage() {
     const [galleryItems, setGalleryItems] = useState<GalleryItem[]>([]);
+    const [activeTab, setActiveTab] = useState("all");
 
     useEffect(() => {
         async function fetchData() {
@@ -16,6 +20,29 @@ export default function GalleryPage() {
         }
         fetchData();
     }, [])
+
+    // Filter data berdasarkan tab yang aktif
+    const filteredByTab = galleryItems.filter(item => 
+        activeTab === "all" || item.category === activeTab
+    );
+
+    // Setup search dan pagination
+    const {
+        paginatedData,
+        totalItems,
+        searchQuery,
+        handleSearch,
+        handleClearSearch,
+        currentPage,
+        totalPages,
+        handlePageChange,
+        itemsPerPage,
+    } = useSearchAndPagination({
+        data: filteredByTab,
+        itemsPerPage: 9,
+        searchFields: ["title", "category"],
+        analyticsSection: "Gallery",
+    });
 
     // Simple Fade In Animation
     const containerVariants = {
@@ -51,7 +78,7 @@ export default function GalleryPage() {
             </Box>
 
             <Container size="4" py="9">
-                <Tabs.Root defaultValue="all">
+                <Tabs.Root value={activeTab} onValueChange={setActiveTab}>
                     <Flex justify="center" mb="6">
                         <Tabs.List>
                             <Tabs.Trigger value="all">Semua</Tabs.Trigger>
@@ -61,53 +88,90 @@ export default function GalleryPage() {
                         </Tabs.List>
                     </Flex>
 
-                    {/* Gallery Grid */}
-                    <Box>
-                        {["all", "kegiatan", "proyek", "prestasi"].map((tabInfo) => (
-                            <Tabs.Content key={tabInfo} value={tabInfo}>
-                                <motion.div
-                                    style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))", gap: "16px" }}
-                                    variants={containerVariants}
-                                    initial="hidden"
-                                    animate="visible"
-                                    transition={{ duration: 0.4 }}
-                                >
-                                    {galleryItems
-                                        .filter(item => tabInfo === "all" || item.category === tabInfo)
-                                        .map((item) => (
-                                            <motion.div key={item.id} whileHover={{ scale: 1.03 }} transition={{ type: 'spring', stiffness: 300 }}>
-                                                <Card style={{ padding: 0, overflow: 'hidden', cursor: 'pointer' }} className="group">
-                                                    <Inset clip="padding-box" side="top" pb="current">
-                                                        <Box style={{ position: 'relative', overflow: 'hidden' }}>
-                                                            <img
-                                                                src={item.src}
-                                                                alt={item.title}
-                                                                style={{
-                                                                    display: 'block',
-                                                                    objectFit: 'cover',
-                                                                    width: '100%',
-                                                                    height: 240,
-                                                                    backgroundColor: 'var(--gray-5)',
-                                                                }}
-                                                            />
-                                                            <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                                                                <ImageIcon color="white" size={32} />
-                                                            </div>
-                                                        </Box>
-                                                    </Inset>
-                                                    <Box p="3">
-                                                        <Flex justify="between" align="center">
-                                                            <Text size="3" weight="bold">{item.title}</Text>
-                                                            <Badge color="gray">{item.date}</Badge>
-                                                        </Flex>
-                                                    </Box>
-                                                </Card>
-                                            </motion.div>
-                                        ))}
-                                </motion.div>
-                            </Tabs.Content>
-                        ))}
+                    {/* Search Bar */}
+                    <Box mb="6">
+                        <SearchBar
+                            placeholder="Cari berdasarkan judul atau kategori..."
+                            onSearch={handleSearch}
+                            onClear={handleClearSearch}
+                        />
                     </Box>
+
+                    {/* Results Info */}
+                    {searchQuery && (
+                        <Box mb="4">
+                            <Text size="2" color="gray">
+                                Menampilkan {totalItems} hasil untuk "{searchQuery}"
+                            </Text>
+                        </Box>
+                    )}
+
+                    {/* Gallery Grid */}
+                    <Box mb="6">
+                        <motion.div
+                            style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))", gap: "16px" }}
+                            variants={containerVariants}
+                            initial="hidden"
+                            animate="visible"
+                            transition={{ duration: 0.4 }}
+                        >
+                            {paginatedData.length > 0 ? (
+                                paginatedData.map((item) => (
+                                    <motion.div key={item.id} whileHover={{ scale: 1.03 }} transition={{ type: 'spring', stiffness: 300 }}>
+                                        <Card style={{ padding: 0, overflow: 'hidden', cursor: 'pointer' }} className="group">
+                                            <Inset clip="padding-box" side="top" pb="current">
+                                                <Box style={{ position: 'relative', overflow: 'hidden' }}>
+                                                    <img
+                                                        src={item.src}
+                                                        alt={item.title}
+                                                        style={{
+                                                            display: 'block',
+                                                            objectFit: 'cover',
+                                                            width: '100%',
+                                                            height: 240,
+                                                            backgroundColor: 'var(--gray-5)',
+                                                        }}
+                                                    />
+                                                    <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                                                        <ImageIcon color="white" size={32} />
+                                                    </div>
+                                                </Box>
+                                            </Inset>
+                                            <Box p="3">
+                                                <Flex justify="between" align="center">
+                                                    <Text size="3" weight="bold">{item.title}</Text>
+                                                    <Badge color="gray">{item.date}</Badge>
+                                                </Flex>
+                                            </Box>
+                                        </Card>
+                                    </motion.div>
+                                ))
+                            ) : (
+                                <Box style={{ gridColumn: "1 / -1" }}>
+                                    <Flex direction="column" align="center" gap="3" py="9">
+                                        <ImageIcon size={48} color="var(--gray-8)" />
+                                        <Text size="4" color="gray">
+                                            {searchQuery ? "Tidak ada hasil yang ditemukan" : "Belum ada item galeri"}
+                                        </Text>
+                                        {searchQuery && (
+                                            <Text size="2" color="gray">
+                                                Coba kata kunci yang berbeda
+                                            </Text>
+                                        )}
+                                    </Flex>
+                                </Box>
+                            )}
+                        </motion.div>
+                    </Box>
+
+                    {/* Pagination */}
+                    <Pagination
+                        currentPage={currentPage}
+                        totalPages={totalPages}
+                        onPageChange={handlePageChange}
+                        itemsPerPage={itemsPerPage}
+                        totalItems={totalItems}
+                    />
                 </Tabs.Root>
             </Container>
         </Box>

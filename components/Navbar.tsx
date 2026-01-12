@@ -8,7 +8,6 @@ import {
   Flex,
   Text,
   Box,
-  Container,
   IconButton,
 } from "@radix-ui/themes";
 import { Menu, X } from "lucide-react";
@@ -20,11 +19,6 @@ export function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
-  // Hide navbar on admin pages
-  if (pathname.startsWith("/admin")) {
-    return null;
-  }
-
   // Handle scroll effect
   useEffect(() => {
     const handleScroll = () => {
@@ -33,6 +27,11 @@ export function Navbar() {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  // Hide navbar on admin pages
+  if (pathname.startsWith("/admin")) {
+    return null;
+  }
 
   // Link Items
   const navItems = [
@@ -45,35 +44,16 @@ export function Navbar() {
   ];
 
   return (
-    <Box
-      style={{
-        position: "fixed",
-        top: 0,
-        left: 0,
-        right: 0,
-        zIndex: 100,
-        paddingTop: "1rem",
-        display: "flex",
-        justifyContent: "center",
-        pointerEvents: "none", // Allow clicking through empty space
-      }}
-    >
+    <Box className="fixed-top flex-center" style={{ paddingTop: "1rem", pointerEvents: "none" }}>
       <Box
+        className={`glass-navbar ${scrolled ? "glass-navbar-scrolled" : ""}`}
+        px="4"
+        py="2"
         style={{
           pointerEvents: "auto",
           width: "90%",
           maxWidth: "1000px",
-          borderRadius: "9999px",
-          backgroundColor: scrolled
-            ? "var(--color-panel-translucent)"
-            : "rgba(255,255,255,0.05)", // Glass effect
-          backdropFilter: "blur(16px)",
-          border: "1px solid var(--gray-a4)",
-          boxShadow: scrolled ? "0 10px 30px -10px rgba(0,0,0,0.1)" : "none",
-          transition: "all 0.3s ease",
         }}
-        px="4"
-        py="2"
       >
         <Flex justify="between" align="center" style={{ height: "48px" }}>
           {/* Logo Section */}
@@ -83,19 +63,11 @@ export function Navbar() {
             style={{ textDecoration: "none" }}
           >
             <Flex align="center" gap="3" style={{ cursor: "pointer" }}>
-              <Box
-                style={{
-                  borderRadius: "50%",
-                  overflow: "hidden",
-                  height: 36,
-                  width: 36,
-                  border: "2px solid var(--indigo-9)",
-                }}
-              >
+              <Box className="logo-circle">
                 <img
                   src="/logo.jpeg"
                   alt="PUPCL Logo"
-                  style={{ width: "100%", height: "100%", objectFit: "cover" }}
+                  className="logo-img"
                 />
               </Box>
               <Text
@@ -113,11 +85,7 @@ export function Navbar() {
             gap="1"
             display={{ initial: "none", md: "flex" }}
             align="center"
-            style={{
-              backgroundColor: "var(--gray-a3)",
-              padding: "4px",
-              borderRadius: "9999px",
-            }}
+            className="nav-pill"
           >
             {navItems.map((item) => (
               <Link
@@ -127,16 +95,7 @@ export function Navbar() {
                 style={{ textDecoration: "none" }}
               >
                 <Box
-                  px="3"
-                  py="1"
-                  style={{
-                    borderRadius: "9999px",
-                    backgroundColor:
-                      pathname === item.href
-                        ? "var(--color-surface)"
-                        : "transparent",
-                    transition: "all 0.2s",
-                  }}
+                  className={`nav-item ${pathname === item.href ? "nav-item-active" : ""}`}
                 >
                   <Text
                     size="2"
@@ -161,14 +120,16 @@ export function Navbar() {
             <ThemeToggle />
 
             <Box display={{ initial: "none", md: "block" }}>
-              <Button
-                size="2"
-                variant="solid"
-                highContrast
-                style={{ cursor: "pointer", borderRadius: "9999px" }}
-              >
-                Join Now
-              </Button>
+              <Link href="/contact">
+                <Button
+                  size="2"
+                  variant="solid"
+                  highContrast
+                  className="btn-primary-pill"
+                >
+                  Join Now
+                </Button>
+              </Link>
             </Box>
 
             {/* Mobile Burger */}
@@ -186,7 +147,9 @@ export function Navbar() {
                     </DropdownMenu.Item>
                   ))}
                   <DropdownMenu.Separator />
-                  <DropdownMenu.Item>Join Now</DropdownMenu.Item>
+                  <DropdownMenu.Item asChild>
+                    <Link href="/contact">Join Now</Link>
+                  </DropdownMenu.Item>
                 </DropdownMenu.Content>
               </DropdownMenu.Root>
             </Box>

@@ -25,15 +25,7 @@ export function Footer() {
   }
 
   return (
-    <Box
-      py="8"
-      style={{
-        backgroundColor: "var(--gray-2)", // Lebih terang untuk visibility di dark mode
-        borderTop: "1px solid var(--gray-6)",
-        marginTop: "auto",
-        width: "100%",
-      }}
-    >
+    <Box py="8" className="section-bg-alt full-width" style={{ marginTop: "auto" }}>
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -48,46 +40,29 @@ export function Footer() {
             gap="8"
             mb="8"
           >
-            {/* Brand Section - Ujung Kiri */}
-            <Box style={{ maxWidth: 450 }}>
+            {/* Brand Section */}
+            <Box className="max-w-content">
               <Flex direction="column" gap="4">
                 <Flex align="center" gap="3">
-                  <Box
-                    style={{
-                      borderRadius: "50%",
-                      overflow: "hidden",
-                      height: 32,
-                      width: 32,
-                      border: "1px solid var(--gray-6)",
-                    }}
-                  >
+                  <Box className="logo-circle-sm">
                     <img
                       src="/logo.jpeg"
                       alt="PUPCL Logo"
-                      style={{
-                        width: "100%",
-                        height: "100%",
-                        objectFit: "cover",
-                      }}
+                      className="logo-img"
                     />
                   </Box>
                   <Text size="3" weight="bold">
                     PUPCL
                   </Text>
                 </Flex>
-                <Text
-                  as="p"
-                  size="2"
-                  color="gray"
-                  style={{ lineHeight: "1.6" }}
-                >
+                <Text as="p" size="2" color="gray" className="text-body">
                   PU Pekanbaru Code Lab is a student-led community dedicated to
                   fostering tech innovation and collaboration.
                 </Text>
               </Flex>
             </Box>
 
-            {/* Links Section - Ujung Kanan */}
+            {/* Links Section */}
             <Flex gap={{ initial: "8", md: "9" }} wrap="wrap">
               {/* Explore */}
               <Box>
@@ -151,11 +126,7 @@ export function Footer() {
                       <Mail size={18} />
                     </IconButton>
                   </Flex>
-                  <Text
-                    size="2"
-                    color="gray"
-                    style={{ lineHeight: "1.5", maxWidth: 200 }}
-                  >
+                  <Text size="2" color="gray" className="text-body" style={{ maxWidth: 200 }}>
                     Jl. Jend. Ahmad Yani No.42a,
                     <br />
                     Pekanbaru, Riau 28155

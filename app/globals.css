@@ -1,13 +1,41 @@
 @import "@radix-ui/themes/styles.css";
 
+/* ============================================
+   DESIGN TOKENS - Single Source of Truth
+   ============================================ */
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  
+  /* Spacing tokens */
+  --space-hero-top: 140px;
+  --space-section: var(--space-9);
+  
+  /* Border radius tokens */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-full: 9999px;
+  
+  /* Shadow tokens */
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.08);
+  --shadow-md: 0 10px 30px -10px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 20px 50px -10px rgba(0, 0, 0, 0.15);
+  --shadow-xl: 0 20px 40px rgba(0, 0, 0, 0.15);
+  
+  /* Transition tokens */
+  --transition-base: all 0.2s ease;
+  --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 [data-theme="dark"] {
   --background: #0a0a0a;
   --foreground: #ededed;
+  
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 10px 30px -10px rgba(0, 0, 0, 0.4);
+  --shadow-lg: 0 20px 50px -10px rgba(0, 0, 0, 0.5);
+  --shadow-xl: 0 20px 40px rgba(0, 0, 0, 0.4);
 }
 
 body {
@@ -18,7 +46,11 @@ body {
   padding: 0;
 }
 
-/* Custom Utilities */
+/* ============================================
+   UTILITY CLASSES
+   ============================================ */
+
+/* Glass Morphism */
 .glass-panel {
   background: rgba(255, 255, 255, 0.7);
   backdrop-filter: blur(12px);
@@ -29,6 +61,48 @@ body {
 .dark .glass-panel {
   background: rgba(20, 20, 20, 0.7);
   border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.glass-navbar {
+  background: var(--color-panel-translucent);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--gray-a4);
+  border-radius: var(--radius-full);
+  transition: var(--transition-smooth);
+}
+
+.glass-navbar-scrolled {
+  box-shadow: var(--shadow-md);
+}
+
+/* Gradient Text */
+.gradient-text {
+  background: linear-gradient(to right, var(--indigo-9), var(--plum-9));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Radial Background */
+.radial-gradient-bg {
+  background: radial-gradient(
+    circle at top center,
+    var(--indigo-4),
+    var(--color-background) 80%
+  );
+  position: relative;
+  overflow: hidden;
+}
+
+/* Section Backgrounds */
+.section-bg-gray {
+  background-color: var(--gray-1);
+}
+
+.section-bg-alt {
+  background-color: var(--gray-2);
+  border-top: 1px solid var(--gray-6);
 }
 
 /* Tech Grid Background Pattern */
@@ -44,18 +118,255 @@ body {
   -webkit-mask-image: linear-gradient(to bottom, black 40%, transparent 100%);
 }
 
+/* Container Utilities */
+.hero-container {
+  padding-top: var(--space-hero-top);
+  padding-bottom: var(--space-section);
+}
+
+.full-width {
+  width: 100%;
+}
+
+.max-w-content {
+  max-width: 600px;
+}
+
+.max-w-content-lg {
+  max-width: 800px;
+}
+
+/* Flex Utilities */
+.flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.flex-between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* Card Styles */
+.card-elevated {
+  background: var(--gray-2);
+  border: none;
+  transition: var(--transition-smooth);
+}
+
+.card-elevated:hover {
+  transform: translateY(-5px);
+}
+
+.card-feature {
+  background: var(--gray-2);
+  cursor: pointer;
+  height: 100%;
+  transition: var(--transition-smooth);
+}
+
+/* Icon Containers */
+.icon-container {
+  border-radius: var(--radius-md);
+  padding: var(--space-3);
+}
+
+.icon-container-sm {
+  border-radius: var(--radius-md);
+  padding: var(--space-2);
+  width: max-content;
+}
+
+/* Logo Styles */
+.logo-circle {
+  border-radius: 50%;
+  overflow: hidden;
+  height: 36px;
+  width: 36px;
+  border: 2px solid var(--indigo-9);
+}
+
+.logo-circle-sm {
+  border-radius: 50%;
+  overflow: hidden;
+  height: 32px;
+  width: 32px;
+  border: 1px solid var(--gray-6);
+}
+
+.logo-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Button Styles */
+.btn-primary {
+  cursor: pointer;
+  border-radius: var(--radius-md);
+}
+
+.btn-primary-pill {
+  cursor: pointer;
+  border-radius: var(--radius-full);
+}
+
+.btn-outline-dark {
+  cursor: pointer;
+  border-radius: var(--radius-md);
+  background: white;
+  color: #111827;
+  border-color: rgba(17, 24, 39, 0.18);
+}
+
+/* Nav Styles */
+.nav-pill {
+  border-radius: var(--radius-full);
+  padding: 4px;
+  background-color: var(--gray-a3);
+}
+
+.nav-item {
+  border-radius: var(--radius-full);
+  padding: var(--space-1) var(--space-3);
+  transition: var(--transition-base);
+}
+
+.nav-item-active {
+  background-color: var(--color-surface);
+}
+
+/* Text Styles */
+.text-muted {
+  color: var(--gray-10);
+}
+
+.text-body {
+  line-height: 1.6;
+}
+
+.text-heading {
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+}
+
+/* Code Block Styles */
+.code-window {
+  width: 100%;
+  height: 320px;
+  background: var(--gray-2);
+  border: 1px solid var(--gray-6);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-lg);
+  overflow: hidden;
+}
+
+.code-window-header {
+  border-bottom: 1px solid var(--gray-4);
+  background: var(--gray-3);
+  padding: var(--space-3);
+  display: flex;
+  gap: var(--space-2);
+}
+
+.window-control {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+}
+
+.window-control-red {
+  background: #FF5F56;
+}
+
+.window-control-yellow {
+  background: #FFBD2E;
+}
+
+.window-control-green {
+  background: #27C93F;
+}
+
+.code-content {
+  font-family: monospace;
+  font-size: 14px;
+  line-height: 1.6;
+  padding: var(--space-4);
+}
+
+/* Animations */
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-15px);
+  }
+}
+
+.animate-pulse-cursor {
+  display: inline-block;
+  width: 8px;
+  height: 16px;
+  background: var(--green-9);
+  margin-left: 8px;
+  animation: pulse 1s infinite;
+  vertical-align: middle;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.3;
+  }
+}
+
 /* Member Card Hover Effect */
 .member-card {
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: var(--transition-smooth);
 }
 
 .member-card:hover {
   transform: translateY(-8px);
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+  box-shadow: var(--shadow-xl);
 }
 
-[data-theme="dark"] .member-card:hover {
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+/* Position Utilities */
+.fixed-top {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+}
+
+.relative {
+  position: relative;
+}
+
+.absolute-center {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+.z-0 {
+  z-index: 0;
+}
+
+.z-1 {
+  z-index: 1;
 }
 
 /* Organization Chart Connectors */
@@ -69,7 +380,6 @@ body {
   position: relative;
 }
 
-/* Vertical line from top level */
 .org-level-1::after {
   content: "";
   position: absolute;
@@ -83,7 +393,6 @@ body {
   transform-origin: top;
 }
 
-/* Horizontal line connecting level 2 */
 .org-level-2-container {
   position: relative;
 }
@@ -113,7 +422,6 @@ body {
   transform-origin: center;
 }
 
-/* Vertical lines to level 2 cards */
 .org-level-2::before {
   content: "";
   position: absolute;
@@ -127,7 +435,6 @@ body {
   transform-origin: top;
 }
 
-/* Vertical line from level 2 to level 3 */
 .org-level-2-container-bottom::after {
   content: "";
   position: absolute;
@@ -141,7 +448,6 @@ body {
   transform-origin: top;
 }
 
-/* Line animations for org chart */
 @keyframes lineGrow {
   from {
     transform: translateX(-50%) scaleY(0);

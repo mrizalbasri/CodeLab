@@ -22,6 +22,9 @@ import {
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import { getPrograms, Program } from "../actions";
+import { SearchBar } from "@/components/SearchBar";
+import { Pagination } from "@/components/Pagination";
+import { useSearchAndPagination } from "@/lib/hooks/useSearchAndPagination";
 
 export default function ProgramsPage() {
   const [programs, setPrograms] = useState<Program[]>([]);
@@ -36,10 +39,28 @@ export default function ProgramsPage() {
   }, []);
 
   // Filter programs by category
-  const filteredPrograms =
+  const filteredByCategory =
     selectedCategory === "Semua"
       ? programs
       : programs.filter((p) => p.category === selectedCategory);
+
+  // Setup search dan pagination
+  const {
+    paginatedData: filteredPrograms,
+    totalItems,
+    searchQuery,
+    handleSearch,
+    handleClearSearch,
+    currentPage,
+    totalPages,
+    handlePageChange,
+    itemsPerPage,
+  } = useSearchAndPagination({
+    data: filteredByCategory,
+    itemsPerPage: 6,
+    searchFields: ["title", "description", "category", "speaker", "location"],
+    analyticsSection: "Programs",
+  });
 
   // Animation Variants
   const containerVariants = {
@@ -162,6 +183,24 @@ export default function ProgramsPage() {
         </Box>
       </motion.div>
 
+      {/* Search Bar */}
+      <Box py="6" style={{ backgroundColor: "var(--gray-1)" }}>
+        <Container size="4">
+          <SearchBar
+            placeholder="Cari program berdasarkan judul, deskripsi, kategori, atau pembicara..."
+            onSearch={handleSearch}
+            onClear={handleClearSearch}
+          />
+          {searchQuery && (
+            <Box mt="3">
+              <Text size="2" color="gray">
+                Menampilkan {totalItems} hasil untuk "{searchQuery}"
+              </Text>
+            </Box>
+          )}
+        </Container>
+      </Box>
+
       {/* Events Grid */}
       <Container size="4" py="9">
         {filteredPrograms.length === 0 ? (
@@ -173,121 +212,139 @@ export default function ProgramsPage() {
             py="9"
           >
             <Text size="5" color="gray">
-              Belum ada program{" "}
-              {selectedCategory !== "Semua" ? selectedCategory : ""} tersedia
+              {searchQuery 
+                ? "Tidak ada program yang ditemukan" 
+                : `Belum ada program ${selectedCategory !== "Semua" ? selectedCategory : ""} tersedia`
+              }
             </Text>
             <Text size="2" color="gray">
-              Tambahkan program melalui Admin Dashboard
+              {searchQuery 
+                ? "Coba kata kunci yang berbeda"
+                : "Tambahkan program melalui Admin Dashboard"
+              }
             </Text>
           </Flex>
         ) : (
-          <motion.div
-            style={{
-              display: "grid",
-              gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))",
-              gap: "24px",
-            }}
-            variants={containerVariants}
-            initial="hidden"
-            animate="visible"
-          >
-            {filteredPrograms.map((program) => (
-              <motion.div
-                key={program.id}
-                variants={itemVariants}
-                whileHover={{ y: -10 }}
-                transition={{ type: "spring", stiffness: 300 }}
-              >
-                <Card size="3">
-                  <div style={{ padding: 0, overflow: "hidden" }}>
-                    <Box
-                      height="200px"
-                      style={{
-                        backgroundImage: `url('${
-                          program.image_url ||
-                          "https://images.unsplash.com/photo-1542831371-d531d513ef56?auto=format&fit=crop&w=800&q=80"
-                        }')`,
-                        backgroundSize: "cover",
-                        backgroundPosition: "center",
-                      }}
-                    />
-                  <Box p="4">
-                    <Flex gap="2" mb="3">
-                      <Badge color={categoryColors[program.category]}>
-                        {program.category}
-                      </Badge>
-                      {program.status && (
-                        <Badge color="cyan" variant="soft">
-                          {program.status}
+          <>
+            <motion.div
+              style={{
+                display: "grid",
+                gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))",
+                gap: "24px",
+              }}
+              variants={containerVariants}
+              initial="hidden"
+              animate="visible"
+            >
+              {filteredPrograms.map((program) => (
+                <motion.div
+                  key={program.id}
+                  variants={itemVariants}
+                  whileHover={{ y: -10 }}
+                  transition={{ type: "spring", stiffness: 300 }}
+                >
+                  <Card size="3">
+                    <div style={{ padding: 0, overflow: "hidden" }}>
+                      <Box
+                        height="200px"
+                        style={{
+                          backgroundImage: `url('${
+                            program.image_url ||
+                            "https://images.unsplash.com/photo-1542831371-d531d513ef56?auto=format&fit=crop&w=800&q=80"
+                          }')`,
+                          backgroundSize: "cover",
+                          backgroundPosition: "center",
+                        }}
+                      />
+                    <Box p="4">
+                      <Flex gap="2" mb="3">
+                        <Badge color={categoryColors[program.category]}>
+                          {program.category}
                         </Badge>
-                      )}
-                    </Flex>
-                    <Heading size="5" mb="2">
-                      {program.title}
-                    </Heading>
-                    <Text
-                      as="p"
-                      size="2"
-                      color="gray"
-                      mb="4"
-                      style={{
-                        overflow: "hidden",
-                        textOverflow: "ellipsis",
-                        display: "-webkit-box",
-                        WebkitLineClamp: 2,
-                        WebkitBoxOrient: "vertical",
-                      }}
-                    >
-                      {program.description || "Deskripsi akan segera hadir"}
-                    </Text>
+                        {program.status && (
+                          <Badge color="cyan" variant="soft">
+                            {program.status}
+                          </Badge>
+                        )}
+                      </Flex>
+                      <Heading size="5" mb="2">
+                        {program.title}
+                      </Heading>
+                      <Text
+                        as="p"
+                        size="2"
+                        color="gray"
+                        mb="4"
+                        style={{
+                          overflow: "hidden",
+                          textOverflow: "ellipsis",
+                          display: "-webkit-box",
+                          WebkitLineClamp: 2,
+                          WebkitBoxOrient: "vertical",
+                        }}
+                      >
+                        {program.description || "Deskripsi akan segera hadir"}
+                      </Text>
 
-                    <Flex direction="column" gap="2" mb="4">
-                      {program.date && (
-                        <Flex gap="2" align="center">
-                          <Calendar size={16} color="var(--gray-9)" />
-                          <Text size="2" color="gray">
-                            {program.date}
-                          </Text>
-                        </Flex>
-                      )}
-                      {program.time && (
-                        <Flex gap="2" align="center">
-                          <Clock size={16} color="var(--gray-9)" />
-                          <Text size="2" color="gray">
-                            {program.time}
-                          </Text>
-                        </Flex>
-                      )}
-                      {program.location && (
-                        <Flex gap="2" align="center">
-                          <MapPin size={16} color="var(--gray-9)" />
-                          <Text size="2" color="gray">
-                            {program.location}
-                          </Text>
-                        </Flex>
-                      )}
-                      {program.speaker && (
-                        <Flex gap="2" align="center">
-                          <Users size={16} color="var(--gray-9)" />
-                          <Text size="2" color="gray">
-                            {program.speaker}
-                          </Text>
-                        </Flex>
-                      )}
-                    </Flex>
+                      <Flex direction="column" gap="2" mb="4">
+                        {program.date && (
+                          <Flex gap="2" align="center">
+                            <Calendar size={16} color="var(--gray-9)" />
+                            <Text size="2" color="gray">
+                              {program.date}
+                            </Text>
+                          </Flex>
+                        )}
+                        {program.time && (
+                          <Flex gap="2" align="center">
+                            <Clock size={16} color="var(--gray-9)" />
+                            <Text size="2" color="gray">
+                              {program.time}
+                            </Text>
+                          </Flex>
+                        )}
+                        {program.location && (
+                          <Flex gap="2" align="center">
+                            <MapPin size={16} color="var(--gray-9)" />
+                            <Text size="2" color="gray">
+                              {program.location}
+                            </Text>
+                          </Flex>
+                        )}
+                        {program.speaker && (
+                          <Flex gap="2" align="center">
+                            <Users size={16} color="var(--gray-9)" />
+                            <Text size="2" color="gray">
+                              {program.speaker}
+                            </Text>
+                          </Flex>
+                        )}
+                      </Flex>
 
-                    <Button
-                      variant="solid"
-                      style={{ width: "100%", cursor: "pointer" }}
-                    >
-                      Daftar Sekarang
-                    </Button>
-                  </Box>
-                  </div>
-                </Card>
-              </motion.div>
-            ))}
-          </motion.div>
+                      <Button
+                        variant="solid"
+                        style={{ width: "100%", cursor: "pointer" }}
+                      >
+                        Daftar Sekarang
+                      </Button>
+                    </Box>
+                    </div>
+                  </Card>
+                </motion.div>
+              ))}
+            </motion.div>
+            
+            {/* Pagination */}
+            <Box mt="8">
+              <Pagination
+                currentPage={currentPage}
+                totalPages={totalPages}
+                onPageChange={handlePageChange}
+                itemsPerPage={itemsPerPage}
+                totalItems={totalItems}
+              />
+            </Box>
+          </>
         )}
       </Container>
 
