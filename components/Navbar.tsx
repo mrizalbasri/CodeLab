@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import NextImage from "next/image";
 import { usePathname } from "next/navigation";
 import {
   Button,
@@ -64,9 +65,11 @@ export function Navbar() {
           >
             <Flex align="center" gap="3" style={{ cursor: "pointer" }}>
               <Box className="logo-circle">
-                <img
+                <NextImage
                   src="/logo.jpeg"
-                  alt="PUPCL Logo"
+                  alt="CodeLab Logo"
+                  width={36}
+                  height={36}
                   className="logo-img"
                 />
               </Box>
@@ -75,7 +78,7 @@ export function Navbar() {
                 weight="bold"
                 style={{ color: "var(--gray-12)", letterSpacing: "-0.5px" }}
               >
-                PUPCL
+                CodeLab
               </Text>
             </Flex>
           </Link>

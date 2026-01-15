@@ -21,9 +21,9 @@ const robotoMono = Roboto_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "PUPCL - PU Pekanbaru Code Lab",
-  description: "Official community website for Polytechnic Computer Club at President University Pekanbaru. A place to learn, build, and innovate together.",
-  keywords: ["PUPCL", "Coding Club", "Polytechnic", "Pekanbaru", "President University", "Programming", "Community"],
+  title: "CodeLab - President University Pekanbaru",
+  description: "The official hub for young innovators and developers at President University Pekanbaru. Join us to learn, share, and build the future.",
+  keywords: ["CodeLab", "PUPCL", "Coding Club", "Polytechnic", "Pekanbaru", "President University", "Programming", "Community", "Developer"],
 };
 
 export default function RootLayout({
