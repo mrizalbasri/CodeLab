@@ -2,7 +2,7 @@
 
 import { Box, Container, Flex, Heading, Text, Tabs, Inset, Card, Badge } from "@radix-ui/themes";
 import { Image as ImageIcon } from "lucide-react";
-import { getGalleryItems, GalleryItem } from "../actions";
+import { getGalleryItems, GalleryItem } from "@/app/actions";
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { SearchBar } from "@/components/SearchBar";

@@ -13,7 +13,7 @@ import {
   Grid,
 } from "@radix-ui/themes";
 import { Github, Linkedin, Mail } from "lucide-react";
-import { getMembers, Member } from "../actions";
+import { getMembers, Member } from "@/app/actions";
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 

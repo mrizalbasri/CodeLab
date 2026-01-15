@@ -21,7 +21,7 @@ import {
 } from "lucide-react";
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
-import { getPrograms, Program } from "../actions";
+import { getPrograms, Program } from "@/app/actions";
 import { SearchBar } from "@/components/SearchBar";
 import { Pagination } from "@/components/Pagination";
 import { useSearchAndPagination } from "@/lib/hooks/useSearchAndPagination";

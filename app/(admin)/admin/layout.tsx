@@ -3,7 +3,7 @@
 import { Theme, Box } from "@radix-ui/themes";
 import { ThemeProvider } from "next-themes";
 import "@radix-ui/themes/styles.css";
-import "../globals.css";
+
 
 export default function AdminLayout({
   children,

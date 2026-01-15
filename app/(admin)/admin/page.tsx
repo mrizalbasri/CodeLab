@@ -9,7 +9,7 @@ import {
   GalleryItem,
   getPrograms,
   Program,
-} from "../actions";
+} from "@/app/actions";
 import { useEffect, useState, useTransition } from "react";
 import { createClient } from "@/lib/supabase/client";
 import { useRouter } from "next/navigation";
