@@ -128,6 +128,7 @@ export function Navbar() {
                   size="2"
                   variant="solid"
                   highContrast
+                  radius="full"
                   className="btn-primary-pill"
                 >
                   Join Now

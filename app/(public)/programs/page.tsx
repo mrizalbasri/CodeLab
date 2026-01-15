@@ -250,7 +250,7 @@ export default function ProgramsPage() {
                         style={{
                           backgroundImage: `url('${
                             program.image_url ||
-                            "https://images.unsplash.com/photo-1542831371-d531d513ef56?auto=format&fit=crop&w=800&q=80"
+                            "/logo.jpeg"
                           }')`,
                           backgroundSize: "cover",
                           backgroundPosition: "center",
@@ -323,6 +323,7 @@ export default function ProgramsPage() {
 
                       <Button
                         variant="solid"
+                        radius="full"
                         style={{ width: "100%", cursor: "pointer" }}
                       >
                         Daftar Sekarang

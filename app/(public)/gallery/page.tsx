@@ -2,6 +2,7 @@
 
 import { Box, Container, Flex, Heading, Text, Tabs, Inset, Card, Badge } from "@radix-ui/themes";
 import { Image as ImageIcon } from "lucide-react";
+import NextImage from "next/image";
 import { getGalleryItems, GalleryItem } from "@/app/actions";
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
@@ -101,7 +102,7 @@ export default function GalleryPage() {
                     {searchQuery && (
                         <Box mb="4">
                             <Text size="2" color="gray">
-                                Menampilkan {totalItems} hasil untuk "{searchQuery}"
+                                Menampilkan {totalItems} hasil untuk &quot;{searchQuery}&quot;
                             </Text>
                         </Box>
                     )}
@@ -120,19 +121,17 @@ export default function GalleryPage() {
                                     <motion.div key={item.id} whileHover={{ scale: 1.03 }} transition={{ type: 'spring', stiffness: 300 }}>
                                         <Card style={{ padding: 0, overflow: 'hidden', cursor: 'pointer' }} className="group">
                                             <Inset clip="padding-box" side="top" pb="current">
-                                                <Box style={{ position: 'relative', overflow: 'hidden' }}>
-                                                    <img
+                                                <Box style={{ position: 'relative', overflow: 'hidden', height: 240 }}>
+                                                    <NextImage
                                                         src={item.src}
                                                         alt={item.title}
+                                                        fill
                                                         style={{
-                                                            display: 'block',
                                                             objectFit: 'cover',
-                                                            width: '100%',
-                                                            height: 240,
                                                             backgroundColor: 'var(--gray-5)',
                                                         }}
                                                     />
-                                                    <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                                                    <div className="card-overlay">
                                                         <ImageIcon color="white" size={32} />
                                                     </div>
                                                 </Box>
