@@ -1,5 +1,3 @@
-"use server";
-
 export * from "@/lib/actions/members";
 export * from "@/lib/actions/gallery";
 export * from "@/lib/actions/programs";

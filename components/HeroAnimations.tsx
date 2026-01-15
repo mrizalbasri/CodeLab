@@ -1,40 +1,25 @@
 "use client";
 
 import { Box, Text } from "@radix-ui/themes";
-import { motion } from "framer-motion";
+import { motion, MotionProps } from "framer-motion";
 import { useEffect, useState, ReactNode } from "react";
 import { RadixColor } from "@/lib/types";
 
 // Animated wrapper for motion effects
-export function MotionWrapper({
-  children,
-  initial,
-  animate,
-  transition,
-  whileHover,
-  whileTap,
-  className,
-  style,
-}: {
+interface WrapperProps extends MotionProps {
   children: ReactNode;
-  initial?: object;
-  animate?: object;
-  transition?: object;
-  whileHover?: object;
-  whileTap?: object;
   className?: string;
   style?: React.CSSProperties;
-}) {
+}
+
+export function MotionWrapper({
+  children,
+  className,
+  style,
+  ...props
+}: WrapperProps) {
   return (
-    <motion.div
-      initial={initial}
-      animate={animate}
-      transition={transition}
-      whileHover={whileHover}
-      whileTap={whileTap}
-      className={className}
-      style={style}
-    >
+    <motion.div className={className} style={style} {...props}>
       {children}
     </motion.div>
   );
@@ -97,7 +82,7 @@ export function CodeBlock() {
           style={{ paddingLeft: 16, marginTop: 4 }}
         >
           <Text color="green" style={{ fontFamily: "monospace" }}>
-            // Code your future...
+            { "// Code your future..." }
           </Text>
           <span className="animate-pulse-cursor" />
         </motion.div>

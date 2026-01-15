@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Suspense } from "react";
 import { Inter, Roboto_Mono } from "next/font/google";
 import "@radix-ui/themes/styles.css";
 import "./globals.css";
@@ -37,7 +38,9 @@ export default function RootLayout({
           <Theme accentColor="indigo" grayColor="slate" radius="medium" scaling="100%">
             {children}
             <Toaster position="top-center" />
-            <Analytics />
+            <Suspense fallback={null}>
+              <Analytics />
+            </Suspense>
           </Theme>
         </ThemeProvider>
       </body>

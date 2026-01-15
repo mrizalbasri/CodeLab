@@ -76,7 +76,7 @@ export default function ProgramsPage() {
     visible: {
       opacity: 1,
       y: 0,
-      transition: { type: "spring", stiffness: 50 },
+      transition: { type: "spring" as const, stiffness: 50 },
     },
   };
 
