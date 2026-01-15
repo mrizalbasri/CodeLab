@@ -110,6 +110,7 @@ export default function Home() {
                     size="4"
                     variant="solid"
                     highContrast
+                    radius="full"
                     className="btn-primary"
                   >
                     Explore Events <ArrowRight size={18} />
@@ -120,6 +121,7 @@ export default function Home() {
                     size="4"
                     variant="outline"
                     highContrast
+                    radius="full"
                     className="btn-outline-dark"
                   >
                     Learn More
