@@ -68,7 +68,7 @@ body {
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 9999px;
+  border-radius: 9999px !important;
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
   transition: var(--transition-smooth);
 }
@@ -231,19 +231,22 @@ body {
 
 /* Nav Styles */
 .nav-pill {
-  border-radius: var(--radius-full);
+  border-radius: 9999px !important;
   padding: 4px;
   background-color: var(--gray-a3);
+  border: 1px solid var(--gray-a4);
 }
 
 .nav-item {
-  border-radius: var(--radius-full);
+  border-radius: 9999px !important;
   padding: var(--space-1) var(--space-3);
   transition: var(--transition-base);
+  cursor: pointer;
 }
 
 .nav-item-active {
   background-color: var(--color-surface);
+  box-shadow: var(--shadow-sm);
 }
 
 /* Text Styles */
