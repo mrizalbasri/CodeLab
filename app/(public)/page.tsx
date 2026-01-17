@@ -29,6 +29,9 @@ import {
   AnimatedCard,
 } from "@/components/HeroAnimations";
 import { BentoGrid, BentoCard } from "@/components/BentoGrid";
+import { TechStackCloud } from "@/components/TechStackCloud";
+import { InteractiveGridPattern } from "@/components/ui/interactive-grid-pattern";
+import { cn } from "@/lib/utils";
 
 import { Spotlight } from "@/components/ui/Spotlight";
 
@@ -42,8 +45,13 @@ export default function Home() {
           fill="var(--indigo-9)"
         />
         
-        {/* Background Grid Pattern */}
-        <Box className="bg-grid absolute-center z-0" />
+        {/* Interactive Grid Pattern */}
+        <InteractiveGridPattern
+          className={cn(
+            "[mask-image:radial-gradient(600px_circle_at_center,white,transparent)]",
+            "inset-x-0 inset-y-[-30%] h-[200%] skew-y-12 opacity-50 absolute"
+          )}
+        />
 
         <Container size="3" className="relative z-1">
           <Flex direction="column" align="center" gap="6">
@@ -137,20 +145,34 @@ export default function Home() {
               </Flex>
             </MotionWrapper>
 
-            {/* Visual Content (Code Mockup) */}
-            <FloatingCodeWindow>
-              <Box mt="8" mb="9" className="code-window">
-                {/* Window Controls */}
-                <Flex gap="2" className="code-window-header">
-                  <Box className="window-control window-control-red" />
-                  <Box className="window-control window-control-yellow" />
-                  <Box className="window-control window-control-green" />
-                </Flex>
+            {/* Hero Visual Content: Code & Tech Stack */}
+            <Grid columns={{ initial: "1", md: "2" }} gap="6" width="100%" mt="8" mb="9">
+              {/* Left Column: Code Window */}
+              <FloatingCodeWindow>
+                <Box className="code-window" style={{ height: '320px' }}>
+                  {/* Window Controls */}
+                  <Flex gap="2" className="code-window-header">
+                    <Box className="window-control window-control-red" />
+                    <Box className="window-control window-control-yellow" />
+                    <Box className="window-control window-control-green" />
+                  </Flex>
 
-                {/* Animated Code Content */}
-                <CodeBlock />
-              </Box>
-            </FloatingCodeWindow>
+                  {/* Animated Code Content */}
+                  <CodeBlock />
+                </Box>
+              </FloatingCodeWindow>
+
+              {/* Right Column: Tech Stack Cloud */}
+              <MotionWrapper
+                initial={{ opacity: 0, x: 20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 1, delay: 0.5 }}
+                className="full-width flex-center"
+                style={{ height: '100%' }}
+              >
+                  <TechStackCloud />
+              </MotionWrapper>
+            </Grid>
           </Flex>
         </Container>
       </Box>
