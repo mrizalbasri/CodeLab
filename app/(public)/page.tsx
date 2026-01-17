@@ -1,6 +1,5 @@
 import {
   Box,
-  Button,
   Card,
   Container,
   Flex,
@@ -8,17 +7,11 @@ import {
   Heading,
   Section,
   Text,
-  Badge,
 } from "@radix-ui/themes";
 import {
-  ArrowRight,
-  Code,
-  Terminal,
-  Globe,
-  Zap,
   Users,
+  Code,
   Trophy,
-  HandHeart,
   Calendar,
 } from "lucide-react";
 import Link from "next/link";
@@ -28,10 +21,9 @@ import {
   FloatingCodeWindow,
   AnimatedCard,
 } from "@/components/HeroAnimations";
-import { BentoGrid, BentoCard } from "@/components/BentoGrid";
 import { BackgroundBeamsWithCollision } from "@/components/ui/background-beams-with-collision";
 import { WobbleCard } from "@/components/ui/wobble-card";
-import { cn } from "@/lib/utils";
+import { RippleButton } from "@/components/ui/ripple-button";
 
 import { Spotlight } from "@/components/ui/Spotlight";
 
@@ -95,26 +87,14 @@ export default function Home() {
             >
               <Flex gap="4" mt="6" mb="8">
                 <Link href="/about">
-                  <Button
-                    size="4"
-                    variant="solid"
-                    highContrast
-                    radius="full"
-                    className="btn-primary"
-                  >
-                    Explore Events <ArrowRight size={18} />
-                  </Button>
+                  <RippleButton rippleColor="#ADD8E6" className="w-40 bg-indigo-600 text-white hover:bg-indigo-700 border-none">
+                    Explore Events
+                  </RippleButton>
                 </Link>
                 <Link href="/contact">
-                  <Button
-                    size="4"
-                    variant="outline"
-                    highContrast
-                    radius="full"
-                    className="btn-outline-dark"
-                  >
+                   <RippleButton rippleColor="#ffffff" className="w-40 bg-transparent border border-indigo-500/50 text-indigo-100 hover:bg-indigo-500/10">
                     Learn More
-                  </Button>
+                  </RippleButton>
                 </Link>
               </Flex>
             </MotionWrapper>

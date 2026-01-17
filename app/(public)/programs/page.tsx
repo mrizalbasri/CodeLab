@@ -25,6 +25,7 @@ import { getPrograms, Program } from "@/app/actions";
 import { SearchBar } from "@/components/SearchBar";
 import { Pagination } from "@/components/Pagination";
 import { useSearchAndPagination } from "@/lib/hooks/useSearchAndPagination";
+import { InteractiveHoverButton } from "@/components/ui/interactive-hover-button";
 
 export default function ProgramsPage() {
   const [programs, setPrograms] = useState<Program[]>([]);
@@ -321,13 +322,12 @@ export default function ProgramsPage() {
                         )}
                       </Flex>
 
-                      <Button
-                        variant="solid"
-                        radius="full"
-                        style={{ width: "100%", cursor: "pointer" }}
+                      <InteractiveHoverButton
+                        className="w-full"
+                        onClick={() => { /* Add logic/link if needed later */ }}
                       >
                         Daftar Sekarang
-                      </Button>
+                      </InteractiveHoverButton>
                     </Box>
                     </div>
                   </Card>

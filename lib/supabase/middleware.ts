@@ -35,9 +35,15 @@ export async function updateSession(request: NextRequest) {
 
   // IMPORTANT: Avoid writing any logic between createServerClient and
   // supabase.auth.getUser().
-  const {
-    data: { user },
-  } = await supabase.auth.getUser()
+  let user = null
+  try {
+    const { data } = await supabase.auth.getUser()
+    user = data.user
+  } catch (error) {
+    console.error('Supabase middleware error (ignoring for public routes):', error)
+    // If Supabase is unreachable, we treat the user as logged out.
+    // This prevents the entire site from going down due to auth verification failures on public pages.
+  }
 
   // Protect /admin routes
   if (request.nextUrl.pathname.startsWith('/admin') && !user) {
