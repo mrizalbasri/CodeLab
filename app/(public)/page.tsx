@@ -27,14 +27,21 @@ import {
   CodeBlock,
   FloatingCodeWindow,
   AnimatedCard,
-  AnimatedFeatureCard,
 } from "@/components/HeroAnimations";
+import { BentoGrid, BentoCard } from "@/components/BentoGrid";
+
+import { Spotlight } from "@/components/ui/Spotlight";
 
 export default function Home() {
   return (
     <Box>
       {/* Hero Section */}
-      <Box className="radial-gradient-bg hero-container">
+      <Box className="radial-gradient-bg hero-container relative overflow-hidden">
+        <Spotlight
+          className="-top-40 left-0 md:left-60 md:-top-20"
+          fill="var(--indigo-9)"
+        />
+        
         {/* Background Grid Pattern */}
         <Box className="bg-grid absolute-center z-0" />
 
@@ -222,67 +229,47 @@ export default function Home() {
             </Text>
           </Flex>
 
-          <Grid columns={{ initial: "1", sm: "2", md: "3" }} gap="6">
-            {[
-              {
-                icon: Users,
-                color: "indigo",
-                title: "Networking",
-                desc: "Connect with mentors, alumni, and peers.",
-              },
-              {
-                icon: HandHeart,
-                color: "pink",
-                title: "Mentorship",
-                desc: "Get guidance from experienced seniors.",
-              },
-              {
-                icon: Calendar,
-                color: "orange",
-                title: "Events",
-                desc: "Weekly workshops and tech talks.",
-              },
-              {
-                icon: Zap,
-                color: "yellow",
-                title: "Job Connect",
-                desc: "Exclusive internship opportunities.",
-              },
-              {
-                icon: Globe,
-                color: "blue",
-                title: "Real Projects",
-                desc: "Build apps for real clients.",
-              },
-              {
-                icon: Terminal,
-                color: "green",
-                title: "Hackathons",
-                desc: "Compete and win cash prizes.",
-              },
-            ].map((feature, i) => (
-              <AnimatedFeatureCard key={i}>
-                <Card size="3" className="card-feature">
-                  <Flex gap="4" direction="column">
-                    <Box
-                      className="icon-container-sm"
-                      style={{ backgroundColor: `var(--${feature.color}-3)` }}
-                    >
-                      <feature.icon size={28} color={`var(--${feature.color}-11)`} />
-                    </Box>
-                    <Box>
-                      <Heading size="4" mb="2">
-                        {feature.title}
-                      </Heading>
-                      <Text as="p" color="gray" size="2" className="text-body">
-                        {feature.desc}
-                      </Text>
-                    </Box>
-                  </Flex>
-                </Card>
-              </AnimatedFeatureCard>
-            ))}
-          </Grid>
+          <BentoGrid>
+            <BentoCard
+              title="Networking"
+              desc="Connect with mentors, alumni, and peers to build lifelong professional relationships."
+              icon={<Users size={28} color="var(--indigo-11)" />}
+              color="indigo"
+              colSpan={2}
+            />
+            <BentoCard
+              title="Mentorship"
+              desc="Get guidance from experienced seniors."
+              icon={<HandHeart size={28} color="var(--pink-11)" />}
+              color="pink"
+            />
+            <BentoCard
+              title="Real Projects"
+              desc="Build apps for real clients and add them to your portfolio."
+              icon={<Globe size={28} color="var(--blue-11)" />}
+              color="blue"
+              colSpan={2}
+            />
+            <BentoCard
+              title="Job Connect"
+              desc="Exclusive internship opportunities."
+              icon={<Zap size={28} color="var(--yellow-11)" />}
+              color="yellow"
+            />
+            <BentoCard
+              title="Weekly Events"
+              desc="Workshops and tech talks every week."
+              icon={<Calendar size={28} color="var(--orange-11)" />}
+              color="orange"
+            />
+            <BentoCard
+              title="Hackathons"
+              desc="Compete in national hackathons and win cash prizes together."
+              icon={<Terminal size={28} color="var(--green-11)" />}
+              color="green"
+              colSpan={2}
+            />
+          </BentoGrid>
         </Container>
       </Section>
     </Box>

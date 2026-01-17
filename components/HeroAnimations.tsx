@@ -4,6 +4,7 @@ import { Box, Text } from "@radix-ui/themes";
 import { motion, MotionProps } from "framer-motion";
 import { useEffect, useState, ReactNode } from "react";
 import { RadixColor } from "@/lib/types";
+import { TypingAnimation } from "@/components/ui/typing-animation";
 
 // Animated wrapper for motion effects
 interface WrapperProps extends MotionProps {
@@ -36,57 +37,51 @@ export function CodeBlock() {
     { text: "    </div>", indent: 4, color: "plum" },
     { text: "  );", indent: 2, color: "gray" },
     { text: "}", indent: 0, color: "pink" },
+    { text: "// Code your future...", indent: 0, color: "green" },
   ];
 
-  const [visibleLines, setVisibleLines] = useState(0);
+  const [key, setKey] = useState(0);
+  const TYPE_SPEED = 30; // Faster typing for code
+  const LINE_PAUSE = 150;
 
+  // Reset loop every ~8 seconds (duration + pause)
   useEffect(() => {
-    let timeout: NodeJS.Timeout;
+    let totalChars = 0;
+    lines.forEach(l => totalChars += l.text.length);
+    const duration = (totalChars * TYPE_SPEED) + (lines.length * LINE_PAUSE) + 3000;
+    
+    const interval = setInterval(() => {
+      setKey((prev) => prev + 1);
+    }, duration);
 
-    if (visibleLines < lines.length) {
-      timeout = setTimeout(() => {
-        setVisibleLines((prev) => prev + 1);
-      }, 400);
-    } else {
-      timeout = setTimeout(() => {
-        setVisibleLines(0);
-      }, 3000);
-    }
+    return () => clearInterval(interval);
+  }, []);
 
-    return () => clearTimeout(timeout);
-  }, [visibleLines, lines.length]);
+  let cumulativeDelay = 0;
 
   return (
-    <Box className="code-content">
-      {lines.map((line, i) => (
-        <motion.div
-          key={i}
-          initial={{ opacity: 0, x: -10 }}
-          animate={{
-            opacity: i < visibleLines ? 1 : 0,
-            x: i < visibleLines ? 0 : -10,
-          }}
-          transition={{ duration: 0.2 }}
-        >
-          <div style={{ paddingLeft: line.indent * 8 }}>
+    <Box className="code-content" key={key}>
+      {lines.map((line, i) => {
+        const thisDelay = cumulativeDelay;
+        const thisDuration = line.text.length * TYPE_SPEED;
+        cumulativeDelay += thisDuration + LINE_PAUSE;
+
+        return (
+          <div key={i} style={{ paddingLeft: line.indent * 8, minHeight: '1.5em' }}>
             <Text color={line.color} style={{ fontFamily: "monospace" }}>
-              {line.text}
+              <TypingAnimation
+                duration={TYPE_SPEED}
+                delay={thisDelay}
+                startOnView={false}
+                showCursor={false}
+                className="leading-normal tracking-normal"
+              >
+                {line.text}
+              </TypingAnimation>
             </Text>
           </div>
-        </motion.div>
-      ))}
-      {visibleLines >= lines.length && (
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          style={{ paddingLeft: 16, marginTop: 4 }}
-        >
-          <Text color="green" style={{ fontFamily: "monospace" }}>
-            { "// Code your future..." }
-          </Text>
-          <span className="animate-pulse-cursor" />
-        </motion.div>
-      )}
+        );
+      })}
     </Box>
   );
 }

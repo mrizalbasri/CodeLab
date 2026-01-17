@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Suspense } from "react";
-import { Inter, Roboto_Mono } from "next/font/google";
+import { Outfit, JetBrains_Mono } from "next/font/google";
 import "@radix-ui/themes/styles.css";
 import "./globals.css";
 import { Theme } from "@radix-ui/themes";
@@ -8,14 +8,14 @@ import { ThemeProvider } from "next-themes";
 import { Toaster } from "sonner";
 import { Analytics } from "@/components/Analytics";
 
-const inter = Inter({
-  variable: "--font-inter",
+const outfit = Outfit({
+  variable: "--font-outfit",
   subsets: ["latin"],
   display: "swap",
 });
 
-const robotoMono = Roboto_Mono({
-  variable: "--font-roboto-mono",
+const jetbrainsMono = JetBrains_Mono({
+  variable: "--font-jetbrains-mono",
   subsets: ["latin"],
   display: "swap",
 });
@@ -38,7 +38,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${inter.variable} ${robotoMono.variable} antialiased`}>
+      <body className={`${outfit.variable} ${jetbrainsMono.variable} antialiased`}>
         <ThemeProvider attribute="class">
           <Theme accentColor="indigo" grayColor="slate" radius="medium" scaling="100%">
             {children}
