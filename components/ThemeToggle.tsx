@@ -1,12 +1,9 @@
 "use client";
 
-import { IconButton } from "@radix-ui/themes";
-import { Moon, Sun } from "lucide-react";
-import { useTheme } from "next-themes";
+import { AnimatedThemeToggler } from "@/components/ui/animated-theme-toggler";
 import { useEffect, useState } from "react";
 
 export function ThemeToggle() {
-    const { theme, setTheme } = useTheme();
     const [mounted, setMounted] = useState(false);
 
     // Avoid hydration mismatch
@@ -14,13 +11,6 @@ export function ThemeToggle() {
     if (!mounted) return null;
 
     return (
-        <IconButton
-            variant="ghost"
-            color="gray"
-            onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-            style={{ cursor: 'pointer' }}
-        >
-            {theme === 'dark' ? <Moon size={20} /> : <Sun size={20} />}
-        </IconButton>
+        <AnimatedThemeToggler className="rounded-full p-2 hover:bg-[var(--gray-a3)] transition-colors" />
     );
 }
