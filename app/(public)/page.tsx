@@ -30,6 +30,7 @@ import {
 } from "@/components/HeroAnimations";
 import { BentoGrid, BentoCard } from "@/components/BentoGrid";
 import { BackgroundBeamsWithCollision } from "@/components/ui/background-beams-with-collision";
+import { WobbleCard } from "@/components/ui/wobble-card";
 import { cn } from "@/lib/utils";
 
 import { Spotlight } from "@/components/ui/Spotlight";
@@ -47,25 +48,6 @@ export default function Home() {
         <BackgroundBeamsWithCollision className="!h-auto min-h-[800px] w-full bg-transparent">
           <Container size="3" className="relative z-1">
           <Flex direction="column" align="center" gap="6">
-            <MotionWrapper
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8 }}
-            >
-              <Badge
-                size="3"
-                variant="surface"
-                color="indigo"
-                radius="full"
-                style={{
-                  backdropFilter: "blur(10px)",
-                  border: "1px solid var(--indigo-a5)",
-                  marginBottom: "1rem",
-                }}
-              >
-                🚀 The Future of Tech in Riau starts here.
-              </Badge>
-            </MotionWrapper>
 
             <MotionWrapper
               initial={{ opacity: 0, scale: 0.9 }}
@@ -230,47 +212,50 @@ export default function Home() {
             </Text>
           </Flex>
 
-          <BentoGrid>
-            <BentoCard
-              title="Networking"
-              desc="Connect with mentors, alumni, and peers to build lifelong professional relationships."
-              icon={<Users size={28} color="var(--indigo-11)" />}
-              color="indigo"
-              colSpan={2}
-            />
-            <BentoCard
-              title="Mentorship"
-              desc="Get guidance from experienced seniors."
-              icon={<HandHeart size={28} color="var(--pink-11)" />}
-              color="pink"
-            />
-            <BentoCard
-              title="Real Projects"
-              desc="Build apps for real clients and add them to your portfolio."
-              icon={<Globe size={28} color="var(--blue-11)" />}
-              color="blue"
-              colSpan={2}
-            />
-            <BentoCard
-              title="Job Connect"
-              desc="Exclusive internship opportunities."
-              icon={<Zap size={28} color="var(--yellow-11)" />}
-              color="yellow"
-            />
-            <BentoCard
-              title="Weekly Events"
-              desc="Workshops and tech talks every week."
-              icon={<Calendar size={28} color="var(--orange-11)" />}
-              color="orange"
-            />
-            <BentoCard
-              title="Hackathons"
-              desc="Compete in national hackathons and win cash prizes together."
-              icon={<Terminal size={28} color="var(--green-11)" />}
-              color="green"
-              colSpan={2}
-            />
-          </BentoGrid>
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 max-w-7xl mx-auto w-full">
+            <WobbleCard
+              containerClassName="col-span-1 lg:col-span-2 h-full bg-indigo-800 min-h-[500px] lg:min-h-[300px]"
+              className=""
+            >
+              <div className="max-w-xs">
+                <h2 className="text-left text-balance text-base md:text-xl lg:text-3xl font-semibold tracking-[-0.015em] text-white">
+                  Networking & Mentorship
+                </h2>
+                <p className="mt-4 text-left text-base/6 text-neutral-200">
+                  Connect with alumni, industry mentors, and peers. Build lifelong professional relationships and get guidance from experienced seniors.
+                </p>
+              </div>
+              <Box className="absolute -right-4 lg:-right-[10%] -bottom-10 object-contain rounded-2xl">
+                 <Users size={200} className="text-indigo-400 opacity-50" />
+              </Box>
+            </WobbleCard>
+            
+            <WobbleCard containerClassName="col-span-1 min-h-[300px] bg-pink-800">
+              <h2 className="max-w-80 text-left text-balance text-base md:text-xl lg:text-3xl font-semibold tracking-[-0.015em] text-white">
+                Weekly Workshops
+              </h2>
+              <p className="mt-4 max-w-[26rem] text-left text-base/6 text-neutral-200">
+                Sharpen your skills with regular tech talks and hands-on coding sessions.
+              </p>
+               <Box className="absolute -right-2 -bottom-2">
+                 <Calendar size={120} className="text-pink-400 opacity-50" />
+              </Box>
+            </WobbleCard>
+            
+            <WobbleCard containerClassName="col-span-1 lg:col-span-3 bg-blue-900 min-h-[500px] lg:min-h-[600px] xl:min-h-[300px]">
+              <div className="max-w-sm">
+                <h2 className="max-w-sm md:max-w-lg text-left text-balance text-base md:text-xl lg:text-3xl font-semibold tracking-[-0.015em] text-white">
+                   Build Real-World Projects
+                </h2>
+                <p className="mt-4 max-w-[26rem] text-left text-base/6 text-neutral-200">
+                  Don&apos;t just learn theory. Build apps for real clients, compete in national hackathons, and launch your career with exclusive internship opportunities.
+                </p>
+              </div>
+               <Box className="absolute -right-10 md:-right-[10%] lg:-right-[5%] -bottom-10 object-contain rounded-2xl">
+                 <Trophy size={300} className="text-blue-400 opacity-30" />
+              </Box>
+            </WobbleCard>
+          </div>
         </Container>
       </Section>
     </Box>
