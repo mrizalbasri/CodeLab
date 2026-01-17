@@ -8,12 +8,7 @@ import {
   Section,
   Text,
 } from "@radix-ui/themes";
-import {
-  Users,
-  Code,
-  Trophy,
-  Calendar,
-} from "lucide-react";
+import { Users, Code, Trophy, Calendar } from "lucide-react";
 import Link from "next/link";
 import {
   MotionWrapper,
@@ -36,85 +31,88 @@ export default function Home() {
           className="-top-40 left-0 md:left-60 md:-top-20"
           fill="var(--indigo-9)"
         />
-        
+
         <BackgroundBeamsWithCollision className="!h-auto min-h-[800px] w-full bg-transparent">
           <Container size="3" className="relative z-1">
-          <Flex direction="column" align="center" gap="6">
+            <Flex direction="column" align="center" gap="6">
+              <MotionWrapper
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.8, delay: 0.2 }}
+                style={{ textAlign: "center" }}
+              >
+                <Heading size="9" align="center" className="text-heading">
+                  <Text className="gradient-text">PU PEKANBARU CODE LAB</Text>
+                </Heading>
+                <Heading
+                  size="9"
+                  align="center"
+                  className="text-heading"
+                  style={{ marginTop: "-10px" }}
+                >
+                  (PUPCL)
+                </Heading>
+              </MotionWrapper>
 
-            <MotionWrapper
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.8, delay: 0.2 }}
-              style={{ textAlign: "center" }}
-            >
-              <Heading size="9" align="center" className="text-heading">
-                <Text className="gradient-text">
-                  PU PEKANBARU CODE LAB
+              <MotionWrapper
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 1, delay: 0.5 }}
+              >
+                <Text
+                  size="5"
+                  align="center"
+                  color="gray"
+                  className="max-w-content text-body"
+                  style={{ marginTop: "20px" }}
+                >
+                  Join the most active student tech community. Build real-world
+                  projects, connect with industry mentors, and accelerate your
+                  career.
                 </Text>
-              </Heading>
-              <Heading
-                size="9"
-                align="center"
-                className="text-heading"
-                style={{ marginTop: "-10px" }}
+              </MotionWrapper>
+
+              <MotionWrapper
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.8 }}
               >
-                (PUPCL)
-              </Heading>
-            </MotionWrapper>
-
-            <MotionWrapper
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 1, delay: 0.5 }}
-            >
-              <Text
-                size="5"
-                align="center"
-                color="gray"
-                className="max-w-content text-body"
-                style={{ marginTop: "20px" }}
-              >
-                Join the most active student tech community. Build real-world
-                projects, connect with industry mentors, and accelerate your
-                career.
-              </Text>
-            </MotionWrapper>
-
-            <MotionWrapper
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.8 }}
-            >
-              <Flex gap="4" mt="6" mb="8">
-                <Link href="/about">
-                  <RippleButton rippleColor="#ADD8E6" className="w-40 bg-indigo-600 text-white hover:bg-indigo-700 border-none">
-                    Explore Events
-                  </RippleButton>
-                </Link>
-                <Link href="/contact">
-                   <RippleButton rippleColor="#ffffff" className="w-40 bg-transparent border border-indigo-500/50 text-indigo-100 hover:bg-indigo-500/10">
-                    Learn More
-                  </RippleButton>
-                </Link>
-              </Flex>
-            </MotionWrapper>
-
-            {/* Visual Content (Code Mockup) */}
-            <FloatingCodeWindow>
-              <Box mt="8" mb="9" className="code-window">
-                {/* Window Controls */}
-                <Flex gap="2" className="code-window-header">
-                  <Box className="window-control window-control-red" />
-                  <Box className="window-control window-control-yellow" />
-                  <Box className="window-control window-control-green" />
+                <Flex gap="4" mt="6" mb="8">
+                  <Link href="/about">
+                    <RippleButton
+                      rippleColor="#ADD8E6"
+                      className="w-40 bg-indigo-600 dark:bg-indigo-600 text-white hover:bg-indigo-700 dark:hover:bg-indigo-700 border-none"
+                    >
+                      Explore Events
+                    </RippleButton>
+                  </Link>
+                  <Link href="/contact">
+                    <RippleButton
+                      rippleColor="#ffffff"
+                      className="w-40 bg-transparent dark:bg-indigo-500/20 border border-indigo-500/50 dark:border-indigo-300/80 text-indigo-600 dark:text-white hover:bg-indigo-500/10 dark:hover:bg-indigo-500/30"
+                    >
+                      Learn More
+                    </RippleButton>
+                  </Link>
                 </Flex>
+              </MotionWrapper>
 
-                {/* Animated Code Content */}
-                <CodeBlock />
-              </Box>
-            </FloatingCodeWindow>
-          </Flex>
-        </Container>
+              {/* Visual Content (Code Mockup) */}
+              <FloatingCodeWindow>
+                <Box mt="8" mb="9" className="code-window">
+                  {/* Window Controls */}
+                  <Flex gap="2" className="code-window-header">
+                    <Box className="window-control window-control-red" />
+                    <Box className="window-control window-control-yellow" />
+                    <Box className="window-control window-control-green" />
+                  </Flex>
+
+                  {/* Animated Code Content */}
+                  <CodeBlock />
+                </Box>
+              </FloatingCodeWindow>
+            </Flex>
+          </Container>
         </BackgroundBeamsWithCollision>
       </Box>
 
@@ -125,7 +123,10 @@ export default function Home() {
             <AnimatedCard>
               <Card className="card-elevated">
                 <Flex align="center" gap="4" p="2">
-                  <Box className="icon-container" style={{ backgroundColor: "var(--indigo-3)" }}>
+                  <Box
+                    className="icon-container"
+                    style={{ backgroundColor: "var(--indigo-3)" }}
+                  >
                     <Users size={24} color="var(--indigo-11)" />
                   </Box>
                   <Box>
@@ -143,7 +144,10 @@ export default function Home() {
             <AnimatedCard>
               <Card className="card-elevated">
                 <Flex align="center" gap="4" p="2">
-                  <Box className="icon-container" style={{ backgroundColor: "var(--plum-3)" }}>
+                  <Box
+                    className="icon-container"
+                    style={{ backgroundColor: "var(--plum-3)" }}
+                  >
                     <Code size={24} color="var(--plum-11)" />
                   </Box>
                   <Box>
@@ -161,7 +165,10 @@ export default function Home() {
             <AnimatedCard>
               <Card className="card-elevated">
                 <Flex align="center" gap="4" p="2">
-                  <Box className="icon-container" style={{ backgroundColor: "var(--teal-3)" }}>
+                  <Box
+                    className="icon-container"
+                    style={{ backgroundColor: "var(--teal-3)" }}
+                  >
                     <Trophy size={24} color="var(--teal-11)" />
                   </Box>
                   <Box>
@@ -186,7 +193,12 @@ export default function Home() {
             <Heading size="8" align="center" weight="bold">
               Why Join PUPCL?
             </Heading>
-            <Text color="gray" size="4" align="center" className="max-w-content">
+            <Text
+              color="gray"
+              size="4"
+              align="center"
+              className="max-w-content"
+            >
               We provide the ecosystem you need to go from zero to hero in the
               tech industry.
             </Text>
@@ -202,37 +214,42 @@ export default function Home() {
                   Networking & Mentorship
                 </h2>
                 <p className="mt-4 text-left text-base/6 text-neutral-200">
-                  Connect with alumni, industry mentors, and peers. Build lifelong professional relationships and get guidance from experienced seniors.
+                  Connect with alumni, industry mentors, and peers. Build
+                  lifelong professional relationships and get guidance from
+                  experienced seniors.
                 </p>
               </div>
               <Box className="absolute -right-4 lg:-right-[10%] -bottom-10 object-contain rounded-2xl">
-                 <Users size={200} className="text-indigo-400 opacity-50" />
+                <Users size={200} className="text-indigo-400 opacity-50" />
               </Box>
             </WobbleCard>
-            
+
             <WobbleCard containerClassName="col-span-1 min-h-[300px] bg-pink-800">
               <h2 className="max-w-80 text-left text-balance text-base md:text-xl lg:text-3xl font-semibold tracking-[-0.015em] text-white">
                 Weekly Workshops
               </h2>
               <p className="mt-4 max-w-[26rem] text-left text-base/6 text-neutral-200">
-                Sharpen your skills with regular tech talks and hands-on coding sessions.
+                Sharpen your skills with regular tech talks and hands-on coding
+                sessions.
               </p>
-               <Box className="absolute -right-2 -bottom-2">
-                 <Calendar size={120} className="text-pink-400 opacity-50" />
+              <Box className="absolute -right-2 -bottom-2">
+                <Calendar size={120} className="text-pink-400 opacity-50" />
               </Box>
             </WobbleCard>
-            
+
             <WobbleCard containerClassName="col-span-1 lg:col-span-3 bg-blue-900 min-h-[500px] lg:min-h-[600px] xl:min-h-[300px]">
               <div className="max-w-sm">
                 <h2 className="max-w-sm md:max-w-lg text-left text-balance text-base md:text-xl lg:text-3xl font-semibold tracking-[-0.015em] text-white">
-                   Build Real-World Projects
+                  Build Real-World Projects
                 </h2>
                 <p className="mt-4 max-w-[26rem] text-left text-base/6 text-neutral-200">
-                  Don&apos;t just learn theory. Build apps for real clients, compete in national hackathons, and launch your career with exclusive internship opportunities.
+                  Don&apos;t just learn theory. Build apps for real clients,
+                  compete in national hackathons, and launch your career with
+                  exclusive internship opportunities.
                 </p>
               </div>
-               <Box className="absolute -right-10 md:-right-[10%] lg:-right-[5%] -bottom-10 object-contain rounded-2xl">
-                 <Trophy size={300} className="text-blue-400 opacity-30" />
+              <Box className="absolute -right-10 md:-right-[10%] lg:-right-[5%] -bottom-10 object-contain rounded-2xl">
+                <Trophy size={300} className="text-blue-400 opacity-30" />
               </Box>
             </WobbleCard>
           </div>

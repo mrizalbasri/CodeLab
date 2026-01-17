@@ -1,7 +1,5 @@
 "use client";
 
-
-
 import {
   Box,
   Card,
@@ -20,7 +18,7 @@ import { TechStackBeam } from "@/components/TechStackBeam";
 import { InteractiveHoverButton } from "@/components/ui/interactive-hover-button";
 import { GlowingEffect } from "@/components/ui/glowing-effect";
 import { LinkPreview } from "@/components/ui/link-preview";
-
+import { BackgroundLines } from "@/components/ui/background-lines";
 
 import { getMembers, Member } from "@/app/actions";
 import { useEffect, useState } from "react";
@@ -72,8 +70,6 @@ export default function AboutPage() {
     fetchData();
   }, []);
 
-
-
   return (
     <Box>
       {/* Header Section */}
@@ -88,9 +84,7 @@ export default function AboutPage() {
           overflow: "hidden",
         }}
       >
-        <Box
-          className="bg-grid absolute inset-0 z-0 pointer-events-none"
-        />
+        <Box className="bg-grid absolute inset-0 z-0 pointer-events-none" />
         <Container size="4" style={{ position: "relative", zIndex: 1 }}>
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -212,17 +206,27 @@ export default function AboutPage() {
                 <div className="relative flex h-full flex-col justify-between gap-6 overflow-hidden rounded-xl border-0.75 p-6 dark:shadow-[0px_0px_27px_0px_#2D2D2D] md:p-6 bg-white dark:bg-black/80">
                   <div className="relative flex flex-1 flex-col justify-between gap-3">
                     <div className="w-fit rounded-lg border border-gray-600/10 p-2 ">
-                       <Heading size="6" color="indigo">Visi</Heading>
+                      <Heading size="6" color="indigo">
+                        Visi
+                      </Heading>
                     </div>
                     <div className="space-y-3">
-                      <Heading size="3" className="font-bold text-gray-800 dark:text-gray-100">
+                      <Heading
+                        size="3"
+                        className="font-bold text-gray-800 dark:text-gray-100"
+                      >
                         Menjadi Pusat Keunggulan Teknologi
                       </Heading>
-                      <Text as="p" size="3" color="gray" style={{ lineHeight: 1.6 }}>
-                        Menjadi komunitas belajar pemrograman di President University
-                        Pekanbaru yang menginspirasi dan mendukung mahasiswa untuk
-                        tumbuh bersama, mengasah kemampuan coding, dan berinovasi di
-                        bidang teknologi.
+                      <Text
+                        as="p"
+                        size="3"
+                        color="gray"
+                        style={{ lineHeight: 1.6 }}
+                      >
+                        Menjadi komunitas belajar pemrograman di President
+                        University Pekanbaru yang menginspirasi dan mendukung
+                        mahasiswa untuk tumbuh bersama, mengasah kemampuan
+                        coding, dan berinovasi di bidang teknologi.
                       </Text>
                     </div>
                   </div>
@@ -243,7 +247,9 @@ export default function AboutPage() {
                 <div className="relative flex h-full flex-col justify-between gap-6 overflow-hidden rounded-xl border-0.75 p-6 dark:shadow-[0px_0px_27px_0px_#2D2D2D] md:p-6 bg-white dark:bg-black/80">
                   <div className="relative flex flex-1 flex-col justify-between gap-3">
                     <div className="w-fit rounded-lg border border-gray-600/10 p-2 ">
-                      <Heading size="6" color="plum">Misi</Heading>
+                      <Heading size="6" color="plum">
+                        Misi
+                      </Heading>
                     </div>
                     <Flex direction="column" gap="2">
                       {[
@@ -251,10 +257,28 @@ export default function AboutPage() {
                         "Membangun pemecah masalah tangguh dengan keterampilan teknis.",
                         "Mendorong anggota aktif membangun portofolio.",
                         "Menumbuhkan semangat kolaborasi dan inovasi tim.",
-                        "Mendorong partisipasi dalam perlombaan teknologi."
+                        "Mendorong partisipasi dalam perlombaan teknologi.",
                       ].map((item, i) => (
-                        <Text key={i} as="p" size="2" color="gray" style={{ lineHeight: 1.5, display: 'flex', gap: '8px' }}>
-                          <span style={{ fontWeight: 'bold', color: 'var(--plum-9)' }}>{i + 1}.</span> {item}
+                        <Text
+                          key={i}
+                          as="p"
+                          size="2"
+                          color="gray"
+                          style={{
+                            lineHeight: 1.5,
+                            display: "flex",
+                            gap: "8px",
+                          }}
+                        >
+                          <span
+                            style={{
+                              fontWeight: "bold",
+                              color: "var(--plum-9)",
+                            }}
+                          >
+                            {i + 1}.
+                          </span>{" "}
+                          {item}
                         </Text>
                       ))}
                     </Flex>
@@ -318,7 +342,13 @@ export default function AboutPage() {
           <Box mt="9">
             <Grid columns={{ initial: "1", md: "2" }} gap="9" align="center">
               <Box>
-                <Badge color="cyan" size="2" radius="full" variant="soft" mb="2">
+                <Badge
+                  color="cyan"
+                  size="2"
+                  radius="full"
+                  variant="soft"
+                  mb="2"
+                >
                   Teknologi & Tools
                 </Badge>
                 <Heading size="8" mb="4" color="gray" highContrast>
@@ -330,41 +360,58 @@ export default function AboutPage() {
                   color="gray"
                   style={{ lineHeight: 1.8, marginBottom: "1.5rem" }}
                 >
-                  Di CodeLab, kami tidak membatasi diri pada satu teknologi. Kami
-                  mendorong anggota untuk mengeksplorasi berbagai bahasa,
+                  Di CodeLab, kami tidak membatasi diri pada satu teknologi.
+                  Kami mendorong anggota untuk mengeksplorasi berbagai bahasa,
                   framework, dan tools industri terkini untuk membangun solusi
                   yang tangguh dan relevan.
                 </Text>
-                
+
                 <Grid columns="2" gap="4">
-                   <Box>
-                      <Heading size="3" mb="2" color="indigo">Core</Heading>
-                      <Text size="2" color="gray">HTML, CSS, JavaScript, TypeScript, Java, Python</Text>
-                   </Box>
-                   <Box>
-                      <Heading size="3" mb="2" color="blue">Frameworks</Heading>
-                      <Text size="2" color="gray">React, Next.js, Laravel, Flutter, Tailwind</Text>
-                   </Box>
+                  <Box>
+                    <Heading size="3" mb="2" color="indigo">
+                      Core
+                    </Heading>
+                    <Text size="2" color="gray">
+                      HTML, CSS, JavaScript, TypeScript, Java, Python
+                    </Text>
+                  </Box>
+                  <Box>
+                    <Heading size="3" mb="2" color="blue">
+                      Frameworks
+                    </Heading>
+                    <Text size="2" color="gray">
+                      React, Next.js, Laravel, Flutter, Tailwind
+                    </Text>
+                  </Box>
                 </Grid>
               </Box>
 
               <Box style={{ position: "relative" }}>
-                 <Card 
-                    size="3" 
-                    style={{ 
-                        background: "var(--gray-2)", 
-                        overflow: "hidden",
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                        aspectRatio: "1/1",
-                        position: 'relative',
-                        padding: 0
+                <Card
+                  size="3"
+                  style={{
+                    background: "var(--gray-2)",
+                    overflow: "hidden",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    aspectRatio: "1/1",
+                    position: "relative",
+                    padding: 0,
+                  }}
+                >
+                  <Box
+                    style={{
+                      inset: 0,
+                      position: "absolute",
+                      opacity: 0.5,
+                      pointerEvents: "none",
+                      background:
+                        "radial-gradient(circle at center, var(--indigo-3), transparent 70%)",
                     }}
-                 >
-                    <Box style={{ inset: 0, position: "absolute", opacity: 0.5, pointerEvents: "none", background: "radial-gradient(circle at center, var(--indigo-3), transparent 70%)" }} />
-                    <TechStackBeam />
-                 </Card>
+                  />
+                  <TechStackBeam />
+                </Card>
               </Box>
             </Grid>
           </Box>
@@ -378,16 +425,31 @@ export default function AboutPage() {
               <Heading size="8" align="center">
                 Club Structure
               </Heading>
-              <Text align="center" color="gray" size="3" style={{ maxWidth: 600 }}>
-                Meet the dedicated individuals who lead and drive our community forward
+              <Text
+                align="center"
+                color="gray"
+                size="3"
+                style={{ maxWidth: 600 }}
+              >
+                Meet the dedicated individuals who lead and drive our community
+                forward
               </Text>
-
-
             </Flex>
 
-            <Flex direction="column" gap="9" align="center" style={{ marginTop: "2rem" }}>
+            <Flex
+              direction="column"
+              gap="9"
+              align="center"
+              style={{ marginTop: "2rem" }}
+            >
               {/* Ketua - Top Level */}
-              <Box style={{ width: "100%", maxWidth: "1200px", marginBottom: "3rem" }}>
+              <Box
+                style={{
+                  width: "100%",
+                  maxWidth: "1200px",
+                  marginBottom: "3rem",
+                }}
+              >
                 <Flex justify="center" mb="6">
                   <Badge color="indigo" size="3" radius="full" variant="soft">
                     Leadership
@@ -436,7 +498,7 @@ export default function AboutPage() {
                             style={{
                               height: 120,
                               background: `linear-gradient(135deg, ${getRoleLightColor(
-                                member.color
+                                member.color,
                               )} 0%, ${getRoleColor(member.color)} 100%)`,
                               position: "relative",
                               overflow: "hidden",
@@ -493,7 +555,13 @@ export default function AboutPage() {
               </Box>
 
               {/* Bendahara & Sekretaris - Second Level */}
-              <Box style={{ width: "100%", maxWidth: "1200px", marginBottom: "3rem" }}>
+              <Box
+                style={{
+                  width: "100%",
+                  maxWidth: "1200px",
+                  marginBottom: "3rem",
+                }}
+              >
                 <Flex justify="center" mb="6">
                   <Badge color="teal" size="3" radius="full" variant="soft">
                     Core Team
@@ -512,7 +580,7 @@ export default function AboutPage() {
                         m.role.toLowerCase().includes("bendahara") ||
                         m.role.toLowerCase().includes("sekretaris") ||
                         m.role.toLowerCase().includes("treasurer") ||
-                        m.role.toLowerCase().includes("secretary")
+                        m.role.toLowerCase().includes("secretary"),
                     )
                     .map((member, index) => (
                       <motion.div
@@ -541,7 +609,7 @@ export default function AboutPage() {
                             style={{
                               height: 110,
                               background: `linear-gradient(135deg, ${getRoleLightColor(
-                                member.color
+                                member.color,
                               )} 0%, ${getRoleColor(member.color)} 100%)`,
                               position: "relative",
                               overflow: "hidden",
@@ -598,14 +666,21 @@ export default function AboutPage() {
               </Box>
 
               {/* Divisi Media & Creative */}
-              <Box style={{ width: "100%", maxWidth: "1200px", marginBottom: "3rem" }}>
+              <Box
+                style={{
+                  width: "100%",
+                  maxWidth: "1200px",
+                  marginBottom: "3rem",
+                }}
+              >
                 <Flex direction="column" align="center" mb="8" gap="3">
                   <Badge color="pink" size="3" radius="full" variant="soft">
                     Media & Creative
                   </Badge>
                   <Text align="center" color="gray" style={{ maxWidth: 600 }}>
-                    Responsible for visual branding, creative content production,
-                    and social media management to strengthen community identity.
+                    Responsible for visual branding, creative content
+                    production, and social media management to strengthen
+                    community identity.
                   </Text>
                 </Flex>
                 <Box
@@ -618,9 +693,9 @@ export default function AboutPage() {
                   {members
                     .filter((m) => m.role.toLowerCase().includes("media"))
                     .sort((a, b) => {
-                       const aIsHead = a.role.toLowerCase().includes("head");
-                       const bIsHead = b.role.toLowerCase().includes("head");
-                       return aIsHead === bIsHead ? 0 : aIsHead ? -1 : 1;
+                      const aIsHead = a.role.toLowerCase().includes("head");
+                      const bIsHead = b.role.toLowerCase().includes("head");
+                      return aIsHead === bIsHead ? 0 : aIsHead ? -1 : 1;
                     })
                     .map((member, index) => (
                       <motion.div
@@ -635,7 +710,7 @@ export default function AboutPage() {
                           stiffness: 100,
                         }}
                       >
-                         <Card
+                        <Card
                           style={{
                             padding: 0,
                             overflow: "hidden",
@@ -650,7 +725,7 @@ export default function AboutPage() {
                             style={{
                               height: 110,
                               background: `linear-gradient(135deg, ${getRoleLightColor(
-                                member.color
+                                member.color,
                               )} 0%, ${getRoleColor(member.color)} 100%)`,
                               position: "relative",
                               overflow: "hidden",
@@ -707,14 +782,21 @@ export default function AboutPage() {
               </Box>
 
               {/* Divisi Outreach & Influence */}
-              <Box style={{ width: "100%", maxWidth: "1200px", marginBottom: "3rem" }}>
+              <Box
+                style={{
+                  width: "100%",
+                  maxWidth: "1200px",
+                  marginBottom: "3rem",
+                }}
+              >
                 <Flex direction="column" align="center" mb="8" gap="3">
                   <Badge color="orange" size="3" radius="full" variant="soft">
                     Outreach & Influence
                   </Badge>
                   <Text align="center" color="gray" style={{ maxWidth: 600 }}>
-                    Building external relationships, forging strategic partnerships,
-                    and expanding community reach both on and off campus.
+                    Building external relationships, forging strategic
+                    partnerships, and expanding community reach both on and off
+                    campus.
                   </Text>
                 </Flex>
                 <Box
@@ -725,11 +807,15 @@ export default function AboutPage() {
                   }}
                 >
                   {members
-                    .filter((m) => m.role.toLowerCase().includes("outreach") || m.role.toLowerCase().includes("public relation"))
+                    .filter(
+                      (m) =>
+                        m.role.toLowerCase().includes("outreach") ||
+                        m.role.toLowerCase().includes("public relation"),
+                    )
                     .sort((a, b) => {
-                       const aIsHead = a.role.toLowerCase().includes("head");
-                       const bIsHead = b.role.toLowerCase().includes("head");
-                       return aIsHead === bIsHead ? 0 : aIsHead ? -1 : 1;
+                      const aIsHead = a.role.toLowerCase().includes("head");
+                      const bIsHead = b.role.toLowerCase().includes("head");
+                      return aIsHead === bIsHead ? 0 : aIsHead ? -1 : 1;
                     })
                     .map((member, index) => (
                       <motion.div
@@ -744,7 +830,7 @@ export default function AboutPage() {
                           stiffness: 100,
                         }}
                       >
-                         <Card
+                        <Card
                           style={{
                             padding: 0,
                             overflow: "hidden",
@@ -759,7 +845,7 @@ export default function AboutPage() {
                             style={{
                               height: 110,
                               background: `linear-gradient(135deg, ${getRoleLightColor(
-                                member.color
+                                member.color,
                               )} 0%, ${getRoleColor(member.color)} 100%)`,
                               position: "relative",
                               overflow: "hidden",
@@ -822,8 +908,9 @@ export default function AboutPage() {
                     Research & Development
                   </Badge>
                   <Text align="center" color="gray" style={{ maxWidth: 600 }}>
-                    Focused on curriculum development, latest technology research,
-                    and organizing relevant technical education programs.
+                    Focused on curriculum development, latest technology
+                    research, and organizing relevant technical education
+                    programs.
                   </Text>
                 </Flex>
                 <Box
@@ -834,11 +921,11 @@ export default function AboutPage() {
                   }}
                 >
                   {members
-                     .filter((m) => m.role.toLowerCase().includes("research"))
-                     .sort((a, b) => {
-                       const aIsHead = a.role.toLowerCase().includes("head");
-                       const bIsHead = b.role.toLowerCase().includes("head");
-                       return aIsHead === bIsHead ? 0 : aIsHead ? -1 : 1;
+                    .filter((m) => m.role.toLowerCase().includes("research"))
+                    .sort((a, b) => {
+                      const aIsHead = a.role.toLowerCase().includes("head");
+                      const bIsHead = b.role.toLowerCase().includes("head");
+                      return aIsHead === bIsHead ? 0 : aIsHead ? -1 : 1;
                     })
                     .map((member, index) => (
                       <motion.div
@@ -853,7 +940,7 @@ export default function AboutPage() {
                           stiffness: 100,
                         }}
                       >
-                         <Card
+                        <Card
                           style={{
                             padding: 0,
                             overflow: "hidden",
@@ -868,7 +955,7 @@ export default function AboutPage() {
                             style={{
                               height: 110,
                               background: `linear-gradient(135deg, ${getRoleLightColor(
-                                member.color
+                                member.color,
                               )} 0%, ${getRoleColor(member.color)} 100%)`,
                               position: "relative",
                               overflow: "hidden",
@@ -925,39 +1012,36 @@ export default function AboutPage() {
               </Box>
             </Flex>
           </Section>
-
         </Flex>
       </Container>
 
-      {/* Full Width CTA Section */}
-      <Box style={{ position: "relative", width: "100%", overflow: "hidden" }}>
-        <Box
-          style={{
-             background: "linear-gradient(135deg, var(--indigo-3), var(--plum-3))",
-             width: "100%",
-             padding: "80px 0",
-             position: "relative"
-          }}
-        >
-          <Box style={{ position: "absolute", top: -100, right: -100, opacity: 0.1 }}>
-             <Meteors number={30} />
-          </Box>
-
-          <Container size="3">
-             <Flex direction="column" align="center" gap="6">
-                <Heading size="9" align="center" highContrast style={{color: 'white' }}>
-                  Siap untuk Berinovasi Bersama Kami?
-                </Heading>
-                <Text align="center" size="5" style={{ maxWidth: 600, color: "rgba(255,255,255,0.8)" }}>
-                  Jangan lewatkan kesempatan untuk belajar, berkarya, dan berkembang bersama komunitas pemuda visioner di President University Pekanbaru.
-                </Text>
-                <InteractiveHoverButton className="bg-white text-indigo-600 hover:bg-gray-100 border-none">
-                   Gabung CodeLab Sekarang
-                </InteractiveHoverButton>
-             </Flex>
-          </Container>
-        </Box>
-      </Box>
+      {/* Full Width CTA Section with Background Lines */}
+      <BackgroundLines className="w-full py-20">
+        <Container size="3">
+          <Flex direction="column" align="center" gap="6">
+            <Heading
+              size="9"
+              align="center"
+              highContrast
+              className="bg-clip-text text-transparent bg-gradient-to-b from-indigo-600 via-purple-600 to-indigo-700 dark:from-indigo-200 dark:via-purple-200 dark:to-indigo-100 text-center"
+            >
+              Siap untuk Berinovasi Bersama Kami?
+            </Heading>
+            <Text
+              align="center"
+              size="5"
+              className="max-w-2xl text-neutral-700 dark:text-neutral-300"
+            >
+              Jangan lewatkan kesempatan untuk belajar, berkarya, dan berkembang
+              bersama komunitas pemuda visioner di President University
+              Pekanbaru.
+            </Text>
+            <InteractiveHoverButton className="mt-4 bg-indigo-600 text-white hover:bg-indigo-700 dark:bg-indigo-600 dark:text-white dark:hover:bg-indigo-700 border-none px-8 py-3">
+              Gabung CodeLab Sekarang
+            </InteractiveHoverButton>
+          </Flex>
+        </Container>
+      </BackgroundLines>
     </Box>
   );
 }
