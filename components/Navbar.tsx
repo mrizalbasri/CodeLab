@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import NextImage from "next/image";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import {
   Button,
   DropdownMenu,
@@ -17,8 +17,10 @@ import { ThemeToggle } from "./ThemeToggle";
 
 export function Navbar() {
   const pathname = usePathname();
+  const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [isNavigating, setIsNavigating] = useState(false);
 
   // Handle scroll effect
   useEffect(() => {
@@ -28,6 +30,29 @@ export function Navbar() {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  // Handle navigation with loading state
+  const handleNavigation = (href: string) => {
+    if (href === pathname) return;
+    
+    setIsNavigating(true);
+    setIsOpen(false);
+    
+    // Add a small delay for visual feedback
+    setTimeout(() => {
+      router.push(href);
+      // Reset navigation state after a delay
+      setTimeout(() => setIsNavigating(false), 300);
+    }, 150);
+  };
+
+  // Handle keyboard navigation
+  const handleKeyDown = (event: React.KeyboardEvent, href: string) => {
+    if (event.key === 'Enter' || event.key === ' ') {
+      event.preventDefault();
+      handleNavigation(href);
+    }
+  };
 
   // Hide navbar on admin pages
   if (pathname.startsWith("/admin")) {
@@ -45,23 +70,42 @@ export function Navbar() {
   ];
 
   return (
-    <Box className="fixed-top flex-center" style={{ paddingTop: "1rem", pointerEvents: "none" }}>
+    <Box
+      className="fixed-top flex-center"
+      style={{ paddingTop: "1rem", pointerEvents: "none" }}
+    >
       <Box
-        className={`glass-navbar ${scrolled ? "glass-navbar-scrolled" : ""}`}
+        className={`glass-navbar ${scrolled ? "glass-navbar-scrolled" : ""} ${isNavigating ? "navbar-navigating" : ""}`}
         px="4"
         py="2"
         style={{
           pointerEvents: "auto",
           width: "90%",
           maxWidth: "1000px",
+          transform: isNavigating ? "scale(0.98)" : "scale(1)",
+          transition: "all 0.4s cubic-bezier(0.4, 0, 0.2, 1)",
+          position: "relative",
         }}
       >
+        {/* Loading bar */}
+        <div className="nav-loading-bar" />
+        
         <Flex justify="between" align="center" style={{ height: "48px" }}>
           {/* Logo Section */}
-          <Link
-            href="/"
+          <button
+            onClick={() => handleNavigation("/")}
+            onKeyDown={(e) => handleKeyDown(e, "/")}
             className="no-underline"
-            style={{ textDecoration: "none" }}
+            style={{ 
+              textDecoration: "none", 
+              background: "none", 
+              border: "none", 
+              cursor: "pointer",
+              transition: "transform 0.2s ease"
+            }}
+            onMouseEnter={(e) => e.currentTarget.style.transform = "scale(1.05)"}
+            onMouseLeave={(e) => e.currentTarget.style.transform = "scale(1)"}
+            aria-label="CodeLab Home"
           >
             <Flex align="center" gap="3" style={{ cursor: "pointer" }}>
               <Box className="logo-circle">
@@ -81,7 +125,7 @@ export function Navbar() {
                 CodeLab
               </Text>
             </Flex>
-          </Link>
+          </button>
 
           {/* Desktop Navigation */}
           <Flex
@@ -91,14 +135,27 @@ export function Navbar() {
             className="nav-pill"
           >
             {navItems.map((item) => (
-              <Link
+              <button
                 key={item.href}
-                href={item.href}
-                className="no-underline"
-                style={{ textDecoration: "none" }}
+                onClick={() => handleNavigation(item.href)}
+                onKeyDown={(e) => handleKeyDown(e, item.href)}
+                className="no-underline nav-button"
+                style={{ 
+                  textDecoration: "none",
+                  background: "none",
+                  border: "none",
+                  cursor: "pointer"
+                }}
+                aria-label={`Navigate to ${item.name}`}
+                aria-current={pathname === item.href ? "page" : undefined}
               >
                 <Box
-                  className={`nav-item ${pathname === item.href ? "nav-item-active" : ""}`}
+                  className={`nav-item ${pathname === item.href ? "nav-item-active" : ""} ${isNavigating ? "nav-item-loading" : ""}`}
+                  style={{ 
+                    transition: "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
+                    position: "relative",
+                    overflow: "hidden"
+                  }}
                 >
                   <Text
                     size="2"
@@ -108,13 +165,18 @@ export function Navbar() {
                         pathname === item.href
                           ? "var(--gray-12)"
                           : "var(--gray-10)",
+                      transition: "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
+                      position: "relative",
+                      zIndex: 2
                     }}
                     className="hover:text-[var(--gray-12)]"
                   >
                     {item.name}
                   </Text>
+                  {/* Ripple effect */}
+                  <div className="nav-ripple" />
                 </Box>
-              </Link>
+              </button>
             ))}
           </Flex>
 
@@ -123,17 +185,28 @@ export function Navbar() {
             <ThemeToggle />
 
             <Box display={{ initial: "none", md: "block" }}>
-              <Link href="/contact">
+              <button
+                onClick={() => handleNavigation("/contact")}
+                style={{
+                  background: "none",
+                  border: "none",
+                  cursor: "pointer"
+                }}
+              >
                 <Button
                   size="2"
                   variant="solid"
                   highContrast
                   radius="full"
                   className="btn-primary-pill"
+                  style={{
+                    transition: "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
+                    transform: isNavigating ? "scale(0.95)" : "scale(1)"
+                  }}
                 >
                   Join Now
                 </Button>
-              </Link>
+              </button>
             </Box>
 
             {/* Mobile Burger */}
@@ -144,15 +217,22 @@ export function Navbar() {
                     {isOpen ? <X size={20} /> : <Menu size={20} />}
                   </IconButton>
                 </DropdownMenu.Trigger>
-                <DropdownMenu.Content variant="soft" color="indigo">
+                <DropdownMenu.Content variant="soft" color="indigo" className="mobile-dropdown">
                   {navItems.map((item) => (
-                    <DropdownMenu.Item key={item.href} asChild>
-                      <Link href={item.href}>{item.name}</Link>
+                    <DropdownMenu.Item 
+                      key={item.href} 
+                      onSelect={() => handleNavigation(item.href)}
+                      className="mobile-nav-item"
+                    >
+                      {item.name}
                     </DropdownMenu.Item>
                   ))}
                   <DropdownMenu.Separator />
-                  <DropdownMenu.Item asChild>
-                    <Link href="/contact">Join Now</Link>
+                  <DropdownMenu.Item 
+                    onSelect={() => handleNavigation("/contact")}
+                    className="mobile-nav-item"
+                  >
+                    Join Now
                   </DropdownMenu.Item>
                 </DropdownMenu.Content>
               </DropdownMenu.Root>
