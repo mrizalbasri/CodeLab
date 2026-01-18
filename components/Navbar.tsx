@@ -38,12 +38,11 @@ export function Navbar() {
     setIsNavigating(true);
     setIsOpen(false);
     
-    // Add a small delay for visual feedback
-    setTimeout(() => {
-      router.push(href);
-      // Reset navigation state after a delay
-      setTimeout(() => setIsNavigating(false), 300);
-    }, 150);
+    router.push(href);
+    // Reset navigation state shortly after push
+    // The delay here is just for the visual "press" effect to finish if needed, 
+    // but the navigation itself happens immediately now.
+    setTimeout(() => setIsNavigating(false), 300);
   };
 
   // Handle keyboard navigation
@@ -185,28 +184,21 @@ export function Navbar() {
             <ThemeToggle />
 
             <Box display={{ initial: "none", md: "block" }}>
-              <button
+              <Button
+                size="2"
+                variant="solid"
+                highContrast
+                radius="full"
+                className="btn-primary-pill"
                 onClick={() => handleNavigation("/contact")}
                 style={{
-                  background: "none",
-                  border: "none",
-                  cursor: "pointer"
+                  cursor: "pointer",
+                  transition: "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
+                  transform: isNavigating ? "scale(0.95)" : "scale(1)"
                 }}
               >
-                <Button
-                  size="2"
-                  variant="solid"
-                  highContrast
-                  radius="full"
-                  className="btn-primary-pill"
-                  style={{
-                    transition: "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
-                    transform: isNavigating ? "scale(0.95)" : "scale(1)"
-                  }}
-                >
-                  Join Now
-                </Button>
-              </button>
+                Join Now
+              </Button>
             </Box>
 
             {/* Mobile Burger */}

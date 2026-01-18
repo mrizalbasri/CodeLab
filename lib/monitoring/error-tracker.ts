@@ -1,5 +1,5 @@
 // Simple error tracking - tidak mengubah tampilan web
-import { getLogger } from "./logger";
+import { getLogger } from "./logger.js";
 
 interface ErrorReport {
   id: string;

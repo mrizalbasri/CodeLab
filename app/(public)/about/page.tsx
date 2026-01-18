@@ -64,7 +64,7 @@ export default function AboutPage() {
   useEffect(() => {
     async function fetchData() {
       const data = await getMembers();
-      console.log("Members loaded:", data);
+
       setMembers(data);
     }
     fetchData();
