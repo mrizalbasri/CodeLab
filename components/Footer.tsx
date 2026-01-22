@@ -12,6 +12,7 @@ import {
   Separator,
 } from "@radix-ui/themes";
 import Link from "next/link";
+import NextImage from "next/image";
 import { Github, Instagram, Linkedin, Twitter, Mail } from "lucide-react";
 import { motion } from "framer-motion";
 import { usePathname } from "next/navigation";
@@ -45,9 +46,11 @@ export function Footer() {
               <Flex direction="column" gap="4">
                 <Flex align="center" gap="3">
                   <Box className="logo-circle-sm">
-                    <img
+                    <NextImage
                       src="/logo.jpeg"
                       alt="PUPCL Logo"
+                      width={32}
+                      height={32}
                       className="logo-img"
                     />
                   </Box>
@@ -113,18 +116,26 @@ export function Footer() {
                 </Heading>
                 <Flex direction="column" gap="3">
                   <Flex gap="3">
-                    <IconButton variant="soft" color="gray" radius="full">
-                      <Instagram size={18} />
-                    </IconButton>
-                    <IconButton variant="soft" color="gray" radius="full">
-                      <Github size={18} />
-                    </IconButton>
-                    <IconButton variant="soft" color="gray" radius="full">
-                      <Linkedin size={18} />
-                    </IconButton>
-                    <IconButton variant="soft" color="gray" radius="full">
-                      <Mail size={18} />
-                    </IconButton>
+                    <Link href="https://www.instagram.com/codlab.presunivpku" target="_blank" rel="noopener noreferrer">
+                      <IconButton variant="soft" color="gray" radius="full">
+                        <Instagram size={18} />
+                      </IconButton>
+                    </Link>
+                    <Link href="https://github.com" target="_blank" rel="noopener noreferrer">
+                      <IconButton variant="soft" color="gray" radius="full">
+                        <Github size={18} />
+                      </IconButton>
+                    </Link>
+                    <Link href="https://linkedin.com" target="_blank" rel="noopener noreferrer">
+                      <IconButton variant="soft" color="gray" radius="full">
+                        <Linkedin size={18} />
+                      </IconButton>
+                    </Link>
+                    <Link href="mailto:contact@pupcl.org">
+                      <IconButton variant="soft" color="gray" radius="full">
+                        <Mail size={18} />
+                      </IconButton>
+                    </Link>
                   </Flex>
                   <Text size="2" color="gray" className="text-body" style={{ maxWidth: 200 }}>
                     Jl. Jend. Ahmad Yani No.42a,

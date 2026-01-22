@@ -1,17 +1,35 @@
 "use client";
 
 import { Box, Button, Card, Container, Flex, Grid, Heading, Text, TextField, TextArea } from "@radix-ui/themes";
-import { Mail, MapPin, Phone, Send, MessageCircle } from "lucide-react";
+import { Mail, MapPin, Send, MessageCircle } from "lucide-react";
 import { motion } from "framer-motion";
+import { useActionState, useEffect } from "react";
+import { submitContactForm } from "@/app/actions";
+import { toast } from "sonner";
 
 export default function ContactPage() {
+    const [state, action, isPending] = useActionState(submitContactForm, null);
+
+    // Show toast when state changes
+    useEffect(() => {
+        if (state?.success) {
+            toast.success(state.message);
+            // Optional: Reset form here if needed, but standard form reset might be needed
+            // Since we don't have a ref easily to the form element without useRef
+            // But relying on toast is enough for feedback
+            (document.getElementById("contact-form") as HTMLFormElement)?.reset();
+        } else if (state?.success === false) {
+             toast.error(state.message);
+        }
+    }, [state]);
+
     return (
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
             <Box style={{ minHeight: "100vh" }} pb="9">
                 {/* Header */}
                 <Box
                     style={{
-                        background: "radial-gradient(circle at top center, var(--indigo-4), var(--color-background) 80%)", // Sedikit dipertegas (indigo-4)
+                        background: "radial-gradient(circle at top center, var(--indigo-4), var(--color-background) 80%)",
                         borderBottom: "1px solid var(--gray-4)",
                         paddingTop: "140px",
                         paddingBottom: "var(--space-9)",
@@ -23,7 +41,7 @@ export default function ContactPage() {
                     <Container size="3" style={{ position: 'relative', zIndex: 1 }}>
                         <Heading size="9" align="center" mb="4">Get in Touch</Heading>
                         <Text align="center" size="5" color="gray" style={{ display: "block" }}>
-                            Have questions? We'd love to hear from you.
+                            Have questions? We&apos;d love to hear from you.
                         </Text>
                     </Container>
                 </Box>
@@ -32,29 +50,29 @@ export default function ContactPage() {
                     <Grid columns={{ initial: "1", md: "2" }} gap="8">
                         {/* Contact Form */}
                         <Card size="4" style={{ boxShadow: "0 10px 40px -10px rgba(0,0,0,0.1)" }}>
-                            <form>
+                            <form action={action} id="contact-form">
                                 <Flex direction="column" gap="4">
                                     <Heading size="5" mb="2">Send us a message</Heading>
                                     <Grid columns="2" gap="4">
                                         <Box>
                                             <Text as="div" size="2" mb="1" weight="bold">Name</Text>
-                                            <TextField.Root placeholder="Your name" />
+                                            <TextField.Root placeholder="Your name" name="name" required />
                                         </Box>
                                         <Box>
                                             <Text as="div" size="2" mb="1" weight="bold">Email</Text>
-                                            <TextField.Root placeholder="hello@example.com" />
+                                            <TextField.Root placeholder="hello@example.com" name="email" type="email" required />
                                         </Box>
                                     </Grid>
                                     <Box>
                                         <Text as="div" size="2" mb="1" weight="bold">Topic</Text>
-                                        <TextField.Root placeholder="Membership / Partnership" />
+                                        <TextField.Root placeholder="Membership / Partnership" name="topic" />
                                     </Box>
                                     <Box>
                                         <Text as="div" size="2" mb="1" weight="bold">Message</Text>
-                                        <TextArea placeholder="Tell us what you need..." style={{ height: 120 }} />
+                                        <TextArea placeholder="Tell us what you need..." style={{ height: 120 }} name="message" required />
                                     </Box>
-                                    <Button size="3" variant="solid" style={{ cursor: 'pointer' }}>
-                                        Send Message <Send size={16} />
+                                    <Button size="3" variant="solid" style={{ cursor: 'pointer' }} disabled={isPending}>
+                                        {isPending ? "Sending..." : "Send Message"} <Send size={16} />
                                     </Button>
                                 </Flex>
                             </form>
