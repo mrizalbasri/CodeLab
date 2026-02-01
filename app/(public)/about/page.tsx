@@ -85,14 +85,14 @@ export default function AboutPage() {
         }}
       >
         <Box className="bg-grid absolute inset-0 z-0 pointer-events-none" />
-        <Container size="4" style={{ position: "relative", zIndex: 1 }}>
+        <Container size="4" px="4" style={{ position: "relative", zIndex: 1 }}>
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
           >
             <Flex direction="column" align="center" gap="4" py="6">
-              <Heading size="9" align="center">
+              <Heading size={{ initial: "7", md: "9" }} align="center">
                 Tentang Kami
               </Heading>
               <Text
@@ -116,7 +116,7 @@ export default function AboutPage() {
       </Box>
 
       {/* Content Section */}
-      <Container size="4" py="6">
+      <Container size="4" py="6" px="4">
         {" "}
         {/* Reduced from py="9" */}
         <Flex direction="column" gap="9">
@@ -128,7 +128,7 @@ export default function AboutPage() {
           >
             <Grid columns={{ initial: "1", md: "2" }} gap="9" align="center">
               <Box>
-                <Heading size="8" mb="4" color="indigo">
+                <Heading size={{ initial: "6", md: "8" }} mb="4" color="indigo">
                   About PUPCL
                 </Heading>
                 <Text
@@ -351,7 +351,7 @@ export default function AboutPage() {
                 >
                   Teknologi & Tools
                 </Badge>
-                <Heading size="8" mb="4" color="gray" highContrast>
+                <Heading size={{ initial: "6", md: "8" }} mb="4" color="gray" highContrast>
                   Kami Bereksplorasi dengan Modern Tech Stack
                 </Heading>
                 <Text
@@ -422,7 +422,7 @@ export default function AboutPage() {
               <Badge color="orange" size="2" radius="full" variant="soft">
                 Our Team
               </Badge>
-              <Heading size="8" align="center">
+              <Heading size={{ initial: "6", md: "8" }} align="center">
                 Club Structure
               </Heading>
               <Text
@@ -570,7 +570,7 @@ export default function AboutPage() {
                 <Box
                   style={{
                     display: "grid",
-                    gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))",
+                    gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
                     gap: "32px",
                   }}
                 >
@@ -686,7 +686,7 @@ export default function AboutPage() {
                 <Box
                   style={{
                     display: "grid",
-                    gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))",
+                    gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
                     gap: "32px",
                   }}
                 >

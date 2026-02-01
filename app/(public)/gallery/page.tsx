@@ -65,11 +65,11 @@ export default function GalleryPage() {
                 }}
             >
                 <Box className="bg-grid" style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, zIndex: 0 }} />
-                <Container size="3" style={{ position: 'relative', zIndex: 1 }}>
+                <Container size="3" px="4" style={{ position: 'relative', zIndex: 1 }}>
                     <motion.div initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
                         <Flex direction="column" align="center" gap="4" py="6">
                             <Badge size="2" color="indigo" variant="soft" radius="full">Dokumentasi</Badge>
-                            <Heading size="9" align="center">Galeri Kegiatan</Heading>
+                            <Heading size={{ initial: "7", md: "9" }} align="center">Galeri Kegiatan</Heading>
                             <Text align="center" size="5" color="gray" style={{ maxWidth: 600 }}>
                                 Momen-momen berharga perjalanan kami dalam berkarya dan berinovasi.
                             </Text>
@@ -78,7 +78,7 @@ export default function GalleryPage() {
                 </Container>
             </Box>
 
-            <Container size="4" py="9">
+            <Container size="4" py="9" px="4">
                 <Tabs.Root value={activeTab} onValueChange={setActiveTab}>
                     <Flex justify="center" mb="6">
                         <Tabs.List>
@@ -110,7 +110,7 @@ export default function GalleryPage() {
                     {/* Gallery Grid */}
                     <Box mb="6">
                         <motion.div
-                            style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))", gap: "16px" }}
+                            style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: "16px" }}
                             variants={containerVariants}
                             initial="hidden"
                             animate="visible"

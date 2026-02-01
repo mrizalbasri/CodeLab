@@ -40,7 +40,7 @@ export default function LoginPage() {
 
   return (
     <Box style={{ backgroundColor: "var(--gray-2)", minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center" }}>
-      <Container size="1">
+      <Container size="1" px="4">
         <Card size="4">
           <Heading align="center" mb="4">Admin Login</Heading>
           

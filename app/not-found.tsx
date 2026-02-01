@@ -15,7 +15,7 @@ export default function NotFound() {
       >
         <Meteors number={30} />
         
-        <Container size="2" style={{ position: "relative", zIndex: 10 }}>
+        <Container size="2" px="4" style={{ position: "relative", zIndex: 10 }}>
           <Flex
             direction="column"
             align="center"
@@ -23,7 +23,7 @@ export default function NotFound() {
             style={{ minHeight: "60vh" }}
             gap="4"
           >
-            <Heading size="9" className="text-indigo-500 font-bold tracking-tighter shadow-xl">
+            <Heading size={{ initial: "8", md: "9" }} className="text-indigo-500 font-bold tracking-tighter shadow-xl">
               404
             </Heading>
             <Heading size="6" className="text-gray-200">

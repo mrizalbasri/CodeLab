@@ -114,7 +114,7 @@ export default function ProgramsPage() {
             zIndex: 0,
           }}
         />
-        <Container size="3" style={{ position: "relative", zIndex: 1 }}>
+        <Container size="3" px="4" style={{ position: "relative", zIndex: 1 }}>
           <motion.div
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -124,7 +124,7 @@ export default function ProgramsPage() {
               <Badge size="2" color="indigo" variant="soft" radius="full">
                 Program Unggulan
               </Badge>
-              <Heading size="9" align="center" style={{ lineHeight: 1.1 }}>
+              <Heading size={{ initial: "7", md: "9" }} align="center" style={{ lineHeight: 1.1 }}>
                 Tingkatkan Skill, <br />
                 <span style={{ color: "var(--accent-9)" }}>
                   Bangun Masa Depan.
@@ -157,8 +157,8 @@ export default function ProgramsPage() {
             backgroundColor: "var(--gray-2)",
           }}
         >
-          <Container size="4">
-            <Flex justify="center" gap="4" wrap="wrap">
+          <Container size="4" px="4">
+            <Flex justify="center" gap={{ initial: "2", md: "4" }} wrap="wrap">
               {["Semua", "Webinar", "Workshop", "Meetup", "Hackathon"].map(
                 (cat) => (
                   <motion.div
@@ -186,7 +186,7 @@ export default function ProgramsPage() {
 
       {/* Search Bar */}
       <Box py="6" style={{ backgroundColor: "var(--gray-1)" }}>
-        <Container size="4">
+        <Container size="4" px="4">
           <SearchBar
             placeholder="Cari program berdasarkan judul, deskripsi, kategori, atau pembicara..."
             onSearch={handleSearch}
@@ -195,7 +195,7 @@ export default function ProgramsPage() {
           {searchQuery && (
             <Box mt="3">
               <Text size="2" color="gray">
-                Menampilkan {totalItems} hasil untuk "{searchQuery}"
+                Menampilkan {totalItems} hasil untuk &quot;{searchQuery}&quot;
               </Text>
             </Box>
           )}
@@ -203,7 +203,7 @@ export default function ProgramsPage() {
       </Box>
 
       {/* Events Grid */}
-      <Container size="4" py="9">
+      <Container size="4" py={{ initial: "6", md: "9" }} px="4">
         {filteredPrograms.length === 0 ? (
           <Flex
             justify="center"
@@ -230,7 +230,7 @@ export default function ProgramsPage() {
             <motion.div
               style={{
                 display: "grid",
-                gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))",
+                gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
                 gap: "24px",
               }}
               variants={containerVariants}
@@ -351,7 +351,7 @@ export default function ProgramsPage() {
 
       {/* Community Activities Section */}
       <Box py="9" style={{ backgroundColor: "var(--gray-2)" }}>
-        <Container size="3">
+        <Container size="3" px="4">
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
             whileInView={{ opacity: 1, scale: 1 }}

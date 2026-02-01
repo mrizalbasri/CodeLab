@@ -4,7 +4,6 @@ import {
   Box,
   Container,
   Flex,
-  Grid,
   Heading,
   Text,
   IconButton,
@@ -13,7 +12,7 @@ import {
 } from "@radix-ui/themes";
 import Link from "next/link";
 import NextImage from "next/image";
-import { Github, Instagram, Linkedin, Twitter, Mail } from "lucide-react";
+import { Github, Instagram, Linkedin, Mail } from "lucide-react";
 import { motion } from "framer-motion";
 import { usePathname } from "next/navigation";
 
@@ -33,7 +32,7 @@ export function Footer() {
         viewport={{ once: true }}
         transition={{ duration: 0.6, ease: "easeOut" }}
       >
-        <Container size="4">
+        <Container size="4" px="4">
           <Flex
             justify="between"
             align="start"

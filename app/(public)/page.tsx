@@ -34,21 +34,26 @@ export default function Home() {
 
         <BackgroundBeamsWithCollision className="!h-auto min-h-[800px] w-full bg-transparent">
           <Container size="3" className="relative z-1">
-            <Flex direction="column" align="center" gap="6">
+            <Flex direction="column" align="center" gap="6" px="4">
               <MotionWrapper
                 initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.8, delay: 0.2 }}
-                style={{ textAlign: "center" }}
+                style={{ textAlign: "center", width: "100%" }}
               >
-                <Heading size="9" align="center" className="text-heading">
+                <Heading 
+                  size={{ initial: "5", xs: "6", sm: "8", md: "9" }} 
+                  align="center" 
+                  className="text-heading"
+                  style={{ wordBreak: "break-word", overflowWrap: "break-word" }}
+                >
                   <Text className="gradient-text">PU PEKANBARU CODE LAB</Text>
                 </Heading>
                 <Heading
-                  size="9"
+                  size={{ initial: "5", xs: "6", sm: "8", md: "9" }}
                   align="center"
                   className="text-heading"
-                  style={{ marginTop: "-10px" }}
+                  style={{ marginTop: "-5px" }}
                 >
                   (PUPCL)
                 </Heading>
@@ -60,7 +65,7 @@ export default function Home() {
                 transition={{ duration: 1, delay: 0.5 }}
               >
                 <Text
-                  size="5"
+                  size={{ initial: "4", md: "5" }}
                   align="center"
                   color="gray"
                   className="max-w-content text-body"
@@ -77,7 +82,7 @@ export default function Home() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: 0.8 }}
               >
-                <Flex gap="4" mt="6" mb="8">
+                <Flex gap="4" mt="6" mb="8" direction={{ initial: "column", sm: "row" }} align="center">
                   <Link href="/about">
                     <RippleButton
                       rippleColor="#ADD8E6"
@@ -190,12 +195,12 @@ export default function Home() {
       <Section size="3">
         <Container size="4">
           <Flex direction="column" align="center" mb="9" gap="4">
-            <Heading size="8" align="center" weight="bold">
+            <Heading size={{ initial: "7", md: "8" }} align="center" weight="bold">
               Why Join PUPCL?
             </Heading>
             <Text
               color="gray"
-              size="4"
+              size={{ initial: "3", md: "4" }}
               align="center"
               className="max-w-content"
             >
@@ -206,7 +211,7 @@ export default function Home() {
 
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 max-w-7xl mx-auto w-full">
             <WobbleCard
-              containerClassName="col-span-1 lg:col-span-2 h-full bg-indigo-800 min-h-[500px] lg:min-h-[300px]"
+              containerClassName="col-span-1 lg:col-span-2 h-full bg-indigo-800 min-h-[300px] lg:min-h-[300px]"
               className=""
             >
               <div className="max-w-xs">
@@ -237,7 +242,7 @@ export default function Home() {
               </Box>
             </WobbleCard>
 
-            <WobbleCard containerClassName="col-span-1 lg:col-span-3 bg-blue-900 min-h-[500px] lg:min-h-[600px] xl:min-h-[300px]">
+            <WobbleCard containerClassName="col-span-1 lg:col-span-3 bg-blue-900 min-h-[300px] lg:min-h-[300px] xl:min-h-[300px]">
               <div className="max-w-sm">
                 <h2 className="max-w-sm md:max-w-lg text-left text-balance text-base md:text-xl lg:text-3xl font-semibold tracking-[-0.015em] text-white">
                   Build Real-World Projects

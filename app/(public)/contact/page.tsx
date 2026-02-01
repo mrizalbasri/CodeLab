@@ -38,22 +38,22 @@ export default function ContactPage() {
                     }}
                 >
                     <Box className="bg-grid" style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, zIndex: 0 }} />
-                    <Container size="3" style={{ position: 'relative', zIndex: 1 }}>
-                        <Heading size="9" align="center" mb="4">Get in Touch</Heading>
+                    <Container size="3" px="4" style={{ position: 'relative', zIndex: 1 }}>
+                        <Heading size={{ initial: "7", md: "9" }} align="center" mb="4">Get in Touch</Heading>
                         <Text align="center" size="5" color="gray" style={{ display: "block" }}>
                             Have questions? We&apos;d love to hear from you.
                         </Text>
                     </Container>
                 </Box>
 
-                <Container size="4" style={{ marginTop: "-60px" }}>
+                <Container size="4" px="4" style={{ marginTop: "-60px" }}>
                     <Grid columns={{ initial: "1", md: "2" }} gap="8">
                         {/* Contact Form */}
                         <Card size="4" style={{ boxShadow: "0 10px 40px -10px rgba(0,0,0,0.1)" }}>
                             <form action={action} id="contact-form">
                                 <Flex direction="column" gap="4">
                                     <Heading size="5" mb="2">Send us a message</Heading>
-                                    <Grid columns="2" gap="4">
+                                    <Grid columns={{ initial: "1", sm: "2" }} gap="4">
                                         <Box>
                                             <Text as="div" size="2" mb="1" weight="bold">Name</Text>
                                             <TextField.Root placeholder="Your name" name="name" required />

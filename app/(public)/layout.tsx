@@ -1,6 +1,7 @@
 import { Box, Flex } from "@radix-ui/themes";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
+import { ScrollToTop } from "@/components/ScrollToTop";
 
 export default function PublicLayout({
   children,
@@ -14,6 +15,7 @@ export default function PublicLayout({
         {children}
       </Box>
       <Footer />
+      <ScrollToTop />
     </Flex>
   );
 }

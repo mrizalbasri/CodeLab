@@ -60,14 +60,14 @@ export function CodeBlock() {
   let cumulativeDelay = 0;
 
   return (
-    <Box className="code-content" key={key}>
+    <Box className="code-content" key={key} style={{ overflowX: "auto", width: "100%", fontSize: "0.85rem", padding: "1.5rem" }}>
       {lines.map((line, i) => {
         const thisDelay = cumulativeDelay;
         const thisDuration = line.text.length * TYPE_SPEED;
         cumulativeDelay += thisDuration + LINE_PAUSE;
 
         return (
-          <div key={i} style={{ paddingLeft: line.indent * 8, minHeight: '1.5em' }}>
+          <div key={i} style={{ paddingLeft: line.indent * 8, minHeight: '1.5em', whiteSpace: "pre" }}>
             <Text color={line.color} style={{ fontFamily: "monospace" }}>
               <TypingAnimation
                 duration={TYPE_SPEED}
