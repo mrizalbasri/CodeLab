@@ -11,16 +11,10 @@ import {
   Badge,
   Button,
 } from "@radix-ui/themes";
-import {
-  Calendar,
-  Users,
-  Zap,
-  MapPin,
-  MonitorPlay,
-  Clock,
-} from "lucide-react";
+import { Calendar, Users, Zap, MapPin, MonitorPlay, Clock } from "lucide-react";
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import { getPrograms, Program } from "@/app/actions";
 import { SearchBar } from "@/components/SearchBar";
 import { Pagination } from "@/components/Pagination";
@@ -30,6 +24,7 @@ import { InteractiveHoverButton } from "@/components/ui/interactive-hover-button
 export default function ProgramsPage() {
   const [programs, setPrograms] = useState<Program[]>([]);
   const [selectedCategory, setSelectedCategory] = useState<string>("Semua");
+  const router = useRouter();
 
   useEffect(() => {
     async function loadPrograms() {
@@ -81,13 +76,16 @@ export default function ProgramsPage() {
     },
   };
 
-  // Category color mapping
-  const categoryColors: Record<string, "purple" | "blue" | "crimson" | "orange"> = {
+  // Category color mapping — "gray" sebagai fallback untuk kategori yang tidak dikenal
+  type CategoryBadgeColor = "purple" | "blue" | "crimson" | "orange" | "gray";
+  const categoryColors: Record<string, CategoryBadgeColor> = {
     Webinar: "purple",
     Workshop: "blue",
     Meetup: "crimson",
     Hackathon: "orange",
   };
+  const getCategoryColor = (category: string): CategoryBadgeColor =>
+    categoryColors[category] ?? "gray";
 
   return (
     <Box>
@@ -124,7 +122,11 @@ export default function ProgramsPage() {
               <Badge size="2" color="indigo" variant="soft" radius="full">
                 Program Unggulan
               </Badge>
-              <Heading size={{ initial: "7", md: "9" }} align="center" style={{ lineHeight: 1.1 }}>
+              <Heading
+                size={{ initial: "7", md: "9" }}
+                align="center"
+                style={{ lineHeight: 1.1 }}
+              >
                 Tingkatkan Skill, <br />
                 <span style={{ color: "var(--accent-9)" }}>
                   Bangun Masa Depan.
@@ -177,7 +179,7 @@ export default function ProgramsPage() {
                       {cat}
                     </Button>
                   </motion.div>
-                )
+                ),
               )}
             </Flex>
           </Container>
@@ -213,16 +215,14 @@ export default function ProgramsPage() {
             py="9"
           >
             <Text size="5" color="gray">
-              {searchQuery 
-                ? "Tidak ada program yang ditemukan" 
-                : `Belum ada program ${selectedCategory !== "Semua" ? selectedCategory : ""} tersedia`
-              }
+              {searchQuery
+                ? "Tidak ada program yang ditemukan"
+                : `Belum ada program ${selectedCategory !== "Semua" ? selectedCategory : ""} tersedia`}
             </Text>
             <Text size="2" color="gray">
-              {searchQuery 
+              {searchQuery
                 ? "Coba kata kunci yang berbeda"
-                : "Tambahkan program melalui Admin Dashboard"
-              }
+                : "Tambahkan program melalui Admin Dashboard"}
             </Text>
           </Flex>
         ) : (
@@ -250,91 +250,91 @@ export default function ProgramsPage() {
                         height="200px"
                         style={{
                           backgroundImage: `url('${
-                            program.image_url ||
-                            "/logo.jpeg"
+                            program.image_url || "/logo.jpeg"
                           }')`,
                           backgroundSize: "cover",
                           backgroundPosition: "center",
                         }}
                       />
-                    <Box p="4">
-                      <Flex gap="2" mb="3">
-                        <Badge color={categoryColors[program.category]}>
-                          {program.category}
-                        </Badge>
-                        {program.status && (
-                          <Badge color="cyan" variant="soft">
-                            {program.status}
+                      <Box p="4">
+                        <Flex gap="2" mb="3">
+                          <Badge color={getCategoryColor(program.category)}>
+                            {program.category}
                           </Badge>
-                        )}
-                      </Flex>
-                      <Heading size="5" mb="2">
-                        {program.title}
-                      </Heading>
-                      <Text
-                        as="p"
-                        size="2"
-                        color="gray"
-                        mb="4"
-                        style={{
-                          overflow: "hidden",
-                          textOverflow: "ellipsis",
-                          display: "-webkit-box",
-                          WebkitLineClamp: 2,
-                          WebkitBoxOrient: "vertical",
-                        }}
-                      >
-                        {program.description || "Deskripsi akan segera hadir"}
-                      </Text>
+                          {program.status && (
+                            <Badge color="cyan" variant="soft">
+                              {program.status}
+                            </Badge>
+                          )}
+                        </Flex>
+                        <Heading size="5" mb="2">
+                          {program.title}
+                        </Heading>
+                        <Text
+                          as="p"
+                          size="2"
+                          color="gray"
+                          mb="4"
+                          style={{
+                            overflow: "hidden",
+                            textOverflow: "ellipsis",
+                            display: "-webkit-box",
+                            WebkitLineClamp: 2,
+                            WebkitBoxOrient: "vertical",
+                          }}
+                        >
+                          {program.description || "Deskripsi akan segera hadir"}
+                        </Text>
 
-                      <Flex direction="column" gap="2" mb="4">
-                        {program.date && (
-                          <Flex gap="2" align="center">
-                            <Calendar size={16} color="var(--gray-9)" />
-                            <Text size="2" color="gray">
-                              {program.date}
-                            </Text>
-                          </Flex>
-                        )}
-                        {program.time && (
-                          <Flex gap="2" align="center">
-                            <Clock size={16} color="var(--gray-9)" />
-                            <Text size="2" color="gray">
-                              {program.time}
-                            </Text>
-                          </Flex>
-                        )}
-                        {program.location && (
-                          <Flex gap="2" align="center">
-                            <MapPin size={16} color="var(--gray-9)" />
-                            <Text size="2" color="gray">
-                              {program.location}
-                            </Text>
-                          </Flex>
-                        )}
-                        {program.speaker && (
-                          <Flex gap="2" align="center">
-                            <Users size={16} color="var(--gray-9)" />
-                            <Text size="2" color="gray">
-                              {program.speaker}
-                            </Text>
-                          </Flex>
-                        )}
-                      </Flex>
+                        <Flex direction="column" gap="2" mb="4">
+                          {program.date && (
+                            <Flex gap="2" align="center">
+                              <Calendar size={16} color="var(--gray-9)" />
+                              <Text size="2" color="gray">
+                                {program.date}
+                              </Text>
+                            </Flex>
+                          )}
+                          {program.time && (
+                            <Flex gap="2" align="center">
+                              <Clock size={16} color="var(--gray-9)" />
+                              <Text size="2" color="gray">
+                                {program.time}
+                              </Text>
+                            </Flex>
+                          )}
+                          {program.location && (
+                            <Flex gap="2" align="center">
+                              <MapPin size={16} color="var(--gray-9)" />
+                              <Text size="2" color="gray">
+                                {program.location}
+                              </Text>
+                            </Flex>
+                          )}
+                          {program.speaker && (
+                            <Flex gap="2" align="center">
+                              <Users size={16} color="var(--gray-9)" />
+                              <Text size="2" color="gray">
+                                {program.speaker}
+                              </Text>
+                            </Flex>
+                          )}
+                        </Flex>
 
-                      <InteractiveHoverButton
-                        className="w-full"
-                        onClick={() => { /* Add logic/link if needed later */ }}
-                      >
-                        Daftar Sekarang
-                      </InteractiveHoverButton>
-                    </Box>
+                        {/* ✅ FIX: Navigasi ke /contact untuk pendaftaran */}
+                        <InteractiveHoverButton
+                          className="w-full"
+                          onClick={() => router.push("/contact")}
+                        >
+                          Daftar Sekarang
+                        </InteractiveHoverButton>
+                      </Box>
                     </div>
                   </Card>
                 </motion.div>
               ))}
             </motion.div>
-            
+
             {/* Pagination */}
             <Box mt="8">
               <Pagination

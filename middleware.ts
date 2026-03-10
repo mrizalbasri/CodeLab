@@ -1,19 +1,22 @@
-import { type NextRequest } from 'next/server'
-import { updateSession } from '@/lib/supabase/middleware'
+import { type NextRequest } from "next/server";
+import { updateSession } from "@/lib/supabase/middleware";
 
 export async function middleware(request: NextRequest) {
-  return await updateSession(request)
+  return await updateSession(request);
 }
 
 export const config = {
   matcher: [
     /*
-     * Match all request paths except for the ones starting with:
-     * - _next/static (static files)
-     * - _next/image (image optimization files)
-     * - favicon.ico (favicon file)
-     * - public files
+     * Hanya jalankan middleware pada route yang memerlukan auth:
+     * - /admin dan semua sub-route-nya
+     * - /login
+     *
+     * Halaman publik (/, /about, /programs, /gallery, /contact)
+     * TIDAK melewati middleware ini, sehingga tidak ada panggilan
+     * Supabase yang tidak perlu dan tidak menyebabkan delay.
      */
-    '/((?!_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)',
+    "/admin/:path*",
+    "/login",
   ],
-}
+};

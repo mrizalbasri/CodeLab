@@ -5,67 +5,38 @@ import {
   Card,
   Container,
   Flex,
+  Grid,
   Heading,
   Section,
   Text,
-  Avatar,
   Badge,
-  Grid,
 } from "@radix-ui/themes";
 
-import { Meteors } from "@/components/ui/meteors";
 import { TechStackBeam } from "@/components/TechStackBeam";
 import { InteractiveHoverButton } from "@/components/ui/interactive-hover-button";
 import { GlowingEffect } from "@/components/ui/glowing-effect";
 import { LinkPreview } from "@/components/ui/link-preview";
 import { BackgroundLines } from "@/components/ui/background-lines";
+import { MemberSection } from "@/components/MemberSection";
 
 import { getMembers, Member } from "@/app/actions";
 import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
-
-function getRoleColor(color: Member["color"]) {
-  switch (color) {
-    case "indigo":
-      return "var(--indigo-9)";
-    case "pink":
-      return "var(--pink-9)";
-    case "teal":
-      return "var(--teal-9)";
-    case "orange":
-      return "var(--orange-9)";
-    case "blue":
-      return "var(--blue-9)";
-    default:
-      return "var(--gray-9)";
-  }
-}
-
-function getRoleLightColor(color: Member["color"]) {
-  switch (color) {
-    case "indigo":
-      return "var(--indigo-3)";
-    case "pink":
-      return "var(--pink-3)";
-    case "teal":
-      return "var(--teal-3)";
-    case "orange":
-      return "var(--orange-3)";
-    case "blue":
-      return "var(--blue-3)";
-    default:
-      return "var(--gray-3)";
-  }
-}
 
 export default function AboutPage() {
   const [members, setMembers] = useState<Member[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const router = useRouter();
 
   useEffect(() => {
     async function fetchData() {
-      const data = await getMembers();
-
-      setMembers(data);
+      try {
+        const data = await getMembers();
+        setMembers(data);
+      } finally {
+        setIsLoading(false);
+      }
     }
     fetchData();
   }, []);
@@ -79,7 +50,7 @@ export default function AboutPage() {
             "radial-gradient(circle at top center, var(--indigo-4), var(--color-background) 80%)",
           borderBottom: "1px solid var(--gray-4)",
           paddingTop: "140px",
-          paddingBottom: "var(--space-6)", // Reduced from space-9
+          paddingBottom: "var(--space-6)",
           position: "relative",
           overflow: "hidden",
         }}
@@ -117,8 +88,6 @@ export default function AboutPage() {
 
       {/* Content Section */}
       <Container size="4" py="6" px="4">
-        {" "}
-        {/* Reduced from py="9" */}
         <Flex direction="column" gap="9">
           {/* About Section with Logo */}
           <motion.div
@@ -164,17 +133,16 @@ export default function AboutPage() {
                     width: "100%",
                     maxWidth: "350px",
                     aspectRatio: "1/1",
-                    borderRadius: "12px", // Sedikit rounded biar modern
+                    borderRadius: "12px",
                     overflow: "hidden",
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "center",
-                    border: "1px solid var(--gray-alpha-4)", // Border tipis
-                    background: "var(--color-panel-solid)", // Background panel halus
-                    boxShadow: "0 8px 24px -6px rgba(0,0,0,0.15)", // Shadow lembut
+                    border: "1px solid var(--gray-alpha-4)",
+                    background: "var(--color-panel-solid)",
+                    boxShadow: "0 8px 24px -6px rgba(0,0,0,0.15)",
                   }}
                 >
-                  {/* Replace src with your actual logo file path */}
                   <img
                     src="/logo.jpeg"
                     alt="PUPCL Logo"
@@ -189,7 +157,7 @@ export default function AboutPage() {
             </Grid>
           </motion.div>
 
-          {/* Visi & Misi - Enhanced with Glowing Effect */}
+          {/* Visi & Misi */}
           <Box mt="9">
             <Grid columns={{ initial: "1", md: "2" }} gap="6">
               {/* Visi Card */}
@@ -205,7 +173,7 @@ export default function AboutPage() {
                 />
                 <div className="relative flex h-full flex-col justify-between gap-6 overflow-hidden rounded-xl border-0.75 p-6 dark:shadow-[0px_0px_27px_0px_#2D2D2D] md:p-6 bg-white dark:bg-black/80">
                   <div className="relative flex flex-1 flex-col justify-between gap-3">
-                    <div className="w-fit rounded-lg border border-gray-600/10 p-2 ">
+                    <div className="w-fit rounded-lg border border-gray-600/10 p-2">
                       <Heading size="6" color="indigo">
                         Visi
                       </Heading>
@@ -246,7 +214,7 @@ export default function AboutPage() {
                 />
                 <div className="relative flex h-full flex-col justify-between gap-6 overflow-hidden rounded-xl border-0.75 p-6 dark:shadow-[0px_0px_27px_0px_#2D2D2D] md:p-6 bg-white dark:bg-black/80">
                   <div className="relative flex flex-1 flex-col justify-between gap-3">
-                    <div className="w-fit rounded-lg border border-gray-600/10 p-2 ">
+                    <div className="w-fit rounded-lg border border-gray-600/10 p-2">
                       <Heading size="6" color="plum">
                         Misi
                       </Heading>
@@ -351,7 +319,12 @@ export default function AboutPage() {
                 >
                   Teknologi & Tools
                 </Badge>
-                <Heading size={{ initial: "6", md: "8" }} mb="4" color="gray" highContrast>
+                <Heading
+                  size={{ initial: "6", md: "8" }}
+                  mb="4"
+                  color="gray"
+                  highContrast
+                >
                   Kami Bereksplorasi dengan Modern Tech Stack
                 </Heading>
                 <Text
@@ -416,7 +389,7 @@ export default function AboutPage() {
             </Grid>
           </Box>
 
-          {/* Team Section - Modern Layout */}
+          {/* ─── Team Section ─────────────────────────────────────────────────────── */}
           <Section>
             <Flex direction="column" align="center" gap="3" mb="8">
               <Badge color="orange" size="2" radius="full" variant="soft">
@@ -442,574 +415,112 @@ export default function AboutPage() {
               align="center"
               style={{ marginTop: "2rem" }}
             >
-              {/* Ketua - Top Level */}
-              <Box
-                style={{
-                  width: "100%",
-                  maxWidth: "1200px",
-                  marginBottom: "3rem",
-                }}
-              >
-                <Flex justify="center" mb="6">
-                  <Badge color="indigo" size="3" radius="full" variant="soft">
-                    Leadership
-                  </Badge>
-                </Flex>
-                <Flex justify="center" style={{ width: "100%" }}>
-                  {members
-                    .filter((m) => {
-                      const role = m.role.toLowerCase();
-                      return (
-                        role.includes("ketua") ||
-                        role.includes("president") ||
-                        role.includes("leader") ||
-                        role.includes("chairman") ||
-                        role.includes("chief") ||
-                        role.includes("head of club") ||
-                        role === "head"
-                      );
-                    })
-                    .map((member) => (
-                      <motion.div
-                        key={member.id}
-                        initial={{ opacity: 0, y: -30 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{
-                          delay: 0.2,
-                          duration: 0.6,
-                          type: "spring",
-                          stiffness: 100,
-                        }}
-                        style={{ maxWidth: "360px", width: "100%" }}
-                      >
-                        <Card
-                          style={{
-                            padding: 0,
-                            overflow: "hidden",
-                            cursor: "pointer",
-                            transition:
-                              "transform 0.3s ease, box-shadow 0.3s ease",
-                            width: "100%",
-                            maxWidth: "360px",
-                          }}
-                          className="member-card"
-                        >
-                          <Box
-                            style={{
-                              height: 120,
-                              background: `linear-gradient(135deg, ${getRoleLightColor(
-                                member.color,
-                              )} 0%, ${getRoleColor(member.color)} 100%)`,
-                              position: "relative",
-                              overflow: "hidden",
-                            }}
-                          >
-                            <Meteors number={20} />
-                            <Box
-                              style={{
-                                position: "absolute",
-                                bottom: -55,
-                                left: "50%",
-                                transform: "translateX(-50%)",
-                                zIndex: 10,
-                              }}
-                            >
-                              <Avatar
-                                size="9"
-                                src={member.image || ""}
-                                fallback={member.name[0]}
-                                radius="full"
-                                style={{
-                                  border:
-                                    "5px solid var(--color-card-background)",
-                                  backgroundColor: "var(--gray-4)",
-                                  boxShadow: "0 4px 12px rgba(0,0,0,0.1)",
-                                }}
-                              />
-                            </Box>
-                          </Box>
-                          <Box p="5" pt="8" pb="6">
-                            <Flex
-                              direction="column"
-                              align="center"
-                              gap="3"
-                              style={{ marginTop: 20 }}
-                            >
-                              <Heading size="5" align="center">
-                                {member.name}
-                              </Heading>
-                              <Badge
-                                color={member.color}
-                                size="2"
-                                variant="soft"
-                                radius="full"
-                              >
-                                {member.role}
-                              </Badge>
-                            </Flex>
-                          </Box>
-                        </Card>
-                      </motion.div>
-                    ))}
-                </Flex>
-              </Box>
+              {/* Helper filters — didefinisikan sekali, dipakai ulang untuk catch-all */}
+              {(() => {
+                const isLeadership = (m: Member) => {
+                  const r = m.role.toLowerCase();
+                  return (
+                    r.includes("ketua") ||
+                    r.includes("president") ||
+                    r.includes("leader") ||
+                    r.includes("chairman") ||
+                    r.includes("chief") ||
+                    r.includes("head of club") ||
+                    r === "head"
+                  );
+                };
+                const isCoreTeam = (m: Member) => {
+                  const r = m.role.toLowerCase();
+                  return (
+                    r.includes("bendahara") ||
+                    r.includes("sekretaris") ||
+                    r.includes("treasurer") ||
+                    r.includes("secretary")
+                  );
+                };
+                const isMedia = (m: Member) =>
+                  m.role.toLowerCase().includes("media");
+                const isOutreach = (m: Member) => {
+                  const r = m.role.toLowerCase();
+                  return (
+                    r.includes("outreach") || r.includes("public relation")
+                  );
+                };
+                const isResearch = (m: Member) =>
+                  m.role.toLowerCase().includes("research");
 
-              {/* Bendahara & Sekretaris - Second Level */}
-              <Box
-                style={{
-                  width: "100%",
-                  maxWidth: "1200px",
-                  marginBottom: "3rem",
-                }}
-              >
-                <Flex justify="center" mb="6">
-                  <Badge color="teal" size="3" radius="full" variant="soft">
-                    Core Team
-                  </Badge>
-                </Flex>
-                <Box
-                  style={{
-                    display: "grid",
-                    gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
-                    gap: "32px",
-                  }}
-                >
-                  {members
-                    .filter(
-                      (m) =>
-                        m.role.toLowerCase().includes("bendahara") ||
-                        m.role.toLowerCase().includes("sekretaris") ||
-                        m.role.toLowerCase().includes("treasurer") ||
-                        m.role.toLowerCase().includes("secretary"),
-                    )
-                    .map((member, index) => (
-                      <motion.div
-                        key={member.id}
-                        initial={{ opacity: 0, x: index === 0 ? -50 : 50 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        transition={{
-                          delay: 0.5 + index * 0.15,
-                          duration: 0.6,
-                          type: "spring",
-                          stiffness: 80,
-                        }}
-                      >
-                        <Card
-                          style={{
-                            padding: 0,
-                            overflow: "hidden",
-                            cursor: "pointer",
-                            transition:
-                              "transform 0.3s ease, box-shadow 0.3s ease",
-                            height: "100%",
-                          }}
-                          className="member-card"
-                        >
-                          <Box
-                            style={{
-                              height: 110,
-                              background: `linear-gradient(135deg, ${getRoleLightColor(
-                                member.color,
-                              )} 0%, ${getRoleColor(member.color)} 100%)`,
-                              position: "relative",
-                              overflow: "hidden",
-                            }}
-                          >
-                            <Meteors number={20} />
-                            <Box
-                              style={{
-                                position: "absolute",
-                                bottom: -50,
-                                left: "50%",
-                                transform: "translateX(-50%)",
-                                zIndex: 10,
-                              }}
-                            >
-                              <Avatar
-                                size="8"
-                                src={member.image || ""}
-                                fallback={member.name[0]}
-                                radius="full"
-                                style={{
-                                  border:
-                                    "5px solid var(--color-card-background)",
-                                  backgroundColor: "var(--gray-4)",
-                                  boxShadow: "0 4px 12px rgba(0,0,0,0.1)",
-                                }}
-                              />
-                            </Box>
-                          </Box>
-                          <Box p="5" pt="8" pb="6">
-                            <Flex
-                              direction="column"
-                              align="center"
-                              gap="3"
-                              style={{ marginTop: 16 }}
-                            >
-                              <Heading size="5" align="center">
-                                {member.name}
-                              </Heading>
-                              <Badge
-                                color={member.color}
-                                size="2"
-                                variant="soft"
-                                radius="full"
-                              >
-                                {member.role}
-                              </Badge>
-                            </Flex>
-                          </Box>
-                        </Card>
-                      </motion.div>
-                    ))}
-                </Box>
-              </Box>
+                // Anggota yang tidak masuk section manapun
+                const unmatched = members.filter(
+                  (m) =>
+                    !isLeadership(m) &&
+                    !isCoreTeam(m) &&
+                    !isMedia(m) &&
+                    !isOutreach(m) &&
+                    !isResearch(m),
+                );
 
-              {/* Divisi Media & Creative */}
-              <Box
-                style={{
-                  width: "100%",
-                  maxWidth: "1200px",
-                  marginBottom: "3rem",
-                }}
-              >
-                <Flex direction="column" align="center" mb="8" gap="3">
-                  <Badge color="pink" size="3" radius="full" variant="soft">
-                    Media & Creative
-                  </Badge>
-                  <Text align="center" color="gray" style={{ maxWidth: 600 }}>
-                    Responsible for visual branding, creative content
-                    production, and social media management to strengthen
-                    community identity.
-                  </Text>
-                </Flex>
-                <Box
-                  style={{
-                    display: "grid",
-                    gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
-                    gap: "32px",
-                  }}
-                >
-                  {members
-                    .filter((m) => m.role.toLowerCase().includes("media"))
-                    .sort((a, b) => {
-                      const aIsHead = a.role.toLowerCase().includes("head");
-                      const bIsHead = b.role.toLowerCase().includes("head");
-                      return aIsHead === bIsHead ? 0 : aIsHead ? -1 : 1;
-                    })
-                    .map((member, index) => (
-                      <motion.div
-                        key={member.id}
-                        initial={{ opacity: 0, y: 30 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true }}
-                        transition={{
-                          delay: 0.2 + index * 0.1,
-                          duration: 0.5,
-                          type: "spring",
-                          stiffness: 100,
-                        }}
-                      >
-                        <Card
-                          style={{
-                            padding: 0,
-                            overflow: "hidden",
-                            cursor: "pointer",
-                            transition:
-                              "transform 0.3s ease, box-shadow 0.3s ease",
-                            height: "100%",
-                          }}
-                          className="member-card"
-                        >
-                          <Box
-                            style={{
-                              height: 110,
-                              background: `linear-gradient(135deg, ${getRoleLightColor(
-                                member.color,
-                              )} 0%, ${getRoleColor(member.color)} 100%)`,
-                              position: "relative",
-                              overflow: "hidden",
-                            }}
-                          >
-                            <Meteors number={15} />
-                            <Box
-                              style={{
-                                position: "absolute",
-                                bottom: -50,
-                                left: "50%",
-                                transform: "translateX(-50%)",
-                                zIndex: 10,
-                              }}
-                            >
-                              <Avatar
-                                size="8"
-                                src={member.image || ""}
-                                fallback={member.name[0]}
-                                radius="full"
-                                style={{
-                                  border:
-                                    "5px solid var(--color-card-background)",
-                                  backgroundColor: "var(--gray-4)",
-                                  boxShadow: "0 4px 12px rgba(0,0,0,0.1)",
-                                }}
-                              />
-                            </Box>
-                          </Box>
-                          <Box p="5" pt="8" pb="6">
-                            <Flex
-                              direction="column"
-                              align="center"
-                              gap="3"
-                              style={{ marginTop: 16 }}
-                            >
-                              <Heading size="5" align="center">
-                                {member.name}
-                              </Heading>
-                              <Badge
-                                color={member.color}
-                                size="2"
-                                variant="soft"
-                                radius="full"
-                              >
-                                {member.role}
-                              </Badge>
-                            </Flex>
-                          </Box>
-                        </Card>
-                      </motion.div>
-                    ))}
-                </Box>
-              </Box>
+                return (
+                  <>
+                    {/* Ketua / Leadership */}
+                    <MemberSection
+                      label="Leadership"
+                      color="indigo"
+                      isLoading={isLoading}
+                      members={members.filter(isLeadership)}
+                      variant="large"
+                      animateOnView={false}
+                      centered
+                    />
 
-              {/* Divisi Outreach & Influence */}
-              <Box
-                style={{
-                  width: "100%",
-                  maxWidth: "1200px",
-                  marginBottom: "3rem",
-                }}
-              >
-                <Flex direction="column" align="center" mb="8" gap="3">
-                  <Badge color="orange" size="3" radius="full" variant="soft">
-                    Outreach & Influence
-                  </Badge>
-                  <Text align="center" color="gray" style={{ maxWidth: 600 }}>
-                    Building external relationships, forging strategic
-                    partnerships, and expanding community reach both on and off
-                    campus.
-                  </Text>
-                </Flex>
-                <Box
-                  style={{
-                    display: "grid",
-                    gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))",
-                    gap: "32px",
-                  }}
-                >
-                  {members
-                    .filter(
-                      (m) =>
-                        m.role.toLowerCase().includes("outreach") ||
-                        m.role.toLowerCase().includes("public relation"),
-                    )
-                    .sort((a, b) => {
-                      const aIsHead = a.role.toLowerCase().includes("head");
-                      const bIsHead = b.role.toLowerCase().includes("head");
-                      return aIsHead === bIsHead ? 0 : aIsHead ? -1 : 1;
-                    })
-                    .map((member, index) => (
-                      <motion.div
-                        key={member.id}
-                        initial={{ opacity: 0, y: 30 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true }}
-                        transition={{
-                          delay: 0.2 + index * 0.1,
-                          duration: 0.5,
-                          type: "spring",
-                          stiffness: 100,
-                        }}
-                      >
-                        <Card
-                          style={{
-                            padding: 0,
-                            overflow: "hidden",
-                            cursor: "pointer",
-                            transition:
-                              "transform 0.3s ease, box-shadow 0.3s ease",
-                            height: "100%",
-                          }}
-                          className="member-card"
-                        >
-                          <Box
-                            style={{
-                              height: 110,
-                              background: `linear-gradient(135deg, ${getRoleLightColor(
-                                member.color,
-                              )} 0%, ${getRoleColor(member.color)} 100%)`,
-                              position: "relative",
-                              overflow: "hidden",
-                            }}
-                          >
-                            <Meteors number={15} />
-                            <Box
-                              style={{
-                                position: "absolute",
-                                bottom: -50,
-                                left: "50%",
-                                transform: "translateX(-50%)",
-                                zIndex: 10,
-                              }}
-                            >
-                              <Avatar
-                                size="8"
-                                src={member.image || ""}
-                                fallback={member.name[0]}
-                                radius="full"
-                                style={{
-                                  border:
-                                    "5px solid var(--color-card-background)",
-                                  backgroundColor: "var(--gray-4)",
-                                  boxShadow: "0 4px 12px rgba(0,0,0,0.1)",
-                                }}
-                              />
-                            </Box>
-                          </Box>
-                          <Box p="5" pt="8" pb="6">
-                            <Flex
-                              direction="column"
-                              align="center"
-                              gap="3"
-                              style={{ marginTop: 16 }}
-                            >
-                              <Heading size="5" align="center">
-                                {member.name}
-                              </Heading>
-                              <Badge
-                                color={member.color}
-                                size="2"
-                                variant="soft"
-                                radius="full"
-                              >
-                                {member.role}
-                              </Badge>
-                            </Flex>
-                          </Box>
-                        </Card>
-                      </motion.div>
-                    ))}
-                </Box>
-              </Box>
+                    {/* Bendahara & Sekretaris */}
+                    <MemberSection
+                      label="Core Team"
+                      color="teal"
+                      isLoading={isLoading}
+                      members={members.filter(isCoreTeam)}
+                    />
 
-              {/* Divisi Research */}
-              <Box style={{ width: "100%", maxWidth: "1200px" }}>
-                <Flex direction="column" align="center" mb="8" gap="3">
-                  <Badge color="blue" size="3" radius="full" variant="soft">
-                    Research & Development
-                  </Badge>
-                  <Text align="center" color="gray" style={{ maxWidth: 600 }}>
-                    Focused on curriculum development, latest technology
-                    research, and organizing relevant technical education
-                    programs.
-                  </Text>
-                </Flex>
-                <Box
-                  style={{
-                    display: "grid",
-                    gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))",
-                    gap: "32px",
-                  }}
-                >
-                  {members
-                    .filter((m) => m.role.toLowerCase().includes("research"))
-                    .sort((a, b) => {
-                      const aIsHead = a.role.toLowerCase().includes("head");
-                      const bIsHead = b.role.toLowerCase().includes("head");
-                      return aIsHead === bIsHead ? 0 : aIsHead ? -1 : 1;
-                    })
-                    .map((member, index) => (
-                      <motion.div
-                        key={member.id}
-                        initial={{ opacity: 0, y: 30 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true }}
-                        transition={{
-                          delay: 0.2 + index * 0.1,
-                          duration: 0.5,
-                          type: "spring",
-                          stiffness: 100,
-                        }}
-                      >
-                        <Card
-                          style={{
-                            padding: 0,
-                            overflow: "hidden",
-                            cursor: "pointer",
-                            transition:
-                              "transform 0.3s ease, box-shadow 0.3s ease",
-                            height: "100%",
-                          }}
-                          className="member-card"
-                        >
-                          <Box
-                            style={{
-                              height: 110,
-                              background: `linear-gradient(135deg, ${getRoleLightColor(
-                                member.color,
-                              )} 0%, ${getRoleColor(member.color)} 100%)`,
-                              position: "relative",
-                              overflow: "hidden",
-                            }}
-                          >
-                            <Meteors number={15} />
-                            <Box
-                              style={{
-                                position: "absolute",
-                                bottom: -50,
-                                left: "50%",
-                                transform: "translateX(-50%)",
-                                zIndex: 10,
-                              }}
-                            >
-                              <Avatar
-                                size="8"
-                                src={member.image || ""}
-                                fallback={member.name[0]}
-                                radius="full"
-                                style={{
-                                  border:
-                                    "5px solid var(--color-card-background)",
-                                  backgroundColor: "var(--gray-4)",
-                                  boxShadow: "0 4px 12px rgba(0,0,0,0.1)",
-                                }}
-                              />
-                            </Box>
-                          </Box>
-                          <Box p="5" pt="8" pb="6">
-                            <Flex
-                              direction="column"
-                              align="center"
-                              gap="3"
-                              style={{ marginTop: 16 }}
-                            >
-                              <Heading size="5" align="center">
-                                {member.name}
-                              </Heading>
-                              <Badge
-                                color={member.color}
-                                size="2"
-                                variant="soft"
-                                radius="full"
-                              >
-                                {member.role}
-                              </Badge>
-                            </Flex>
-                          </Box>
-                        </Card>
-                      </motion.div>
-                    ))}
-                </Box>
-              </Box>
+                    {/* Divisi Media & Creative */}
+                    <MemberSection
+                      label="Media & Creative"
+                      color="pink"
+                      isLoading={isLoading}
+                      description="Responsible for visual branding, creative content production, and social media management to strengthen community identity."
+                      members={members.filter(isMedia)}
+                    />
+
+                    {/* Divisi Outreach & Influence */}
+                    <MemberSection
+                      label="Outreach & Influence"
+                      color="orange"
+                      isLoading={isLoading}
+                      description="Building external relationships, forging strategic partnerships, and expanding community reach both on and off campus."
+                      members={members.filter(isOutreach)}
+                      minCardWidth="300px"
+                    />
+
+                    {/* Divisi Research & Development */}
+                    <MemberSection
+                      label="Research & Development"
+                      color="blue"
+                      isLoading={isLoading}
+                      description="Focused on curriculum development, latest technology research, and organizing relevant technical education programs."
+                      members={members.filter(isResearch)}
+                      minCardWidth="300px"
+                    />
+
+                    {/* Catch-all: anggota yang role-nya belum masuk divisi manapun */}
+                    {!isLoading && unmatched.length > 0 && (
+                      <MemberSection
+                        label="Anggota"
+                        color="gray"
+                        isLoading={false}
+                        members={unmatched}
+                      />
+                    )}
+                  </>
+                );
+              })()}
             </Flex>
           </Section>
         </Flex>
@@ -1036,7 +547,11 @@ export default function AboutPage() {
               bersama komunitas pemuda visioner di President University
               Pekanbaru.
             </Text>
-            <InteractiveHoverButton className="mt-4 bg-indigo-600 text-white hover:bg-indigo-700 dark:bg-indigo-600 dark:text-white dark:hover:bg-indigo-700 border-none px-8 py-3">
+            {/* ✅ FIX: CTA button now navigates to /contact */}
+            <InteractiveHoverButton
+              className="mt-4 bg-indigo-600 text-white hover:bg-indigo-700 dark:bg-indigo-600 dark:text-white dark:hover:bg-indigo-700 border-none px-8 py-3"
+              onClick={() => router.push("/contact")}
+            >
               Gabung CodeLab Sekarang
             </InteractiveHoverButton>
           </Flex>
