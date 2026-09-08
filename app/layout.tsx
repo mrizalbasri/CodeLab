@@ -31,6 +31,8 @@ export const metadata: Metadata = {
   },
 };
 
+import { LanguageProvider } from "@/context/LanguageContext";
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -40,8 +42,10 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <body className={`${outfit.variable} ${jetbrainsMono.variable} antialiased`}>
         <ThemeProvider attribute="class">
-          <Theme accentColor="indigo" grayColor="slate" radius="medium" scaling="100%">
-            {children}
+          <Theme accentColor="blue" grayColor="slate" radius="medium" scaling="100%">
+            <LanguageProvider>
+              {children}
+            </LanguageProvider>
             <Toaster position="top-center" />
             <Suspense fallback={null}>
               <Analytics />

@@ -13,11 +13,14 @@ import {
 import { Menu, X, ArrowRight } from "lucide-react";
 import { useState, useEffect } from "react";
 import { ThemeToggle } from "./ThemeToggle";
+import { LanguageToggle } from "./LanguageToggle";
+import { useLanguage } from "@/context/LanguageContext";
 import { motion, AnimatePresence } from "framer-motion";
 
 export function Navbar() {
   const pathname = usePathname();
   const router = useRouter();
+  const { t } = useLanguage();
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [isNavigating, setIsNavigating] = useState(false);
@@ -70,11 +73,11 @@ export function Navbar() {
 
   // Link Items
   const navItems = [
-    { name: "Home", href: "/" },
-    { name: "About", href: "/about" },
-    { name: "Programs", href: "/programs" },
-    { name: "Gallery", href: "/gallery" },
-    { name: "Contact", href: "/contact" },
+    { name: t.nav.home, href: "/" },
+    { name: t.nav.about, href: "/about" },
+    { name: t.nav.programs, href: "/programs" },
+    { name: t.nav.gallery, href: "/gallery" },
+    { name: t.nav.contact, href: "/contact" },
   ];
 
   return (
@@ -191,7 +194,8 @@ export function Navbar() {
             </Flex>
 
             {/* Right Actions */}
-            <Flex gap="3" align="center">
+            <Flex gap="2" align="center">
+              <LanguageToggle />
               <ThemeToggle />
 
               <Box display={{ initial: "none", md: "block" }}>
@@ -208,7 +212,7 @@ export function Navbar() {
                     transform: isNavigating ? "scale(0.95)" : "scale(1)"
                   }}
                 >
-                  Join Now
+                  {t.nav.joinNow}
                 </Button>
               </Box>
 
