@@ -249,10 +249,10 @@ export function Navbar() {
             }}
             className="bg-white/95 dark:bg-black/95 flex flex-col items-center justify-center"
           >
-             {/* Gradient Background Effect */}
+             {/* Background Glow Effect */}
              <div className="absolute inset-0 pointer-events-none overflow-hidden opacity-30">
-                <div className="absolute top-[-20%] left-[-20%] w-[500px] h-[500px] bg-indigo-500 rounded-full blur-[120px]" />
-                <div className="absolute bottom-[-20%] right-[-20%] w-[500px] h-[500px] bg-purple-500 rounded-full blur-[120px]" />
+                <div className="absolute top-[-20%] left-[-20%] w-[500px] h-[500px] bg-[#0047BA] rounded-full blur-[120px]" />
+                <div className="absolute bottom-[-20%] right-[-20%] w-[500px] h-[500px] bg-blue-600 rounded-full blur-[120px]" />
              </div>
 
             <Flex 
@@ -272,10 +272,10 @@ export function Navbar() {
                   <Text 
                     size="8" 
                     weight="bold" 
-                    className="cursor-pointer hover:text-indigo-500 transition-colors tracking-tight"
+                    className="cursor-pointer hover:text-[#0047BA] dark:hover:text-[#60a5fa] transition-colors tracking-tight"
                     onClick={() => handleNavigation(item.href)}
                     style={{ 
-                      color: pathname === item.href ? "var(--indigo-9)" : "var(--gray-12)" 
+                      color: pathname === item.href ? "var(--blue-9)" : "var(--gray-12)" 
                     }}
                   >
                     {item.name}

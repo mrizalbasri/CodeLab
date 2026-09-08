@@ -15,7 +15,7 @@ export const BackgroundLines = ({
   return (
     <div
       className={cn(
-        "relative w-full h-full bg-gradient-to-b from-indigo-50 via-white to-purple-50 dark:bg-gradient-to-b dark:from-slate-950 dark:via-slate-900 dark:to-slate-950",
+        "relative w-full h-full bg-neutral-50 dark:bg-neutral-950",
         className,
       )}
     >
@@ -28,8 +28,8 @@ export const BackgroundLines = ({
       >
         <defs>
           <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="0%">
-            <stop offset="0%" stopColor="#4f46e5" />
-            <stop offset="100%" stopColor="#7c3aed" />
+            <stop offset="0%" stopColor="#0047BA" />
+            <stop offset="100%" stopColor="#3b82f6" />
           </linearGradient>
         </defs>
         <path
