@@ -128,21 +128,14 @@ body {
 
 
 
-/* Gradient Text */
+/* Brand Text (Solid Color, No Gradients) */
 .gradient-text {
-  background: linear-gradient(to right, var(--indigo-9), var(--plum-9));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  color: #0047BA;
 }
 
-/* Radial Background */
+/* Neutral Background (No Gradients) */
 .radial-gradient-bg {
-  background: radial-gradient(
-    circle at top center,
-    var(--indigo-4),
-    var(--color-background) 80%
-  );
+  background-color: var(--color-background);
   position: relative;
   overflow: hidden;
 }

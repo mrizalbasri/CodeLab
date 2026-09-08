@@ -15,9 +15,11 @@ import NextImage from "next/image";
 import { Github, Instagram, Linkedin, Mail } from "lucide-react";
 import { motion } from "framer-motion";
 import { usePathname } from "next/navigation";
+import { useLanguage } from "@/context/LanguageContext";
 
 export function Footer() {
   const pathname = usePathname();
+  const { t } = useLanguage();
 
   // Hide footer on admin pages
   if (pathname.startsWith("/admin")) {
@@ -155,11 +157,10 @@ export function Footer() {
             gap="2"
           >
             <Text size="2" color="gray">
-              © {new Date().getFullYear()} PU Pekanbaru Code Lab. All rights
-              reserved.
+              © {new Date().getFullYear()} PU Pekanbaru Code Lab. {t.footer.rights}
             </Text>
             <Text size="2" color="gray">
-              Built with ❤️ by PUPCL Team
+              {t.footer.builtBy}
             </Text>
           </Flex>
         </Container>

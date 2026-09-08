@@ -8,17 +8,19 @@ import { Member } from "@/app/actions";
 function getRoleColor(color: Member["color"]) {
   switch (color) {
     case "indigo":
-      return "var(--indigo-9)";
-    case "pink":
-      return "var(--pink-9)";
-    case "teal":
-      return "var(--teal-9)";
-    case "orange":
-      return "var(--orange-9)";
+      return "#0047BA"; // President University Blue
     case "blue":
-      return "var(--blue-9)";
+      return "#0284c7";
+    case "red":
+      return "#E31B23"; // President University Crimson Red
+    case "pink":
+      return "#db2777";
+    case "teal":
+      return "#0d9488";
+    case "orange":
+      return "#ea580c";
     default:
-      return "var(--gray-9)";
+      return "#4b5563";
   }
 }
 
@@ -99,13 +101,11 @@ export function MemberCard({
         }}
         className="member-card"
       >
-        {/* Gradient Header with Meteors */}
+        {/* Solid Header with Meteors */}
         <Box
           style={{
             height: headerHeight,
-            background: `linear-gradient(135deg, ${getRoleLightColor(
-              member.color,
-            )} 0%, ${getRoleColor(member.color)} 100%)`,
+            backgroundColor: getRoleColor(member.color),
             position: "relative",
             overflow: "hidden",
           }}

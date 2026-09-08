@@ -33,7 +33,7 @@ export function CodeBlock() {
     { text: "  return (", indent: 2, color: "gray" },
     { text: '    <div className="future-leaders">', indent: 4, color: "plum" },
     { text: "      <h1>Hello, World!</h1>", indent: 6, color: "indigo" },
-    { text: "      <p>Join the Revolution 🚀</p>", indent: 6, color: "indigo" },
+    { text: "      <p>Join the Revolution</p>", indent: 6, color: "blue" },
     { text: "    </div>", indent: 4, color: "plum" },
     { text: "  );", indent: 2, color: "gray" },
     { text: "}", indent: 0, color: "pink" },
