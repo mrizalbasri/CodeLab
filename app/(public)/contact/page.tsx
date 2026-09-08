@@ -3,25 +3,49 @@
 import { Box, Button, Card, Container, Flex, Grid, Heading, Text, TextField, TextArea } from "@radix-ui/themes";
 import { Mail, MapPin, Send, MessageCircle } from "lucide-react";
 import { motion } from "framer-motion";
-import { useActionState, useEffect } from "react";
-import { submitContactForm } from "@/app/actions";
+import { useState } from "react";
+import { siteConfig } from "@/lib/data/site-config";
 import { toast } from "sonner";
 
-export default function ContactPage() {
-    const [state, action, isPending] = useActionState(submitContactForm, null);
+import { useLanguage } from "@/context/LanguageContext";
 
-    // Show toast when state changes
-    useEffect(() => {
-        if (state?.success) {
-            toast.success(state.message);
-            // Optional: Reset form here if needed, but standard form reset might be needed
-            // Since we don't have a ref easily to the form element without useRef
-            // But relying on toast is enough for feedback
-            (document.getElementById("contact-form") as HTMLFormElement)?.reset();
-        } else if (state?.success === false) {
-             toast.error(state.message);
+export default function ContactPage() {
+    const [isSubmitting, setIsSubmitting] = useState(false);
+    const { t, language } = useLanguage();
+
+    // ponytail: client-side WhatsApp redirect provides instant response and zero cost without third-party email issues
+    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        setIsSubmitting(true);
+
+        const form = e.currentTarget;
+        const formData = new FormData(form);
+        const name = (formData.get("name") as string)?.trim();
+        const email = (formData.get("email") as string)?.trim();
+        const topic = (formData.get("topic") as string)?.trim() || "Membership / Partnership";
+        const message = (formData.get("message") as string)?.trim();
+
+        if (!name || !message) {
+            toast.error(language === "en" ? "Please fill in your name and message." : "Mohon lengkapi nama dan pesan Anda.");
+            setIsSubmitting(false);
+            return;
         }
-    }, [state]);
+
+        const lines = [
+            `*Pesan Baru dari Website PUPCL*`,
+            `*Nama:* ${name}`,
+            email ? `*Email:* ${email}` : null,
+            topic ? `*Topik:* ${topic}` : null,
+            `*Pesan:*\n${message}`,
+        ].filter(Boolean).join("\n");
+
+        const waUrl = `${siteConfig.links.whatsapp}?text=${encodeURIComponent(lines)}`;
+
+        toast.success(language === "en" ? "Redirecting to WhatsApp..." : "Mengarahkan ke WhatsApp...");
+        window.open(waUrl, "_blank");
+        form.reset();
+        setIsSubmitting(false);
+    };
 
     return (
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
@@ -29,7 +53,7 @@ export default function ContactPage() {
                 {/* Header */}
                 <Box
                     style={{
-                        background: "radial-gradient(circle at top center, var(--indigo-4), var(--color-background) 80%)",
+                        backgroundColor: "var(--gray-2)",
                         borderBottom: "1px solid var(--gray-4)",
                         paddingTop: "140px",
                         paddingBottom: "var(--space-9)",
@@ -39,9 +63,11 @@ export default function ContactPage() {
                 >
                     <Box className="bg-grid" style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, zIndex: 0 }} />
                     <Container size="3" px="4" style={{ position: 'relative', zIndex: 1 }}>
-                        <Heading size={{ initial: "7", md: "9" }} align="center" mb="4">Get in Touch</Heading>
+                        <Heading size={{ initial: "7", md: "9" }} align="center" mb="4">
+                            {t.contact.headerTitle}
+                        </Heading>
                         <Text align="center" size="5" color="gray" style={{ display: "block" }}>
-                            Have questions? We&apos;d love to hear from you.
+                            {t.contact.headerSubtitle}
                         </Text>
                     </Container>
                 </Box>
@@ -50,29 +76,33 @@ export default function ContactPage() {
                     <Grid columns={{ initial: "1", md: "2" }} gap="8">
                         {/* Contact Form */}
                         <Card size="4" style={{ boxShadow: "0 10px 40px -10px rgba(0,0,0,0.1)" }}>
-                            <form action={action} id="contact-form">
+                            <form onSubmit={handleSubmit} id="contact-form">
                                 <Flex direction="column" gap="4">
-                                    <Heading size="5" mb="2">Send us a message</Heading>
+                                    <Heading size="5" mb="2">
+                                        {language === "en" ? "Send us a message" : "Kirim pesan kepada kami"}
+                                    </Heading>
                                     <Grid columns={{ initial: "1", sm: "2" }} gap="4">
                                         <Box>
-                                            <Text as="div" size="2" mb="1" weight="bold">Name</Text>
-                                            <TextField.Root placeholder="Your name" name="name" required />
+                                            <Text as="div" size="2" mb="1" weight="bold">{t.contact.nameLabel}</Text>
+                                            <TextField.Root placeholder={language === "en" ? "Your full name" : "Nama lengkap Anda"} name="name" required />
                                         </Box>
                                         <Box>
-                                            <Text as="div" size="2" mb="1" weight="bold">Email</Text>
-                                            <TextField.Root placeholder="hello@example.com" name="email" type="email" required />
+                                            <Text as="div" size="2" mb="1" weight="bold">{t.contact.emailLabel}</Text>
+                                            <TextField.Root placeholder="hello@example.com" name="email" type="email" />
                                         </Box>
                                     </Grid>
                                     <Box>
-                                        <Text as="div" size="2" mb="1" weight="bold">Topic</Text>
-                                        <TextField.Root placeholder="Membership / Partnership" name="topic" />
+                                        <Text as="div" size="2" mb="1" weight="bold">{t.contact.subjectLabel}</Text>
+                                        <TextField.Root placeholder={language === "en" ? "Membership / Partnership" : "Pendaftaran / Kemitraan"} name="topic" />
                                     </Box>
                                     <Box>
-                                        <Text as="div" size="2" mb="1" weight="bold">Message</Text>
-                                        <TextArea placeholder="Tell us what you need..." style={{ height: 120 }} name="message" required />
+                                        <Text as="div" size="2" mb="1" weight="bold">{t.contact.messageLabel}</Text>
+                                        <TextArea placeholder={language === "en" ? "Tell us what you need..." : "Tuliskan apa yang ingin Anda sampaikan..."} style={{ height: 120 }} name="message" required />
                                     </Box>
-                                    <Button size="3" variant="solid" style={{ cursor: 'pointer' }} disabled={isPending}>
-                                        {isPending ? "Sending..." : "Send Message"} <Send size={16} />
+                                    <Button size="3" variant="solid" style={{ cursor: 'pointer', backgroundColor: "#0047BA" }} disabled={isSubmitting}>
+                                        {isSubmitting
+                                          ? (language === "en" ? "Opening WhatsApp..." : "Membuka WhatsApp...")
+                                          : (language === "en" ? "Send via WhatsApp" : "Kirim via WhatsApp")} <Send size={16} />
                                     </Button>
                                 </Flex>
                             </form>
@@ -80,28 +110,40 @@ export default function ContactPage() {
 
                         {/* Contact Info & Map */}
                         <Flex direction="column" gap="6">
-                            <Card size="3">
-                                <Flex gap="4" align="center">
-                                    <Box p="3" style={{ background: "var(--indigo-3)", borderRadius: "50%" }}>
-                                        <Mail size={24} color="var(--indigo-11)" />
-                                    </Box>
-                                    <Box>
-                                        <Heading size="3">Email Us</Heading>
-                                        <Text color="gray">contact@pupcl.org</Text>
-                                    </Box>
-                                </Flex>
+                            <Card size="3" asChild style={{ cursor: 'pointer' }}>
+                                <a href={`mailto:${siteConfig.links.email}`} style={{ textDecoration: "none", color: "inherit", display: "block" }}>
+                                    <Flex gap="4" align="center">
+                                        <Box p="3" style={{ background: "var(--indigo-3)", borderRadius: "50%" }}>
+                                            <Mail size={24} color="var(--indigo-11)" />
+                                        </Box>
+                                        <Box>
+                                            <Heading size="3">Email Us</Heading>
+                                            <Text color="gray">{siteConfig.links.email}</Text>
+                                        </Box>
+                                    </Flex>
+                                </a>
                             </Card>
 
-                            <Card size="3">
-                                <Flex gap="4" align="center">
-                                    <Box p="3" style={{ background: "var(--green-3)", borderRadius: "50%" }}>
-                                        <MessageCircle size={24} color="var(--green-11)" />
-                                    </Box>
-                                    <Box>
-                                        <Heading size="3">WhatsApp Community</Heading>
-                                        <Text color="gray">+62 812-3456-7890</Text>
-                                    </Box>
-                                </Flex>
+                            <Card size="3" asChild style={{ cursor: 'pointer' }}>
+                                <a
+                                    href={`${siteConfig.links.whatsapp}?text=${encodeURIComponent("Halo Admin PUPCL, saya ingin bertanya seputar komunitas PUPCL.")}`}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    style={{ textDecoration: "none", color: "inherit", display: "block" }}
+                                >
+                                    <Flex gap="4" align="center">
+                                        <Box p="3" style={{ background: "var(--green-3)", borderRadius: "50%" }}>
+                                            <MessageCircle size={24} color="var(--green-11)" />
+                                        </Box>
+                                        <Box>
+                                            <Flex align="center" gap="2">
+                                                <Heading size="3">WhatsApp Admin</Heading>
+                                                <Text size="1" color="green" weight="bold">Online</Text>
+                                            </Flex>
+                                            <Text color="gray">{siteConfig.links.whatsappDisplay}</Text>
+                                        </Box>
+                                    </Flex>
+                                </a>
                             </Card>
 
                             <Card size="3">

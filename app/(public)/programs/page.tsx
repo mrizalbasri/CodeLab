@@ -13,18 +13,21 @@ import {
 } from "@radix-ui/themes";
 import { Calendar, Users, Zap, MapPin, MonitorPlay, Clock } from "lucide-react";
 import { motion } from "framer-motion";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import { useRouter } from "next/navigation";
 import { getPrograms, Program } from "@/app/actions";
 import { SearchBar } from "@/components/SearchBar";
 import { Pagination } from "@/components/Pagination";
 import { useSearchAndPagination } from "@/lib/hooks/useSearchAndPagination";
 import { InteractiveHoverButton } from "@/components/ui/interactive-hover-button";
+import { formatDate, formatTime } from "@/lib/utils";
+import { useLanguage } from "@/context/LanguageContext";
 
 export default function ProgramsPage() {
   const [programs, setPrograms] = useState<Program[]>([]);
   const [selectedCategory, setSelectedCategory] = useState<string>("Semua");
   const router = useRouter();
+  const { t, language } = useLanguage();
 
   useEffect(() => {
     async function loadPrograms() {
@@ -33,6 +36,24 @@ export default function ProgramsPage() {
     }
     loadPrograms();
   }, []);
+
+  // Kategori dinamis — diambil langsung dari data, bukan hardcoded
+  const categories = useMemo(() => {
+    const unique = Array.from(
+      new Set(programs.map((p) => p.category).filter(Boolean)),
+    ).sort();
+    return ["Semua", ...unique];
+  }, [programs]);
+
+  // Reset ke "Semua" kalau kategori yang dipilih tidak ada di data terbaru
+  useEffect(() => {
+    if (
+      selectedCategory !== "Semua" &&
+      !categories.includes(selectedCategory)
+    ) {
+      setSelectedCategory("Semua");
+    }
+  }, [categories, selectedCategory]);
 
   // Filter programs by category
   const filteredByCategory =
@@ -87,13 +108,18 @@ export default function ProgramsPage() {
   const getCategoryColor = (category: string): CategoryBadgeColor =>
     categoryColors[category] ?? "gray";
 
+  // Warna tombol filter dinamis (sama logic dengan badge)
+  const getFilterColor = (cat: string) =>
+    cat === "Semua" ? undefined : getCategoryColor(cat);
+
+  const allLabel = language === "en" ? "All" : "Semua";
+
   return (
     <Box>
       {/* Hero Header */}
       <Box
         style={{
-          background:
-            "radial-gradient(circle at top center, var(--indigo-4), var(--color-background) 80%)",
+          backgroundColor: "var(--gray-2)",
           borderBottom: "1px solid var(--gray-4)",
           paddingTop: "140px",
           paddingBottom: "var(--space-9)",
@@ -120,16 +146,16 @@ export default function ProgramsPage() {
           >
             <Flex direction="column" align="center" gap="5" py="6">
               <Badge size="2" color="indigo" variant="soft" radius="full">
-                Program Unggulan
+                {language === "en" ? "Featured Programs" : "Program Unggulan"}
               </Badge>
               <Heading
                 size={{ initial: "7", md: "9" }}
                 align="center"
                 style={{ lineHeight: 1.1 }}
               >
-                Tingkatkan Skill, <br />
-                <span style={{ color: "var(--accent-9)" }}>
-                  Bangun Masa Depan.
+                {language === "en" ? "Level Up Your Skills," : "Tingkatkan Skill,"} <br />
+                <span className="text-[#0047BA] dark:text-blue-400">
+                  {language === "en" ? "Build the Future." : "Bangun Masa Depan."}
                 </span>
               </Heading>
               <Text
@@ -138,8 +164,9 @@ export default function ProgramsPage() {
                 color="gray"
                 style={{ maxWidth: 700 }}
               >
-                Beragam kegiatan edukatif mulai dari workshop teknis, webinar
-                industri, hingga kompetisi coding menantimu.
+                {language === "en"
+                  ? "Diverse educational events from technical workshops and industry webinars to hands-on hackathons await you."
+                  : "Beragam kegiatan edukatif mulai dari workshop teknis, webinar industri, hingga kompetisi coding menantimu."}
               </Text>
             </Flex>
           </motion.div>
@@ -161,26 +188,26 @@ export default function ProgramsPage() {
         >
           <Container size="4" px="4">
             <Flex justify="center" gap={{ initial: "2", md: "4" }} wrap="wrap">
-              {["Semua", "Webinar", "Workshop", "Meetup", "Hackathon"].map(
-                (cat) => (
-                  <motion.div
-                    key={cat}
-                    whileHover={{ scale: 1.1 }}
-                    whileTap={{ scale: 0.9 }}
+              {categories.map((cat) => (
+                <motion.div
+                  key={cat}
+                  whileHover={{ scale: 1.1 }}
+                  whileTap={{ scale: 0.9 }}
+                >
+                  <Button
+                    variant={selectedCategory === cat ? "soft" : "outline"}
+                    radius="full"
+                    color={
+                      selectedCategory === cat ? getFilterColor(cat) : "gray"
+                    }
+                    highContrast={selectedCategory === cat}
+                    style={{ cursor: "pointer" }}
+                    onClick={() => setSelectedCategory(cat)}
                   >
-                    <Button
-                      variant={selectedCategory === cat ? "soft" : "outline"}
-                      radius="full"
-                      color={selectedCategory === cat ? undefined : "gray"}
-                      highContrast={selectedCategory === cat}
-                      style={{ cursor: "pointer" }}
-                      onClick={() => setSelectedCategory(cat)}
-                    >
-                      {cat}
-                    </Button>
-                  </motion.div>
-                ),
-              )}
+                    {cat === "Semua" ? allLabel : cat}
+                  </Button>
+                </motion.div>
+              ))}
             </Flex>
           </Container>
         </Box>
@@ -190,7 +217,11 @@ export default function ProgramsPage() {
       <Box py="6" style={{ backgroundColor: "var(--gray-1)" }}>
         <Container size="4" px="4">
           <SearchBar
-            placeholder="Cari program berdasarkan judul, deskripsi, kategori, atau pembicara..."
+            placeholder={
+              language === "en"
+                ? "Search programs by title, description, or speaker..."
+                : "Cari program berdasarkan judul, deskripsi, kategori, atau pembicara..."
+            }
             onSearch={handleSearch}
             onClear={handleClearSearch}
           />
@@ -291,7 +322,7 @@ export default function ProgramsPage() {
                             <Flex gap="2" align="center">
                               <Calendar size={16} color="var(--gray-9)" />
                               <Text size="2" color="gray">
-                                {program.date}
+                                {formatDate(program.date)}
                               </Text>
                             </Flex>
                           )}
@@ -299,7 +330,7 @@ export default function ProgramsPage() {
                             <Flex gap="2" align="center">
                               <Clock size={16} color="var(--gray-9)" />
                               <Text size="2" color="gray">
-                                {program.time}
+                                {formatTime(program.time)}
                               </Text>
                             </Flex>
                           )}

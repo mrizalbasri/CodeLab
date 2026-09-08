@@ -1,6 +1,14 @@
 "use client";
 
-import { Box, Button, Container, Flex, Heading, Text, Tabs } from "@radix-ui/themes";
+import {
+  Box,
+  Button,
+  Container,
+  Flex,
+  Heading,
+  Text,
+  Tabs,
+} from "@radix-ui/themes";
 import { LayoutDashboard, LogOut } from "lucide-react";
 import {
   getMembers,
@@ -23,7 +31,7 @@ export default function AdminPage() {
   const [galleryItems, setGalleryItems] = useState<GalleryItem[]>([]);
   const [programs, setPrograms] = useState<Program[]>([]);
   const [initialLoading, setInitialLoading] = useState(true);
-  
+
   // This hook is used for all child components to show loading states
   const [isPending, startTransition] = useTransition();
 
@@ -110,26 +118,26 @@ export default function AdminPage() {
 
             <Box pt="5">
               <Tabs.Content value="team">
-                <MembersTab 
-                    members={members} 
-                    onRefresh={refreshData} 
-                    startTransition={startTransition}
+                <MembersTab
+                  members={members}
+                  onRefresh={refreshData}
+                  startTransition={startTransition}
                 />
               </Tabs.Content>
 
               <Tabs.Content value="gallery">
-                <GalleryTab 
-                    galleryItems={galleryItems}
-                    onRefresh={refreshData}
-                    startTransition={startTransition}
+                <GalleryTab
+                  galleryItems={galleryItems}
+                  onRefresh={refreshData}
+                  startTransition={startTransition}
                 />
               </Tabs.Content>
 
               <Tabs.Content value="programs">
-                <ProgramsTab 
-                    programs={programs}
-                    onRefresh={refreshData}
-                    startTransition={startTransition}
+                <ProgramsTab
+                  programs={programs}
+                  onRefresh={refreshData}
+                  startTransition={startTransition}
                 />
               </Tabs.Content>
             </Box>

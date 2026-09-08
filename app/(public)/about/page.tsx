@@ -12,6 +12,7 @@ import {
   Badge,
 } from "@radix-ui/themes";
 
+import NextImage from "next/image";
 import { TechStackBeam } from "@/components/TechStackBeam";
 import { InteractiveHoverButton } from "@/components/ui/interactive-hover-button";
 import { GlowingEffect } from "@/components/ui/glowing-effect";
@@ -20,22 +21,27 @@ import { BackgroundLines } from "@/components/ui/background-lines";
 import { MemberSection } from "@/components/MemberSection";
 
 import { getMembers, Member } from "@/app/actions";
+import { initialMembers } from "@/lib/data/members";
+import { useLanguage } from "@/context/LanguageContext";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 
 export default function AboutPage() {
-  const [members, setMembers] = useState<Member[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const [members, setMembers] = useState<Member[]>(initialMembers);
+  const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
+  const { t } = useLanguage();
 
   useEffect(() => {
     async function fetchData() {
       try {
         const data = await getMembers();
-        setMembers(data);
-      } finally {
-        setIsLoading(false);
+        if (data && data.length > 0) {
+          setMembers(data);
+        }
+      } catch (err) {
+        console.warn("Supabase members unavailable, using static fallback:", err);
       }
     }
     fetchData();
@@ -46,8 +52,7 @@ export default function AboutPage() {
       {/* Header Section */}
       <Box
         style={{
-          background:
-            "radial-gradient(circle at top center, var(--indigo-4), var(--color-background) 80%)",
+          backgroundColor: "var(--gray-2)",
           borderBottom: "1px solid var(--gray-4)",
           paddingTop: "140px",
           paddingBottom: "var(--space-6)",
@@ -64,7 +69,7 @@ export default function AboutPage() {
           >
             <Flex direction="column" align="center" gap="4" py="6">
               <Heading size={{ initial: "7", md: "9" }} align="center">
-                Tentang Kami
+                {t.about.headerTitle}
               </Heading>
               <Text
                 align="center"
@@ -72,10 +77,10 @@ export default function AboutPage() {
                 color="gray"
                 style={{ maxWidth: 700 }}
               >
-                Membangun ekosistem teknologi kolaboratif di{" "}
+                {t.about.headerSubtitle}{" "}
                 <LinkPreview
                   url="https://pekanbaru.president.ac.id/"
-                  className="font-bold text-indigo-500 hover:underline"
+                  className="font-bold text-[#0047BA] dark:text-blue-400 hover:underline"
                 >
                   President University Pekanbaru
                 </LinkPreview>
@@ -98,7 +103,7 @@ export default function AboutPage() {
             <Grid columns={{ initial: "1", md: "2" }} gap="9" align="center">
               <Box>
                 <Heading size={{ initial: "6", md: "8" }} mb="4" color="indigo">
-                  About PUPCL
+                  {t.about.aboutPupcl}
                 </Heading>
                 <Text
                   as="p"
@@ -106,11 +111,7 @@ export default function AboutPage() {
                   color="gray"
                   style={{ lineHeight: 1.8, marginBottom: "1.5rem" }}
                 >
-                  Di era digital yang berkembang pesat, keterampilan pemrograman
-                  (coding) menjadi salah satu kompetensi utama yang sangat
-                  dibutuhkan. Sebagai mahasiswa President University Pekanbaru,
-                  pemahaman dan kemampuan dalam coding merupakan bekal penting
-                  untuk menghadapi tantangan industri masa depan.
+                  {t.about.aboutP1}
                 </Text>
                 <Text
                   as="p"
@@ -118,11 +119,7 @@ export default function AboutPage() {
                   color="gray"
                   style={{ lineHeight: 1.8, marginBottom: "1.5rem" }}
                 >
-                  <strong>PU PEKANBARU CODE LAB (PUPCL)</strong> hadir sebagai
-                  inisiatif mahasiswa untuk menciptakan lingkungan belajar yang
-                  kolaboratif, kreatif, dan inovatif di bidang teknologi. Kami
-                  menyediakan wadah bagi mahasiswa untuk belajar coding,
-                  membangun proyek nyata, dan terhubung dengan mentor industri.
+                  {t.about.aboutP2}
                 </Text>
               </Box>
 
@@ -141,16 +138,16 @@ export default function AboutPage() {
                     border: "1px solid var(--gray-alpha-4)",
                     background: "var(--color-panel-solid)",
                     boxShadow: "0 8px 24px -6px rgba(0,0,0,0.15)",
+                    position: "relative",
                   }}
                 >
-                  <img
+                  <NextImage
                     src="/logo.jpeg"
                     alt="PUPCL Logo"
-                    style={{
-                      width: "100%",
-                      height: "auto",
-                      objectFit: "contain",
-                    }}
+                    fill
+                    style={{ objectFit: "contain" }}
+                    sizes="(max-width: 768px) 100vw, 350px"
+                    priority
                   />
                 </Box>
               </Flex>
@@ -175,7 +172,7 @@ export default function AboutPage() {
                   <div className="relative flex flex-1 flex-col justify-between gap-3">
                     <div className="w-fit rounded-lg border border-gray-600/10 p-2">
                       <Heading size="6" color="indigo">
-                        Visi
+                        {t.about.visionTitle}
                       </Heading>
                     </div>
                     <div className="space-y-3">
@@ -183,7 +180,7 @@ export default function AboutPage() {
                         size="3"
                         className="font-bold text-gray-800 dark:text-gray-100"
                       >
-                        Menjadi Pusat Keunggulan Teknologi
+                        {t.about.visionHeading}
                       </Heading>
                       <Text
                         as="p"
@@ -191,10 +188,7 @@ export default function AboutPage() {
                         color="gray"
                         style={{ lineHeight: 1.6 }}
                       >
-                        Menjadi komunitas belajar pemrograman di President
-                        University Pekanbaru yang menginspirasi dan mendukung
-                        mahasiswa untuk tumbuh bersama, mengasah kemampuan
-                        coding, dan berinovasi di bidang teknologi.
+                        {t.about.visionDesc}
                       </Text>
                     </div>
                   </div>
@@ -216,17 +210,11 @@ export default function AboutPage() {
                   <div className="relative flex flex-1 flex-col justify-between gap-3">
                     <div className="w-fit rounded-lg border border-gray-600/10 p-2">
                       <Heading size="6" color="plum">
-                        Misi
+                        {t.about.missionTitle}
                       </Heading>
                     </div>
                     <Flex direction="column" gap="2">
-                      {[
-                        "Menyelenggarakan pelatihan coding rutin untuk meningkatkan keterampilan anggota.",
-                        "Membangun pemecah masalah tangguh dengan keterampilan teknis.",
-                        "Mendorong anggota aktif membangun portofolio.",
-                        "Menumbuhkan semangat kolaborasi dan inovasi tim.",
-                        "Mendorong partisipasi dalam perlombaan teknologi.",
-                      ].map((item, i) => (
+                      {t.about.missionItems.map((item, i) => (
                         <Text
                           key={i}
                           as="p"
@@ -265,12 +253,12 @@ export default function AboutPage() {
           >
             <Box mt="4">
               <Heading size="7" mb="4">
-                Tujuan & Sasaran
+                {t.about.goalsTitle}
               </Heading>
               <Grid columns={{ initial: "1", md: "2" }} gap="6">
                 <Box>
                   <Heading size="4" color="teal" mb="2">
-                    Tujuan Kegiatan
+                    {t.about.objectivesTitle}
                   </Heading>
                   <ul
                     style={{
@@ -280,26 +268,17 @@ export default function AboutPage() {
                       lineHeight: "1.6",
                     }}
                   >
-                    <li>
-                      Wadah pengembangan kemampuan pemrograman & software
-                      development.
-                    </li>
-                    <li>
-                      Meningkatkan keterampilan praktis & minat teknologi.
-                    </li>
-                    <li>
-                      Mendorong kolaborasi lintas jurusan, dosen, dan komunitas.
-                    </li>
+                    {t.about.objectives.map((obj, i) => (
+                      <li key={i}>{obj}</li>
+                    ))}
                   </ul>
                 </Box>
                 <Box>
                   <Heading size="4" color="orange" mb="2">
-                    Sasaran Kegiatan
+                    {t.about.targetTitle}
                   </Heading>
                   <Text as="p" color="gray" style={{ lineHeight: 1.6 }}>
-                    Seluruh mahasiswa President University Pekanbaru yang
-                    tertarik mempelajari pemrograman, terbuka bagi berbagai
-                    jurusan untuk menjangkau lebih banyak peserta antusias.
+                    {t.about.targetDesc}
                   </Text>
                 </Box>
               </Grid>
@@ -317,7 +296,7 @@ export default function AboutPage() {
                   variant="soft"
                   mb="2"
                 >
-                  Teknologi & Tools
+                  {t.about.techBadge}
                 </Badge>
                 <Heading
                   size={{ initial: "6", md: "8" }}
@@ -325,7 +304,7 @@ export default function AboutPage() {
                   color="gray"
                   highContrast
                 >
-                  Kami Bereksplorasi dengan Modern Tech Stack
+                  {t.about.techTitle}
                 </Heading>
                 <Text
                   as="p"
@@ -333,10 +312,7 @@ export default function AboutPage() {
                   color="gray"
                   style={{ lineHeight: 1.8, marginBottom: "1.5rem" }}
                 >
-                  Di CodeLab, kami tidak membatasi diri pada satu teknologi.
-                  Kami mendorong anggota untuk mengeksplorasi berbagai bahasa,
-                  framework, dan tools industri terkini untuk membangun solusi
-                  yang tangguh dan relevan.
+                  {t.about.techDesc}
                 </Text>
 
                 <Grid columns="2" gap="4">
@@ -373,16 +349,6 @@ export default function AboutPage() {
                     padding: 0,
                   }}
                 >
-                  <Box
-                    style={{
-                      inset: 0,
-                      position: "absolute",
-                      opacity: 0.5,
-                      pointerEvents: "none",
-                      background:
-                        "radial-gradient(circle at center, var(--indigo-3), transparent 70%)",
-                    }}
-                  />
                   <TechStackBeam />
                 </Card>
               </Box>
@@ -393,10 +359,10 @@ export default function AboutPage() {
           <Section>
             <Flex direction="column" align="center" gap="3" mb="8">
               <Badge color="orange" size="2" radius="full" variant="soft">
-                Our Team
+                {t.about.teamBadge}
               </Badge>
               <Heading size={{ initial: "6", md: "8" }} align="center">
-                Club Structure
+                {t.about.teamTitle}
               </Heading>
               <Text
                 align="center"
@@ -404,8 +370,7 @@ export default function AboutPage() {
                 size="3"
                 style={{ maxWidth: 600 }}
               >
-                Meet the dedicated individuals who lead and drive our community
-                forward
+                {t.about.teamDesc}
               </Text>
             </Flex>
 
@@ -463,7 +428,7 @@ export default function AboutPage() {
                   <>
                     {/* Ketua / Leadership */}
                     <MemberSection
-                      label="Leadership"
+                      label={t.about.leadershipLabel}
                       color="indigo"
                       isLoading={isLoading}
                       members={members.filter(isLeadership)}
@@ -474,7 +439,7 @@ export default function AboutPage() {
 
                     {/* Bendahara & Sekretaris */}
                     <MemberSection
-                      label="Core Team"
+                      label={t.about.coreTeamLabel}
                       color="teal"
                       isLoading={isLoading}
                       members={members.filter(isCoreTeam)}
@@ -482,29 +447,29 @@ export default function AboutPage() {
 
                     {/* Divisi Media & Creative */}
                     <MemberSection
-                      label="Media & Creative"
+                      label={t.about.mediaLabel}
                       color="pink"
                       isLoading={isLoading}
-                      description="Responsible for visual branding, creative content production, and social media management to strengthen community identity."
+                      description={t.about.mediaDesc}
                       members={members.filter(isMedia)}
                     />
 
                     {/* Divisi Outreach & Influence */}
                     <MemberSection
-                      label="Outreach & Influence"
+                      label={t.about.outreachLabel}
                       color="orange"
                       isLoading={isLoading}
-                      description="Building external relationships, forging strategic partnerships, and expanding community reach both on and off campus."
+                      description={t.about.outreachDesc}
                       members={members.filter(isOutreach)}
                       minCardWidth="300px"
                     />
 
                     {/* Divisi Research & Development */}
                     <MemberSection
-                      label="Research & Development"
+                      label={t.about.researchLabel}
                       color="blue"
                       isLoading={isLoading}
-                      description="Focused on curriculum development, latest technology research, and organizing relevant technical education programs."
+                      description={t.about.researchDesc}
                       members={members.filter(isResearch)}
                       minCardWidth="300px"
                     />
@@ -512,7 +477,7 @@ export default function AboutPage() {
                     {/* Catch-all: anggota yang role-nya belum masuk divisi manapun */}
                     {!isLoading && unmatched.length > 0 && (
                       <MemberSection
-                        label="Anggota"
+                        label={t.about.unmatchedLabel}
                         color="gray"
                         isLoading={false}
                         members={unmatched}
@@ -534,25 +499,23 @@ export default function AboutPage() {
               size="9"
               align="center"
               highContrast
-              className="bg-clip-text text-transparent bg-gradient-to-b from-indigo-600 via-purple-600 to-indigo-700 dark:from-indigo-200 dark:via-purple-200 dark:to-indigo-100 text-center"
+              className="text-[#0047BA] dark:text-blue-400 font-extrabold text-center"
             >
-              Siap untuk Berinovasi Bersama Kami?
+              {t.about.ctaTitle}
             </Heading>
             <Text
               align="center"
               size="5"
               className="max-w-2xl text-neutral-700 dark:text-neutral-300"
             >
-              Jangan lewatkan kesempatan untuk belajar, berkarya, dan berkembang
-              bersama komunitas pemuda visioner di President University
-              Pekanbaru.
+              {t.about.ctaDesc}
             </Text>
-            {/* ✅ FIX: CTA button now navigates to /contact */}
+            {/* CTA button navigates to /contact */}
             <InteractiveHoverButton
-              className="mt-4 bg-indigo-600 text-white hover:bg-indigo-700 dark:bg-indigo-600 dark:text-white dark:hover:bg-indigo-700 border-none px-8 py-3"
+              className="mt-4 bg-[#0047BA] text-white hover:bg-[#00358a] border-none px-8 py-3"
               onClick={() => router.push("/contact")}
             >
-              Gabung CodeLab Sekarang
+              {t.about.ctaBtn}
             </InteractiveHoverButton>
           </Flex>
         </Container>
