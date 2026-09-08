@@ -50,7 +50,7 @@ export default function Home() {
                   style={{ wordBreak: "break-word", overflowWrap: "break-word" }}
                 >
                   <span className="text-[#0047BA] dark:text-[#60a5fa]">PU PEKANBARU </span>
-                  <span className="text-[#E31B23]">CODE LAB</span>
+                  <span className="text-[#E31B23] dark:text-[#ff5c5c]">CODE LAB</span>
                 </Heading>
                 <Heading
                   size={{ initial: "5", xs: "6", sm: "7", md: "8" }}
@@ -60,7 +60,7 @@ export default function Home() {
                 >
                   <span className="text-neutral-400 dark:text-neutral-600 font-bold">(</span>
                   <span className="text-[#0047BA] dark:text-[#60a5fa]">PU</span>
-                  <span className="text-[#E31B23]">PCL</span>
+                  <span className="text-[#E31B23] dark:text-[#ff5c5c]">PCL</span>
                   <span className="text-neutral-400 dark:text-neutral-600 font-bold">)</span>
                 </Heading>
               </MotionWrapper>
@@ -97,7 +97,7 @@ export default function Home() {
                   </Link>
                   <Link href="/about">
                     <button
-                      className="w-48 py-3.5 px-6 rounded-xl font-bold bg-transparent border-2 border-[#E31B23] text-[#E31B23] hover:bg-[#E31B23] hover:text-white shadow-sm hover:shadow-md hover:scale-105 transition-all cursor-pointer text-sm sm:text-base"
+                      className="w-48 py-3.5 px-6 rounded-xl font-bold bg-transparent border-2 border-[#E31B23] dark:border-[#ff5c5c] text-[#E31B23] dark:text-[#ff5c5c] hover:bg-[#E31B23] hover:text-white dark:hover:bg-[#ff5c5c] dark:hover:text-black shadow-sm hover:shadow-md hover:scale-105 transition-all cursor-pointer text-sm sm:text-base"
                     >
                       {t.nav.about} PUPCL
                     </button>

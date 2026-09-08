@@ -28,7 +28,7 @@ export function LanguageToggle() {
       <span
         className={`transition-colors ${
           language === "id"
-            ? "font-extrabold text-[#E31B23]"
+            ? "font-extrabold text-[#E31B23] dark:text-[#ff5c5c]"
             : "font-normal text-[var(--gray-9)]"
         }`}
       >
