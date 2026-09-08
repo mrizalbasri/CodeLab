@@ -134,8 +134,8 @@ export function MemberSection({
             <Box
               style={{
                 display: "grid",
-                gridTemplateColumns: `repeat(auto-fit, minmax(${minCardWidth}, 1fr))`,
-                gap: "32px",
+                gridTemplateColumns: `repeat(auto-fit, minmax(min(100%, ${minCardWidth}), 1fr))`,
+                gap: "24px",
               }}
             >
               {Array.from({ length: skeletonCount }).map((_, i) => (
@@ -178,8 +178,8 @@ export function MemberSection({
             <Box
               style={{
                 display: "grid",
-                gridTemplateColumns: `repeat(auto-fit, minmax(${minCardWidth}, 1fr))`,
-                gap: "32px",
+                gridTemplateColumns: `repeat(auto-fit, minmax(min(100%, ${minCardWidth}), 1fr))`,
+                gap: "24px",
               }}
             >
               {sorted.map((member, index) => (

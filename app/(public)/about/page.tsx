@@ -73,9 +73,9 @@ export default function AboutPage() {
               </Heading>
               <Text
                 align="center"
-                size="5"
+                size={{ initial: "3", sm: "4", md: "5" }}
                 color="gray"
-                style={{ maxWidth: 700 }}
+                style={{ maxWidth: 700, lineHeight: 1.6 }}
               >
                 {t.about.headerSubtitle}{" "}
                 <LinkPreview
@@ -492,27 +492,28 @@ export default function AboutPage() {
       </Container>
 
       {/* Full Width CTA Section with Background Lines */}
-      <BackgroundLines className="w-full py-20">
-        <Container size="3">
-          <Flex direction="column" align="center" gap="6">
+      <BackgroundLines className="w-full py-16 sm:py-20">
+        <Container size="3" px="4">
+          <Flex direction="column" align="center" gap={{ initial: "4", sm: "6" }}>
             <Heading
-              size="9"
+              size={{ initial: "6", sm: "8", md: "9" }}
               align="center"
               highContrast
-              className="text-[#0047BA] dark:text-blue-400 font-extrabold text-center"
+              className="text-[#0047BA] dark:text-blue-400 font-extrabold text-center tracking-tight"
             >
               {t.about.ctaTitle}
             </Heading>
             <Text
               align="center"
-              size="5"
+              size={{ initial: "3", sm: "4", md: "5" }}
               className="max-w-2xl text-neutral-700 dark:text-neutral-300"
+              style={{ lineHeight: 1.6 }}
             >
               {t.about.ctaDesc}
             </Text>
             {/* CTA button navigates to /contact */}
             <InteractiveHoverButton
-              className="mt-4 bg-[#0047BA] text-white hover:bg-[#00358a] border-none px-8 py-3"
+              className="mt-2 sm:mt-4 bg-[#0047BA] text-white hover:bg-[#00358a] border-none px-8 py-3"
               onClick={() => router.push("/contact")}
             >
               {t.about.ctaBtn}

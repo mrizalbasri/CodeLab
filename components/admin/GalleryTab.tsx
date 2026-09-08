@@ -180,15 +180,16 @@ export function GalleryTab({
         <Heading size="4" mb="4">
           Gallery Items ({galleryItems.length})
         </Heading>
-        <Table.Root variant="surface">
-          <Table.Header>
-            <Table.Row>
-              <Table.ColumnHeaderCell>Image</Table.ColumnHeaderCell>
-              <Table.ColumnHeaderCell>Title & Date</Table.ColumnHeaderCell>
-              <Table.ColumnHeaderCell>Category</Table.ColumnHeaderCell>
-              <Table.ColumnHeaderCell>Action</Table.ColumnHeaderCell>
-            </Table.Row>
-          </Table.Header>
+        <Box style={{ overflowX: "auto", WebkitOverflowScrolling: "touch" }}>
+          <Table.Root variant="surface">
+            <Table.Header>
+              <Table.Row>
+                <Table.ColumnHeaderCell>Image</Table.ColumnHeaderCell>
+                <Table.ColumnHeaderCell>Title & Date</Table.ColumnHeaderCell>
+                <Table.ColumnHeaderCell>Category</Table.ColumnHeaderCell>
+                <Table.ColumnHeaderCell>Action</Table.ColumnHeaderCell>
+              </Table.Row>
+            </Table.Header>
 
           <Table.Body>
             {galleryItems.map((item) => (
@@ -273,6 +274,7 @@ export function GalleryTab({
             ))}
           </Table.Body>
         </Table.Root>
+        </Box>
       </Card>
     </Grid>
   );

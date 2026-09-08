@@ -10,7 +10,7 @@ import {
   Box,
   IconButton,
 } from "@radix-ui/themes";
-import { Menu, X, ArrowRight } from "lucide-react";
+import { Menu, X, ArrowRight, Home, Users, Sparkles, Image as ImageIcon, Mail } from "lucide-react";
 import { useState, useEffect } from "react";
 import { ThemeToggle } from "./ThemeToggle";
 import { LanguageToggle } from "./LanguageToggle";
@@ -71,13 +71,13 @@ export function Navbar() {
     return null;
   }
 
-  // Link Items
+  // Link Items with icons for mobile
   const navItems = [
-    { name: t.nav.home, href: "/" },
-    { name: t.nav.about, href: "/about" },
-    { name: t.nav.programs, href: "/programs" },
-    { name: t.nav.gallery, href: "/gallery" },
-    { name: t.nav.contact, href: "/contact" },
+    { name: t.nav.home, href: "/", icon: Home },
+    { name: t.nav.about, href: "/about", icon: Users },
+    { name: t.nav.programs, href: "/programs", icon: Sparkles },
+    { name: t.nav.gallery, href: "/gallery", icon: ImageIcon },
+    { name: t.nav.contact, href: "/contact", icon: Mail },
   ];
 
   return (
@@ -92,7 +92,7 @@ export function Navbar() {
           py="2"
           style={{
             pointerEvents: "auto",
-            width: "90%",
+            width: "92%",
             maxWidth: "1000px",
             transform: isNavigating ? "scale(0.98)" : "scale(1)",
             transition: "all 0.4s cubic-bezier(0.4, 0, 0.2, 1)",
@@ -154,9 +154,9 @@ export function Navbar() {
                   onKeyDown={(e) => handleKeyDown(e, item.href)}
                   className="no-underline nav-button"
                   style={{ 
-                    textDecoration: "none",
-                    background: "none",
-                    border: "none",
+                    textDecoration: "none", 
+                    background: "none", 
+                    border: "none", 
                     cursor: "pointer"
                   }}
                   aria-label={`Navigate to ${item.name}`}
@@ -195,8 +195,12 @@ export function Navbar() {
 
             {/* Right Actions */}
             <Flex gap="2" align="center">
-              <LanguageToggle />
-              <ThemeToggle />
+              <Box display={{ initial: "none", sm: "block" }}>
+                <LanguageToggle />
+              </Box>
+              <Box display={{ initial: "none", sm: "block" }}>
+                <ThemeToggle />
+              </Box>
 
               <Box display={{ initial: "none", md: "block" }}>
                 <Button
@@ -216,16 +220,18 @@ export function Navbar() {
                 </Button>
               </Box>
 
-              {/* Mobile Burger */}
+              {/* Mobile Burger Button */}
               <Box display={{ initial: "block", md: "none" }}>
                 <IconButton 
                   variant="ghost" 
                   color="gray" 
                   radius="full"
+                  size="3"
                   onClick={() => setIsOpen(!isOpen)}
-                  style={{ zIndex: 101 }}
+                  style={{ zIndex: 101, minWidth: "40px", minHeight: "40px" }}
+                  aria-label={isOpen ? "Tutup menu" : "Buka menu"}
                 >
-                  {isOpen ? <X size={20} /> : <Menu size={20} />}
+                  {isOpen ? <X size={22} /> : <Menu size={22} />}
                 </IconButton>
               </Box>
             </Flex>
@@ -233,74 +239,158 @@ export function Navbar() {
         </Box>
       </Box>
 
-      {/* Mobile Menu Overlay */}
+      {/* Mobile Drawer Overlay */}
       <AnimatePresence>
         {isOpen && (
           <motion.div
-            initial={{ opacity: 0, backdropFilter: "blur(0px)" }}
-            animate={{ opacity: 1, backdropFilter: "blur(12px)" }}
-            exit={{ opacity: 0, backdropFilter: "blur(0px)" }}
-            transition={{ duration: 0.3 }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.25 }}
             style={{
               position: "fixed",
               inset: 0,
-              zIndex: 90,
-              background: "var(--color-background)",
+              zIndex: 110,
+              background: "rgba(0, 0, 0, 0.45)",
+              backdropFilter: "blur(8px)",
+              WebkitBackdropFilter: "blur(8px)",
             }}
-            className="bg-white/95 dark:bg-black/95 flex flex-col items-center justify-center"
+            onClick={() => setIsOpen(false)}
+            className="flex flex-col justify-start p-4 pt-6 sm:p-6"
           >
-             {/* Background Glow Effect */}
-             <div className="absolute inset-0 pointer-events-none overflow-hidden opacity-30">
-                <div className="absolute top-[-20%] left-[-20%] w-[500px] h-[500px] bg-[#0047BA] rounded-full blur-[120px]" />
-                <div className="absolute bottom-[-20%] right-[-20%] w-[500px] h-[500px] bg-blue-600 rounded-full blur-[120px]" />
-             </div>
-
-            <Flex 
-              direction="column" 
-              align="center" 
-              gap="8" 
-              style={{ position: "relative", zIndex: 2, width: "100%" }}
+            <motion.div
+              initial={{ opacity: 0, y: -24, scale: 0.98 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: -24, scale: 0.98 }}
+              transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
+              style={{
+                width: "100%",
+                maxWidth: "460px",
+                margin: "0 auto",
+                backgroundColor: "var(--color-panel-solid)",
+                border: "1px solid var(--gray-6)",
+                boxShadow: "0 20px 50px rgba(0, 0, 0, 0.25)",
+              }}
+              className="rounded-3xl p-5 sm:p-6 flex flex-col overflow-y-auto max-h-[90vh]"
+              onClick={(e) => e.stopPropagation()}
             >
-              {navItems.map((item, i) => (
-                <motion.div
-                  key={item.href}
-                  initial={{ opacity: 0, y: 30 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: 20 }}
-                  transition={{ delay: 0.1 + (i * 0.1), duration: 0.4, ease: "easeOut" }}
-                >
-                  <Text 
-                    size="8" 
-                    weight="bold" 
-                    className="cursor-pointer hover:text-[#0047BA] dark:hover:text-[#60a5fa] transition-colors tracking-tight"
-                    onClick={() => handleNavigation(item.href)}
-                    style={{ 
-                      color: pathname === item.href ? "var(--blue-9)" : "var(--gray-12)" 
-                    }}
-                  >
-                    {item.name}
-                  </Text>
-                </motion.div>
-              ))}
-
-              <motion.div
-                initial={{ opacity: 0, scale: 0.9 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0 }}
-                transition={{ delay: 0.6 }}
-                style={{ marginTop: "2rem" }}
-              >
-                <Button 
-                  size="4" 
-                  variant="classic" 
+              {/* Top Drawer Header */}
+              <Flex justify="between" align="center" pb="4" style={{ borderBottom: "1px solid var(--gray-5)" }}>
+                <Flex align="center" gap="3">
+                  <Box className="logo-circle">
+                    <NextImage
+                      src="/logo.jpeg"
+                      alt="CodeLab Logo"
+                      width={36}
+                      height={36}
+                      className="logo-img"
+                    />
+                  </Box>
+                  <Flex direction="column">
+                    <Text size="3" weight="bold" style={{ color: "var(--gray-12)" }}>
+                      PU Pekanbaru Code Lab
+                    </Text>
+                    <Text size="1" color="gray">
+                      Student Tech Community
+                    </Text>
+                  </Flex>
+                </Flex>
+                <IconButton
+                  variant="soft"
+                  color="gray"
                   radius="full"
-                  className="px-8"
+                  size="2"
+                  onClick={() => setIsOpen(false)}
+                  aria-label="Tutup menu"
+                  style={{ cursor: "pointer" }}
+                >
+                  <X size={18} />
+                </IconButton>
+              </Flex>
+
+              {/* Navigation Links */}
+              <Flex direction="column" gap="2" py="4">
+                {navItems.map((item) => {
+                  const Icon = item.icon;
+                  const isActive = pathname === item.href;
+                  return (
+                    <button
+                      key={item.href}
+                      onClick={() => handleNavigation(item.href)}
+                      className="w-full flex items-center justify-between p-3 rounded-2xl transition-all cursor-pointer text-left"
+                      style={{
+                        backgroundColor: isActive ? "var(--indigo-3)" : "var(--gray-2)",
+                        color: isActive ? "var(--indigo-11)" : "var(--gray-12)",
+                        border: isActive ? "1px solid var(--indigo-6)" : "1px solid transparent",
+                      }}
+                    >
+                      <Flex align="center" gap="3">
+                        <Box
+                          p="2"
+                          style={{
+                            borderRadius: "10px",
+                            backgroundColor: isActive ? "var(--indigo-9)" : "var(--gray-4)",
+                            color: isActive ? "white" : "var(--gray-11)",
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "center",
+                          }}
+                        >
+                          <Icon size={18} />
+                        </Box>
+                        <Text size="3" weight={isActive ? "bold" : "medium"}>
+                          {item.name}
+                        </Text>
+                      </Flex>
+                      {isActive && (
+                        <Box
+                          px="2"
+                          py="1"
+                          style={{
+                            borderRadius: "9999px",
+                            backgroundColor: "var(--indigo-9)",
+                            color: "white",
+                            fontSize: "11px",
+                            fontWeight: "bold",
+                          }}
+                        >
+                          Active
+                        </Box>
+                      )}
+                    </button>
+                  );
+                })}
+              </Flex>
+
+              {/* Preferences Row (Language & Theme) */}
+              <Box pt="4" style={{ borderTop: "1px solid var(--gray-5)" }}>
+                <Flex justify="between" align="center" mb="4">
+                  <Text size="2" color="gray" weight="medium">
+                    Preferensi Tampilan
+                  </Text>
+                  <Flex gap="2" align="center">
+                    <LanguageToggle />
+                    <ThemeToggle />
+                  </Flex>
+                </Flex>
+
+                {/* Thumb-friendly CTA Button */}
+                <Button
+                  size="3"
+                  variant="solid"
+                  radius="large"
+                  className="w-full py-3 font-bold"
+                  style={{
+                    backgroundColor: "#0047BA",
+                    color: "white",
+                    cursor: "pointer",
+                  }}
                   onClick={() => handleNavigation("/contact")}
                 >
-                  Join CodeLab <ArrowRight size={18} style={{ marginLeft: "8px" }}/>
+                  {t.nav.joinNow} <ArrowRight size={18} style={{ marginLeft: "6px" }} />
                 </Button>
-              </motion.div>
-            </Flex>
+              </Box>
+            </motion.div>
           </motion.div>
         )}
       </AnimatePresence>

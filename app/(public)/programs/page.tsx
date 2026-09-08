@@ -160,9 +160,9 @@ export default function ProgramsPage() {
               </Heading>
               <Text
                 align="center"
-                size="5"
+                size={{ initial: "3", sm: "4", md: "5" }}
                 color="gray"
-                style={{ maxWidth: 700 }}
+                style={{ maxWidth: 700, lineHeight: 1.6 }}
               >
                 {language === "en"
                   ? "Diverse educational events from technical workshops and industry webinars to hands-on hackathons await you."
@@ -180,19 +180,19 @@ export default function ProgramsPage() {
         transition={{ delay: 0.3 }}
       >
         <Box
-          py="6"
+          py="4"
           style={{
             borderBottom: "1px solid var(--gray-4)",
             backgroundColor: "var(--gray-2)",
           }}
         >
           <Container size="4" px="4">
-            <Flex justify="center" gap={{ initial: "2", md: "4" }} wrap="wrap">
+            <div className="flex items-center gap-2 overflow-x-auto pb-2 pt-1 sm:flex-wrap sm:justify-center no-scrollbar">
               {categories.map((cat) => (
                 <motion.div
                   key={cat}
-                  whileHover={{ scale: 1.1 }}
-                  whileTap={{ scale: 0.9 }}
+                  whileTap={{ scale: 0.95 }}
+                  className="shrink-0"
                 >
                   <Button
                     variant={selectedCategory === cat ? "soft" : "outline"}
@@ -201,14 +201,14 @@ export default function ProgramsPage() {
                       selectedCategory === cat ? getFilterColor(cat) : "gray"
                     }
                     highContrast={selectedCategory === cat}
-                    style={{ cursor: "pointer" }}
+                    style={{ cursor: "pointer", minHeight: "36px" }}
                     onClick={() => setSelectedCategory(cat)}
                   >
                     {cat === "Semua" ? allLabel : cat}
                   </Button>
                 </motion.div>
               ))}
-            </Flex>
+            </div>
           </Container>
         </Box>
       </motion.div>
@@ -261,7 +261,7 @@ export default function ProgramsPage() {
             <motion.div
               style={{
                 display: "grid",
-                gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
+                gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 280px), 1fr))",
                 gap: "24px",
               }}
               variants={containerVariants}
@@ -272,7 +272,7 @@ export default function ProgramsPage() {
                 <motion.div
                   key={program.id}
                   variants={itemVariants}
-                  whileHover={{ y: -10 }}
+                  whileHover={{ y: -6 }}
                   transition={{ type: "spring", stiffness: 300 }}
                 >
                   <Card size="3">

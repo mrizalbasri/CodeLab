@@ -70,7 +70,7 @@ export default function GalleryPage() {
                         <Flex direction="column" align="center" gap="4" py="6">
                             <Badge size="2" color="indigo" variant="soft" radius="full">Dokumentasi</Badge>
                             <Heading size={{ initial: "7", md: "9" }} align="center">Galeri Kegiatan</Heading>
-                            <Text align="center" size="5" color="gray" style={{ maxWidth: 600 }}>
+                            <Text align="center" size={{ initial: "3", sm: "4", md: "5" }} color="gray" style={{ maxWidth: 600, lineHeight: 1.6 }}>
                                 Momen-momen berharga perjalanan kami dalam berkarya dan berinovasi.
                             </Text>
                         </Flex>
@@ -78,14 +78,14 @@ export default function GalleryPage() {
                 </Container>
             </Box>
 
-            <Container size="4" py="9" px="4">
+            <Container size="4" py={{ initial: "6", md: "9" }} px="4">
                 <Tabs.Root value={activeTab} onValueChange={setActiveTab}>
-                    <Flex justify="center" mb="6">
-                        <Tabs.List>
-                            <Tabs.Trigger value="all">Semua</Tabs.Trigger>
-                            <Tabs.Trigger value="kegiatan">Kegiatan</Tabs.Trigger>
-                            <Tabs.Trigger value="proyek">Proyek</Tabs.Trigger>
-                            <Tabs.Trigger value="prestasi">Prestasi</Tabs.Trigger>
+                    <Flex justify="center" mb="6" className="overflow-x-auto no-scrollbar pb-1">
+                        <Tabs.List size="2">
+                            <Tabs.Trigger value="all" className="min-h-[38px] px-4 cursor-pointer">Semua</Tabs.Trigger>
+                            <Tabs.Trigger value="kegiatan" className="min-h-[38px] px-4 cursor-pointer">Kegiatan</Tabs.Trigger>
+                            <Tabs.Trigger value="proyek" className="min-h-[38px] px-4 cursor-pointer">Proyek</Tabs.Trigger>
+                            <Tabs.Trigger value="prestasi" className="min-h-[38px] px-4 cursor-pointer">Prestasi</Tabs.Trigger>
                         </Tabs.List>
                     </Flex>
 
@@ -110,7 +110,7 @@ export default function GalleryPage() {
                     {/* Gallery Grid */}
                     <Box mb="6">
                         <motion.div
-                            style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: "16px" }}
+                            style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 280px), 1fr))", gap: "20px" }}
                             variants={containerVariants}
                             initial="hidden"
                             animate="visible"
@@ -118,10 +118,10 @@ export default function GalleryPage() {
                         >
                             {paginatedData.length > 0 ? (
                                 paginatedData.map((item) => (
-                                    <motion.div key={item.id} whileHover={{ scale: 1.03 }} transition={{ type: 'spring', stiffness: 300 }}>
+                                    <motion.div key={item.id} whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} transition={{ type: 'spring', stiffness: 300 }}>
                                         <Card style={{ padding: 0, overflow: 'hidden', cursor: 'pointer' }} className="group">
                                             <Inset clip="padding-box" side="top" pb="current">
-                                                <Box style={{ position: 'relative', overflow: 'hidden', height: 240 }}>
+                                                <Box style={{ position: 'relative', overflow: 'hidden', height: 220 }}>
                                                     <NextImage
                                                         src={item.src}
                                                         alt={item.title}

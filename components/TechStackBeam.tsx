@@ -12,7 +12,7 @@ const Circle = forwardRef<
     <div
       ref={ref}
       className={cn(
-        "z-10 flex size-16 items-center justify-center rounded-full border-2 border-border bg-white p-3 shadow-[0_0_20px_-12px_rgba(0,0,0,0.8)] dark:bg-black",
+        "z-10 flex size-12 sm:size-16 items-center justify-center rounded-full border-2 border-border bg-white p-2.5 sm:p-3 shadow-[0_0_20px_-12px_rgba(0,0,0,0.8)] dark:bg-black",
         className
       )}
     >
@@ -122,35 +122,35 @@ export function TechStackBeam() {
 
   return (
     <div
-      className="relative flex h-[400px] w-full items-center justify-center overflow-hidden p-10"
+      className="relative flex h-[340px] sm:h-[400px] w-full items-center justify-center overflow-hidden p-4 sm:p-8 md:p-10"
       ref={containerRef}
     >
-      <div className="flex size-full flex-col items-stretch justify-between gap-10">
+      <div className="flex size-full flex-col items-stretch justify-between gap-6 sm:gap-10">
         <div className="flex flex-row items-center justify-between">
           <Circle ref={div1Ref}>
-            <Icons.html5 className="size-8" />
+            <Icons.html5 className="size-6 sm:size-8" />
           </Circle>
           <Circle ref={div5Ref}>
-            <Icons.php className="size-8" />
+            <Icons.php className="size-6 sm:size-8" />
           </Circle>
         </div>
         <div className="flex flex-row items-center justify-between">
           <Circle ref={div2Ref}>
-            <Icons.css3 className="size-8" />
+            <Icons.css3 className="size-6 sm:size-8" />
           </Circle>
-          <Circle ref={div4Ref} className="size-24 border-indigo-500/50 bg-indigo-50/10 dark:bg-indigo-900/20">
-            <Icons.visualstudiocode className="size-12" />
+          <Circle ref={div4Ref} className="size-16 sm:size-24 border-indigo-500/50 bg-indigo-50/10 dark:bg-indigo-900/20">
+            <Icons.visualstudiocode className="size-8 sm:size-12" />
           </Circle>
           <Circle ref={div6Ref}>
-            <Icons.mysql className="size-10" />
+            <Icons.mysql className="size-7 sm:size-10" />
           </Circle>
         </div>
         <div className="flex flex-row items-center justify-between">
           <Circle ref={div3Ref}>
-            <Icons.javascript className="size-8" />
+            <Icons.javascript className="size-6 sm:size-8" />
           </Circle>
           <Circle ref={div7Ref}>
-            <Icons.java className="size-8" />
+            <Icons.java className="size-6 sm:size-8" />
           </Circle>
         </div>
       </div>

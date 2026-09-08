@@ -63,22 +63,22 @@ export default function ContactPage() {
                 >
                     <Box className="bg-grid" style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, zIndex: 0 }} />
                     <Container size="3" px="4" style={{ position: 'relative', zIndex: 1 }}>
-                        <Heading size={{ initial: "7", md: "9" }} align="center" mb="4">
+                        <Heading size={{ initial: "7", md: "9" }} align="center" mb="3">
                             {t.contact.headerTitle}
                         </Heading>
-                        <Text align="center" size="5" color="gray" style={{ display: "block" }}>
+                        <Text align="center" size={{ initial: "3", sm: "4", md: "5" }} color="gray" style={{ display: "block", lineHeight: 1.6 }}>
                             {t.contact.headerSubtitle}
                         </Text>
                     </Container>
                 </Box>
 
-                <Container size="4" px="4" style={{ marginTop: "-60px" }}>
-                    <Grid columns={{ initial: "1", md: "2" }} gap="8">
+                <Container size="4" px="4" style={{ marginTop: "calc(var(--space-6) * -1)" }}>
+                    <Grid columns={{ initial: "1", md: "2" }} gap={{ initial: "5", md: "8" }}>
                         {/* Contact Form */}
-                        <Card size="4" style={{ boxShadow: "0 10px 40px -10px rgba(0,0,0,0.1)" }}>
+                        <Card size={{ initial: "2", sm: "3", md: "4" }} style={{ boxShadow: "0 10px 40px -10px rgba(0,0,0,0.1)" }}>
                             <form onSubmit={handleSubmit} id="contact-form">
                                 <Flex direction="column" gap="4">
-                                    <Heading size="5" mb="2">
+                                    <Heading size="5" mb="1">
                                         {language === "en" ? "Send us a message" : "Kirim pesan kepada kami"}
                                     </Heading>
                                     <Grid columns={{ initial: "1", sm: "2" }} gap="4">
@@ -99,7 +99,7 @@ export default function ContactPage() {
                                         <Text as="div" size="2" mb="1" weight="bold">{t.contact.messageLabel}</Text>
                                         <TextArea placeholder={language === "en" ? "Tell us what you need..." : "Tuliskan apa yang ingin Anda sampaikan..."} style={{ height: 120 }} name="message" required />
                                     </Box>
-                                    <Button size="3" variant="solid" style={{ cursor: 'pointer', backgroundColor: "#0047BA" }} disabled={isSubmitting}>
+                                    <Button size="3" variant="solid" style={{ cursor: 'pointer', backgroundColor: "#0047BA", minHeight: "44px" }} disabled={isSubmitting}>
                                         {isSubmitting
                                           ? (language === "en" ? "Opening WhatsApp..." : "Membuka WhatsApp...")
                                           : (language === "en" ? "Send via WhatsApp" : "Kirim via WhatsApp")} <Send size={16} />

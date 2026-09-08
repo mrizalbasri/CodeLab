@@ -37,26 +37,23 @@ export function ScrollToTop() {
           animate={{ opacity: 1, scale: 1, y: 0 }}
           exit={{ opacity: 0, scale: 0.5, y: 20 }}
           transition={{ duration: 0.3 }}
-          style={{
-            position: "fixed",
-            bottom: "2rem",
-            right: "2rem",
-            zIndex: 50,
-          }}
+          className="fixed bottom-4 right-4 sm:bottom-8 sm:right-8 z-50"
         >
           <IconButton
             size="3"
             radius="full"
             onClick={scrollToTop}
+            aria-label="Scroll to top"
             style={{
-              padding: "12px",
-              boxShadow: "0 8px 30px rgba(0,0,0,0.12)",
+              width: 44,
+              height: 44,
+              boxShadow: "0 8px 30px rgba(0,0,0,0.18)",
               backdropFilter: "blur(12px)",
               backgroundColor: "var(--indigo-9)",
               color: "white",
               cursor: "pointer",
             }}
-            className="hover:scale-110 transition-transform"
+            className="hover:scale-110 active:scale-95 transition-transform"
           >
             <ArrowUp size={20} fontWeight="bold" />
           </IconButton>

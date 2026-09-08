@@ -78,43 +78,46 @@ export default function AdminPage() {
     >
       {/* Header */}
       <Box
-        py="6"
+        py="4"
         style={{
           backgroundColor: "var(--color-panel-solid)",
           borderBottom: "1px solid var(--gray-4)",
         }}
       >
-        <Container size="4">
-          <Flex align="center" justify="between">
-            <Flex align="center" gap="3">
-              <LayoutDashboard color="var(--indigo-9)" />
-              <Heading size="6">PUPCL Team Manager</Heading>
+        <Container size="4" px="4">
+          <Flex align="center" justify="between" gap="3">
+            <Flex align="center" gap="2.5">
+              <LayoutDashboard color="var(--indigo-9)" size={22} />
+              <Heading size={{ initial: "4", sm: "6" }}>PUPCL Manager</Heading>
             </Flex>
             <Button
               color="red"
               variant="soft"
+              size="2"
               style={{ cursor: "pointer" }}
               onClick={handleLogout}
             >
-              <LogOut size={16} />
-              Logout
+              <LogOut size={15} />
+              <span className="hidden sm:inline">Logout</span>
             </Button>
           </Flex>
         </Container>
       </Box>
 
-      <Container size="4" py="6">
+      <Container size="4" py="6" px="4">
         {initialLoading ? (
           <Flex justify="center" align="center" style={{ minHeight: "300px" }}>
             <Text color="gray">Memuat data dashboard...</Text>
           </Flex>
         ) : (
           <Tabs.Root defaultValue="team">
-            <Tabs.List>
-              <Tabs.Trigger value="team">Team Members</Tabs.Trigger>
-              <Tabs.Trigger value="gallery">Gallery</Tabs.Trigger>
-              <Tabs.Trigger value="programs">Programs</Tabs.Trigger>
-            </Tabs.List>
+            <Box className="overflow-x-auto no-scrollbar pb-1">
+              <Tabs.List size="2">
+                <Tabs.Trigger value="team" className="min-h-[38px] cursor-pointer">Team Members</Tabs.Trigger>
+                <Tabs.Trigger value="gallery" className="min-h-[38px] cursor-pointer">Gallery</Tabs.Trigger>
+                <Tabs.Trigger value="programs" className="min-h-[38px] cursor-pointer">Programs</Tabs.Trigger>
+              </Tabs.List>
+            </Box>
 
             <Box pt="5">
               <Tabs.Content value="team">

@@ -168,15 +168,16 @@ export function MembersTab({ members, onRefresh, startTransition }: MembersTabPr
         <Heading size="4" mb="4">
           Current Team ({members.length})
         </Heading>
-        <Table.Root variant="surface">
-          <Table.Header>
-            <Table.Row>
-              <Table.ColumnHeaderCell>Avatar</Table.ColumnHeaderCell>
-              <Table.ColumnHeaderCell>Name & Role</Table.ColumnHeaderCell>
-              <Table.ColumnHeaderCell>Color</Table.ColumnHeaderCell>
-              <Table.ColumnHeaderCell>Action</Table.ColumnHeaderCell>
-            </Table.Row>
-          </Table.Header>
+        <Box style={{ overflowX: "auto", WebkitOverflowScrolling: "touch" }}>
+          <Table.Root variant="surface">
+            <Table.Header>
+              <Table.Row>
+                <Table.ColumnHeaderCell>Avatar</Table.ColumnHeaderCell>
+                <Table.ColumnHeaderCell>Name & Role</Table.ColumnHeaderCell>
+                <Table.ColumnHeaderCell>Color</Table.ColumnHeaderCell>
+                <Table.ColumnHeaderCell>Action</Table.ColumnHeaderCell>
+              </Table.Row>
+            </Table.Header>
 
           <Table.Body>
             {members.map((member) => (
@@ -243,6 +244,7 @@ export function MembersTab({ members, onRefresh, startTransition }: MembersTabPr
             ))}
           </Table.Body>
         </Table.Root>
+        </Box>
       </Card>
     </Grid>
   );

@@ -1,6 +1,6 @@
 "use client";
 
-import { Button, Flex, Text } from "@radix-ui/themes";
+import { Box, Button, Flex, Text } from "@radix-ui/themes";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
 interface PaginationProps {
@@ -54,23 +54,26 @@ export function Pagination({
   };
 
   return (
-    <Flex direction="column" gap="3" align="center">
-      <Text size="2" color="gray">
+    <Flex direction="column" gap="3" align="center" className="w-full">
+      <Text size="2" color="gray" className="text-center">
         Menampilkan {startItem}-{endItem} dari {totalItems} item
       </Text>
       
-      <Flex gap="2" align="center">
+      <Flex gap="2" align="center" justify="center" wrap="wrap" className="max-w-full px-2">
         <Button
           variant="outline"
           size="2"
           disabled={currentPage === 1}
           onClick={() => onPageChange(currentPage - 1)}
+          style={{ cursor: currentPage === 1 ? "default" : "pointer" }}
+          aria-label="Halaman sebelumnya"
         >
           <ChevronLeft size={16} />
-          Sebelumnya
+          <span className="hidden sm:inline">Sebelumnya</span>
         </Button>
 
-        <Flex gap="1">
+        {/* Desktop / Tablet: Full page numbers */}
+        <Flex gap="1" display={{ initial: "none", sm: "flex" }}>
           {getVisiblePages().map((page, index) => (
             <Button
               key={index}
@@ -78,20 +81,29 @@ export function Pagination({
               size="2"
               disabled={page === "..."}
               onClick={() => typeof page === "number" && onPageChange(page)}
-              style={{ minWidth: "40px" }}
+              style={{ minWidth: "38px", cursor: page === "..." ? "default" : "pointer" }}
             >
               {page}
             </Button>
           ))}
         </Flex>
 
+        {/* Mobile: Compact Page Indicator */}
+        <Box display={{ initial: "block", sm: "none" }} px="2">
+          <Text size="2" weight="bold" color="gray">
+            {currentPage} / {totalPages}
+          </Text>
+        </Box>
+
         <Button
           variant="outline"
           size="2"
           disabled={currentPage === totalPages}
           onClick={() => onPageChange(currentPage + 1)}
+          style={{ cursor: currentPage === totalPages ? "default" : "pointer" }}
+          aria-label="Halaman selanjutnya"
         >
-          Selanjutnya
+          <span className="hidden sm:inline">Selanjutnya</span>
           <ChevronRight size={16} />
         </Button>
       </Flex>

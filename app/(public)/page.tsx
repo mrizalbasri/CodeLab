@@ -33,9 +33,9 @@ export default function Home() {
           fill="#0047BA"
         />
 
-        <BackgroundBeamsWithCollision className="!h-auto min-h-[800px] w-full bg-transparent">
+        <BackgroundBeamsWithCollision className="!h-auto min-h-[520px] md:min-h-[780px] w-full bg-transparent">
           <Container size="3" className="relative z-10" px="4">
-            <Flex direction="column" align="center" gap="6" px="4">
+            <Flex direction="column" align="center" gap="5" px={{ initial: "2", sm: "4" }}>
               {/* Main Headline (Original wording restored with solid brand color) */}
               <MotionWrapper
                 initial={{ opacity: 0, scale: 0.9 }}
@@ -74,8 +74,8 @@ export default function Home() {
                 <Text
                   size={{ initial: "3", sm: "4", md: "5" }}
                   align="center"
-                  className="max-w-content text-neutral-600 dark:text-neutral-300 font-medium"
-                  style={{ marginTop: "12px", lineHeight: 1.7 }}
+                  className="max-w-content text-neutral-600 dark:text-neutral-300 font-medium px-2"
+                  style={{ marginTop: "8px", lineHeight: 1.6 }}
                 >
                   {t.home.subtitle}
                 </Text>
@@ -86,18 +86,19 @@ export default function Home() {
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: 0.8 }}
+                className="w-full flex justify-center"
               >
-                <Flex gap="4" mt="4" mb="8" direction={{ initial: "column", sm: "row" }} align="center">
-                  <Link href="/programs">
+                <Flex gap="3" mt="3" mb="6" direction={{ initial: "column", sm: "row" }} align="center" className="w-full sm:w-auto">
+                  <Link href="/programs" className="w-full sm:w-auto flex justify-center">
                     <button
-                      className="w-48 py-3.5 px-6 rounded-xl font-bold bg-[#0047BA] text-white hover:bg-[#003894] shadow-md hover:shadow-lg hover:scale-105 transition-all cursor-pointer text-sm sm:text-base"
+                      className="w-full max-w-xs sm:w-48 py-3.5 px-6 rounded-xl font-bold bg-[#0047BA] text-white hover:bg-[#003894] shadow-md hover:shadow-lg hover:scale-105 active:scale-95 transition-all cursor-pointer text-sm sm:text-base"
                     >
                       {t.home.explorePrograms}
                     </button>
                   </Link>
-                  <Link href="/about">
+                  <Link href="/about" className="w-full sm:w-auto flex justify-center">
                     <button
-                      className="w-48 py-3.5 px-6 rounded-xl font-bold bg-transparent border-2 border-[#E31B23] dark:border-[#ff5c5c] text-[#E31B23] dark:text-[#ff5c5c] hover:bg-[#E31B23] hover:text-white dark:hover:bg-[#ff5c5c] dark:hover:text-black shadow-sm hover:shadow-md hover:scale-105 transition-all cursor-pointer text-sm sm:text-base"
+                      className="w-full max-w-xs sm:w-48 py-3.5 px-6 rounded-xl font-bold bg-transparent border-2 border-[#E31B23] dark:border-[#ff5c5c] text-[#E31B23] dark:text-[#ff5c5c] hover:bg-[#E31B23] hover:text-white dark:hover:bg-[#ff5c5c] dark:hover:text-black shadow-sm hover:shadow-md hover:scale-105 active:scale-95 transition-all cursor-pointer text-sm sm:text-base"
                     >
                       {t.nav.about} PUPCL
                     </button>
@@ -107,9 +108,9 @@ export default function Home() {
 
               {/* Visual Content (Code Mockup) */}
               <FloatingCodeWindow>
-                <Box mt="6" mb="9" className="code-window border-2 border-neutral-200 dark:border-neutral-800 shadow-xl">
+                <Box mt="4" mb="8" className="code-window border-2 border-neutral-200 dark:border-neutral-800 shadow-xl">
                   {/* Window Controls */}
-                  <Flex gap="2" className="code-window-header bg-neutral-100 dark:bg-neutral-900 border-b border-neutral-200 dark:border-neutral-800 px-4 py-3">
+                  <Flex gap="2" className="code-window-header bg-neutral-100 dark:bg-neutral-900 border-b border-neutral-200 dark:border-neutral-800 px-3 sm:px-4 py-2.5 sm:py-3">
                     <Box className="window-control window-control-red" />
                     <Box className="window-control window-control-yellow" />
                     <Box className="window-control window-control-green" />
@@ -132,7 +133,7 @@ export default function Home() {
       <Section size="3">
         <Container size="4" px="4">
           <Flex direction="column" align="center" mb="8" gap="3">
-            <Heading size={{ initial: "7", md: "8" }} align="center" weight="bold" className="text-[#111827] dark:text-white">
+            <Heading size={{ initial: "6", sm: "7", md: "8" }} align="center" weight="bold" className="text-[#111827] dark:text-white">
               {t.home.whyTitle}
             </Heading>
             <Text
@@ -148,8 +149,8 @@ export default function Home() {
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-5 max-w-7xl mx-auto w-full">
             {/* Card 1: Networking & Mentorship (Solid Brand Blue) */}
             <WobbleCard
-              containerClassName="col-span-1 lg:col-span-2 h-full min-h-[300px] lg:min-h-[320px] bg-[#0047BA] border border-blue-600 shadow-xl"
-              className="relative"
+              containerClassName="col-span-1 lg:col-span-2 h-full min-h-[260px] sm:min-h-[300px] lg:min-h-[320px] bg-[#0047BA] border border-blue-600 shadow-xl"
+              className="relative p-6 sm:p-8"
             >
               <div className="max-w-md relative z-10">
                 <span className="inline-block px-3 py-1 mb-3 rounded-full text-xs font-bold bg-white text-[#0047BA]">
@@ -162,15 +163,16 @@ export default function Home() {
                   {t.home.card1Desc}
                 </p>
               </div>
-              <Box className="absolute -right-6 lg:-right-[5%] -bottom-8 pointer-events-none object-contain">
-                <Users size={220} className="text-white/15" />
+              <Box className="absolute -right-4 sm:-right-6 lg:-right-[5%] -bottom-6 sm:-bottom-8 pointer-events-none object-contain">
+                <Users size={160} className="sm:hidden text-white/10" />
+                <Users size={220} className="hidden sm:block text-white/15" />
               </Box>
             </WobbleCard>
 
             {/* Card 2: Weekly Workshops (Solid Brand Red) */}
             <WobbleCard
-              containerClassName="col-span-1 min-h-[300px] lg:min-h-[320px] bg-[#E31B23] border border-red-600 shadow-xl"
-              className="relative"
+              containerClassName="col-span-1 min-h-[260px] sm:min-h-[300px] lg:min-h-[320px] bg-[#E31B23] border border-red-600 shadow-xl"
+              className="relative p-6 sm:p-8"
             >
               <div className="max-w-xs relative z-10">
                 <span className="inline-block px-3 py-1 mb-3 rounded-full text-xs font-bold bg-white text-[#E31B23]">
@@ -184,14 +186,15 @@ export default function Home() {
                 </p>
               </div>
               <Box className="absolute -right-4 -bottom-4 pointer-events-none">
-                <Calendar size={130} className="text-white/15" />
+                <Calendar size={100} className="sm:hidden text-white/10" />
+                <Calendar size={130} className="hidden sm:block text-white/15" />
               </Box>
             </WobbleCard>
 
             {/* Card 3: Build Real-World Projects (Solid Dark Charcoal) */}
             <WobbleCard
-              containerClassName="col-span-1 lg:col-span-3 min-h-[300px] lg:min-h-[320px] bg-[#0f172a] border border-slate-800 shadow-xl"
-              className="relative"
+              containerClassName="col-span-1 lg:col-span-3 min-h-[260px] sm:min-h-[300px] lg:min-h-[320px] bg-[#0f172a] border border-slate-800 shadow-xl"
+              className="relative p-6 sm:p-8"
             >
               <div className="max-w-lg relative z-10">
                 <span className="inline-block px-3 py-1 mb-3 rounded-full text-xs font-bold bg-[#0047BA] text-white">
@@ -204,8 +207,9 @@ export default function Home() {
                   {t.home.card3Desc}
                 </p>
               </div>
-              <Box className="absolute -right-8 md:-right-[5%] lg:-right-[2%] -bottom-10 pointer-events-none object-contain">
-                <Trophy size={280} className="text-white/10" />
+              <Box className="absolute -right-6 sm:-right-8 md:-right-[5%] lg:-right-[2%] -bottom-6 sm:-bottom-10 pointer-events-none object-contain">
+                <Trophy size={180} className="sm:hidden text-white/10" />
+                <Trophy size={280} className="hidden sm:block text-white/10" />
               </Box>
             </WobbleCard>
           </div>
@@ -215,10 +219,10 @@ export default function Home() {
       {/* =========================================================================
           COMING SOON: OPEN RECRUITMENT SECTION (Solid Brand Colors, No Gradients)
           ========================================================================= */}
-      <Box py="8" pb="9" px="4" className="relative">
+      <Box py="6" pb="9" px="4" className="relative">
         <Container size="4">
           <Box
-            className="rounded-3xl p-8 sm:p-12 relative overflow-hidden text-center bg-[#0047BA] border-2 border-blue-600 shadow-2xl"
+            className="rounded-3xl p-6 sm:p-12 relative overflow-hidden text-center bg-[#0047BA] border-2 border-blue-600 shadow-2xl"
           >
             <Flex direction="column" align="center" gap="4" className="relative z-10 max-w-2xl mx-auto">
               {/* Animated Coming Soon Badge */}
@@ -230,29 +234,35 @@ export default function Home() {
                 <span>{t.home.recruitmentBadge.toUpperCase()}</span>
               </div>
 
-              <Heading size={{ initial: "7", sm: "9" }} weight="bold" style={{ color: "white" }} className="tracking-tight font-black">
+              <Heading size={{ initial: "6", sm: "8", md: "9" }} weight="bold" style={{ color: "white" }} className="tracking-tight font-black">
                 {t.home.recruitmentTitle}
               </Heading>
 
-              <Text size={{ initial: "3", sm: "4" }} style={{ color: "rgba(255, 255, 255, 0.95)", lineHeight: 1.7 }} className="font-medium">
+              <Text size={{ initial: "3", sm: "4" }} style={{ color: "rgba(255, 255, 255, 0.95)", lineHeight: 1.6 }} className="font-medium">
                 {t.home.recruitmentDesc}
               </Text>
 
-              <Flex gap="4" mt="3" direction={{ initial: "column", sm: "row" }}>
+              <Flex gap="3" mt="2" direction={{ initial: "column", sm: "row" }} className="w-full sm:w-auto">
                 <Link
                   href={`${siteConfig.links.whatsapp}?text=${encodeURIComponent(
                     "Halo Admin PUPCL, saya tertarik dengan Open Recruitment Member PUPCL dan ingin bertanya lebih lanjut."
                   )}`}
                   target="_blank"
                   rel="noopener noreferrer"
+                  className="w-full sm:w-auto flex justify-center"
                 >
-                  <button className="inline-flex items-center justify-center gap-2 px-8 py-3.5 rounded-xl font-bold bg-[#E31B23] text-white hover:bg-[#c7171e] shadow-lg hover:scale-105 transition-all cursor-pointer">
+                  <button className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-8 py-3.5 rounded-xl font-bold bg-[#E31B23] text-white hover:bg-[#c7171e] shadow-lg hover:scale-105 active:scale-95 transition-all cursor-pointer text-sm sm:text-base">
                     {t.home.recruitmentContact}
                     <ArrowRight size={18} />
                   </button>
                 </Link>
-                <Link href={siteConfig.links.instagram} target="_blank" rel="noopener noreferrer">
-                  <button className="inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-xl font-bold bg-white text-[#0047BA] hover:bg-neutral-100 shadow-md hover:scale-105 transition-all cursor-pointer">
+                <Link 
+                  href={siteConfig.links.instagram} 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="w-full sm:w-auto flex justify-center"
+                >
+                  <button className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-xl font-bold bg-white text-[#0047BA] hover:bg-neutral-100 shadow-md hover:scale-105 active:scale-95 transition-all cursor-pointer text-sm sm:text-base">
                     {t.home.recruitmentInsta}
                     <ExternalLink size={16} />
                   </button>
