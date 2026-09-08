@@ -5,20 +5,33 @@ import { handleFileUpload } from "@/lib/supabase-helpers";
 import { createClient } from "@/lib/supabase/server";
 import { Member, MemberUpdateData } from "@/lib/types";
 import { checkAuth, DEFAULT_IMAGES } from "./utils";
+import { initialMembers } from "@/lib/data/members";
+
+export { initialMembers };
 
 export async function getMembers(): Promise<Member[]> {
   try {
-    const supabase = await createClient();
-    const { data, error } = await supabase
-      .from("members")
-      .select("*")
-      .order("created_at", { ascending: true });
+    const fetchPromise = (async () => {
+      const supabase = await createClient();
+      const { data, error } = await supabase
+        .from("members")
+        .select("*")
+        .order("created_at", { ascending: true });
 
-    if (error) throw error;
-    return data || [];
+      if (error || !data || data.length === 0) {
+        return initialMembers;
+      }
+      return data;
+    })();
+
+    const timeoutPromise = new Promise<Member[]>((_, reject) =>
+      setTimeout(() => reject(new Error("Supabase connection timeout")), 3000)
+    );
+
+    return await Promise.race([fetchPromise, timeoutPromise]);
   } catch (error) {
-    console.error("Error fetching members:", error);
-    return [];
+    console.warn("Supabase members unavailable, using static data:", error);
+    return initialMembers;
   }
 }
 
