@@ -7,7 +7,7 @@ import { Member, MemberUpdateData } from "@/lib/types";
 import { checkAuth, DEFAULT_IMAGES } from "./utils";
 import { initialMembers } from "@/lib/data/members";
 
-export { initialMembers };
+
 
 export async function getMembers(): Promise<Member[]> {
   try {
