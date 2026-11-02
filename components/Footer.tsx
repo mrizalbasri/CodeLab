@@ -13,7 +13,7 @@ import {
 import Link from "next/link";
 import NextImage from "next/image";
 import { Github, Instagram, Linkedin, Mail } from "lucide-react";
-import { motion } from "framer-motion";
+import { motion } from "motion/react";
 import { usePathname } from "next/navigation";
 import { useLanguage } from "@/context/LanguageContext";
 

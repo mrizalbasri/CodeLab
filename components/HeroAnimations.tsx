@@ -1,7 +1,7 @@
 "use client";
 
 import { Box, Text } from "@radix-ui/themes";
-import { motion, MotionProps } from "framer-motion";
+import { motion, MotionProps } from "motion/react";
 import { useEffect, useState, ReactNode } from "react";
 import { RadixColor } from "@/lib/types";
 import { TypingAnimation } from "@/components/ui/typing-animation";

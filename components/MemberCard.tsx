@@ -2,7 +2,7 @@
 
 import { Box, Card, Flex, Heading, Avatar, Badge } from "@radix-ui/themes";
 import { Meteors } from "@/components/ui/meteors";
-import { motion } from "framer-motion";
+import { motion } from "motion/react";
 import { Member } from "@/app/actions";
 
 function getRoleColor(color: Member["color"]) {

@@ -25,7 +25,7 @@ import { initialMembers } from "@/lib/data/members";
 import { useLanguage } from "@/context/LanguageContext";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { motion } from "framer-motion";
+import { motion } from "motion/react";
 
 export default function AboutPage() {
   const [members, setMembers] = useState<Member[]>(initialMembers);

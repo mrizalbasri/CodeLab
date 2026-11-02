@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { IconButton } from "@radix-ui/themes";
 import { ArrowUp } from "lucide-react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence } from "motion/react";
 
 export function ScrollToTop() {
   const [isVisible, setIsVisible] = useState(false);

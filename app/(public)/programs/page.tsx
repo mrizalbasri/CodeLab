@@ -12,7 +12,7 @@ import {
   Button,
 } from "@radix-ui/themes";
 import { Calendar, Users, Zap, MapPin, MonitorPlay, Clock } from "lucide-react";
-import { motion } from "framer-motion";
+import { motion } from "motion/react";
 import { useEffect, useState, useMemo } from "react";
 import { useRouter } from "next/navigation";
 import { getPrograms, Program } from "@/app/actions";
