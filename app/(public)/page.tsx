@@ -16,11 +16,17 @@ import {
   ExternalLink,
   Trophy,
   ChevronDown,
+  Globe,
+  Smartphone,
+  Sparkles,
+  Terminal,
+  MessageCircle,
 } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { WobbleCard } from "@/components/ui/wobble-card";
+import { HeroCodeWindow } from "@/components/HeroCodeWindow";
 import { siteConfig } from "@/lib/data/site-config";
 import { useLanguage } from "@/context/LanguageContext";
 
@@ -28,78 +34,181 @@ export default function Home() {
   const { t } = useLanguage();
   const [openFaq, setOpenFaq] = useState<number | null>(null);
 
+  const tracks = [
+    {
+      icon: Globe,
+      color: "text-blue-500 bg-blue-50 dark:bg-blue-950/60 border-blue-200 dark:border-blue-900/60",
+      badge: t.home.trackWebBadge,
+      title: t.home.trackWebTitle,
+      desc: t.home.trackWebDesc,
+    },
+    {
+      icon: Smartphone,
+      color: "text-emerald-500 bg-emerald-50 dark:bg-emerald-950/60 border-emerald-200 dark:border-emerald-900/60",
+      badge: t.home.trackMobileBadge,
+      title: t.home.trackMobileTitle,
+      desc: t.home.trackMobileDesc,
+    },
+    {
+      icon: Sparkles,
+      color: "text-purple-500 bg-purple-50 dark:bg-purple-950/60 border-purple-200 dark:border-purple-900/60",
+      badge: t.home.trackAiBadge,
+      title: t.home.trackAiTitle,
+      desc: t.home.trackAiDesc,
+    },
+    {
+      icon: Terminal,
+      color: "text-amber-500 bg-amber-50 dark:bg-amber-950/60 border-amber-200 dark:border-amber-900/60",
+      badge: t.home.trackDevOpsBadge,
+      title: t.home.trackDevOpsTitle,
+      desc: t.home.trackDevOpsDesc,
+    },
+  ];
+
   return (
     <Box className="overflow-hidden">
       {/* =========================================================================
-          HERO SECTION (Clean, Minimalist, No Heavy Animation, Direct Content)
+          HERO SECTION (2-Column Split: Headline & CTA on left, Code Terminal on right)
           ========================================================================= */}
-      <Box className="relative overflow-hidden pt-28 pb-20 sm:pt-40 sm:pb-28 border-b border-neutral-200/70 dark:border-neutral-800/80 bg-white dark:bg-[#0a0a0a]">
+      <Box className="relative overflow-hidden pt-28 pb-16 sm:pt-36 sm:pb-24 border-b border-neutral-200/70 dark:border-neutral-800/80 bg-white dark:bg-[#0a0a0a]">
         {/* Subtle Ambient Radial Lighting */}
         <div className="absolute inset-0 pointer-events-none bg-[radial-gradient(ellipse_80%_60%_at_50%_-10%,rgba(0,71,186,0.1),rgba(255,255,255,0))] dark:bg-[radial-gradient(ellipse_80%_60%_at_50%_-10%,rgba(96,165,250,0.08),rgba(10,10,10,0))]" />
 
         {/* Subtle Static Dot Pattern */}
         <div className="absolute inset-0 pointer-events-none opacity-30 dark:opacity-15 [background-image:radial-gradient(#94a3b8_1px,transparent_1px)] [background-size:24px_24px]" />
 
-        <Container size="3" className="relative z-10 px-4 sm:px-6">
-          <Flex direction="column" align="center" gap="5" className="text-center max-w-3xl mx-auto">
-            {/* Main Headline */}
+        <Container size="4" className="relative z-10 px-4 sm:px-6">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-center">
+            {/* Left Column: Headline, Description & CTAs */}
             <motion.div
               initial={{ opacity: 0, y: 15 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.4 }}
-              className="space-y-1"
+              className="lg:col-span-7 flex flex-col items-start text-left space-y-6"
             >
-              <h1 className="text-3xl sm:text-5xl md:text-6xl font-black tracking-tight text-neutral-900 dark:text-white leading-tight">
-                <span className="text-[#0047BA] dark:text-[#60a5fa]">PU PEKANBARU </span>
-                <span className="text-[#E31B23] dark:text-[#ff5c5c]">CODE LAB</span>
-              </h1>
-              <h2 className="text-2xl sm:text-4xl md:text-5xl font-black tracking-tight text-neutral-400 dark:text-neutral-600">
-                (
-                <span className="text-[#0047BA] dark:text-[#60a5fa]">PU</span>
-                <span className="text-[#E31B23] dark:text-[#ff5c5c]">PCL</span>
-                )
-              </h2>
-            </motion.div>
+              {/* Community Pill Badge */}
+              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-blue-50 dark:bg-blue-950/60 border border-blue-200/60 dark:border-blue-900/60 text-[#0047BA] dark:text-[#60a5fa] text-xs sm:text-sm font-semibold shadow-xs">
+                <span className="w-2 h-2 rounded-full bg-[#0047BA] dark:bg-[#60a5fa] animate-pulse" />
+                <span>{t.home.heroBadge}</span>
+              </div>
 
-            {/* Subheadline Description */}
-            <motion.p
-              initial={{ opacity: 0, y: 15 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.4, delay: 0.15 }}
-              className="text-base sm:text-lg md:text-xl text-neutral-600 dark:text-neutral-300 font-medium leading-relaxed max-w-2xl px-2"
-            >
-              {t.home.subtitle}
-            </motion.p>
+              {/* Main Headline */}
+              <div className="space-y-1">
+                <h1 className="text-3xl sm:text-5xl lg:text-5xl xl:text-6xl font-black tracking-tight text-neutral-900 dark:text-white leading-[1.1]">
+                  <span className="text-[#0047BA] dark:text-[#60a5fa]">PU PEKANBARU </span>
+                  <span className="text-[#E31B23] dark:text-[#ff5c5c]">CODE LAB</span>
+                </h1>
+                <h2 className="text-2xl sm:text-3xl lg:text-4xl font-black tracking-tight text-neutral-400 dark:text-neutral-500">
+                  (
+                  <span className="text-[#0047BA] dark:text-[#60a5fa]">PU</span>
+                  <span className="text-[#E31B23] dark:text-[#ff5c5c]">PCL</span>
+                  )
+                </h2>
+              </div>
 
-            {/* Action Buttons */}
-            <motion.div
-              initial={{ opacity: 0, y: 15 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.4, delay: 0.25 }}
-              className="w-full flex justify-center pt-2"
-            >
-              <Flex
-                gap="3"
-                direction={{ initial: "column", sm: "row" }}
-                align="center"
-                className="w-full sm:w-auto"
-              >
+              {/* Subheadline Description */}
+              <p className="text-base sm:text-lg text-neutral-600 dark:text-neutral-300 font-normal leading-relaxed max-w-xl">
+                {t.home.subtitle}
+              </p>
+
+              {/* Action Buttons */}
+              <div className="w-full sm:w-auto flex flex-col sm:flex-row gap-3 pt-1">
                 <Link href="/programs" className="w-full sm:w-auto">
-                  <button className="w-full sm:w-48 py-3.5 px-6 rounded-xl font-bold bg-[#0047BA] text-white hover:bg-[#003894] shadow-md hover:shadow-lg hover:-translate-y-0.5 active:translate-y-0 transition-all cursor-pointer text-sm sm:text-base inline-flex items-center justify-center gap-2">
+                  <button className="w-full sm:w-auto px-6 py-3.5 rounded-xl font-bold bg-[#0047BA] text-white hover:bg-[#003894] shadow-md hover:shadow-lg hover:-translate-y-0.5 active:translate-y-0 transition-all cursor-pointer text-sm sm:text-base inline-flex items-center justify-center gap-2">
                     <span>{t.home.explorePrograms}</span>
                     <ArrowRight size={18} />
                   </button>
                 </Link>
-                <Link href="/about" className="w-full sm:w-auto">
-                  <button className="w-full sm:w-48 py-3.5 px-6 rounded-xl font-bold bg-transparent border-2 border-[#E31B23] dark:border-[#ff5c5c] text-[#E31B23] dark:text-[#ff5c5c] hover:bg-[#E31B23] hover:text-white dark:hover:bg-[#ff5c5c] dark:hover:text-black shadow-xs hover:-translate-y-0.5 active:translate-y-0 transition-all cursor-pointer text-sm sm:text-base">
-                    <span>{t.nav.about} PUPCL</span>
+                <Link href="/contact" className="w-full sm:w-auto">
+                  <button className="w-full sm:w-auto px-6 py-3.5 rounded-xl font-bold bg-transparent border-2 border-neutral-300 dark:border-neutral-700 text-neutral-700 dark:text-neutral-200 hover:border-[#0047BA] hover:text-[#0047BA] dark:hover:border-[#60a5fa] dark:hover:text-[#60a5fa] shadow-xs hover:-translate-y-0.5 active:translate-y-0 transition-all cursor-pointer text-sm sm:text-base inline-flex items-center justify-center gap-2">
+                    <MessageCircle size={18} />
+                    <span>{t.home.recruitmentContact}</span>
                   </button>
                 </Link>
-              </Flex>
+              </div>
+
+              {/* Tech Stack Pills Strip */}
+              <div className="w-full pt-4 border-t border-neutral-200/70 dark:border-neutral-800/80">
+                <div className="text-[11px] font-bold text-neutral-400 uppercase tracking-wider mb-2.5">
+                  {t.home.techExplore}
+                </div>
+                <div className="flex flex-wrap gap-2">
+                  {["Next.js 16", "TypeScript", "React", "Python", "Flutter", "Tailwind CSS", "Git & GitHub", "Supabase"].map((tech) => (
+                    <span
+                      key={tech}
+                      className="px-2.5 py-1 rounded-lg text-xs font-semibold bg-neutral-100 dark:bg-neutral-800/80 text-neutral-700 dark:text-neutral-300 border border-neutral-200/60 dark:border-neutral-700/60"
+                    >
+                      {tech}
+                    </span>
+                  ))}
+                </div>
+              </div>
             </motion.div>
-          </Flex>
+
+            {/* Right Column: Code Editor Terminal Window */}
+            <motion.div
+              initial={{ opacity: 0, y: 15 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.4, delay: 0.2 }}
+              className="lg:col-span-5 w-full flex justify-center"
+            >
+              <HeroCodeWindow />
+            </motion.div>
+          </div>
         </Container>
       </Box>
+
+      {/* =========================================================================
+          CORE FOCUS TRACKS (4 Pilar Pembelajaran & Eksplorasi)
+          ========================================================================= */}
+      <Section size="2" className="bg-neutral-50/60 dark:bg-neutral-950/60 border-b border-neutral-200/70 dark:border-neutral-800/70">
+        <Container size="4" px="4">
+          <Flex direction="column" align="center" mb="6" gap="2" className="text-center">
+            <Badge size="2" color="indigo" radius="full" variant="soft" className="px-3 py-1 font-bold">
+              {t.home.tracksBadge}
+            </Badge>
+            <Heading
+              size={{ initial: "6", sm: "7", md: "8" }}
+              weight="bold"
+              className="text-neutral-900 dark:text-white"
+            >
+              {t.home.tracksTitle}
+            </Heading>
+            <Text size={{ initial: "2", sm: "3" }} color="gray" className="max-w-xl">
+              {t.home.tracksSubtitle}
+            </Text>
+          </Flex>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 max-w-7xl mx-auto w-full">
+            {tracks.map((track, i) => {
+              const IconComp = track.icon;
+              return (
+                <div
+                  key={i}
+                  className="p-5 rounded-2xl border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-900 shadow-xs hover:border-[#0047BA] dark:hover:border-[#60a5fa] hover:-translate-y-1 transition-all flex flex-col justify-between"
+                >
+                  <div>
+                    <div className="flex items-center justify-between mb-4">
+                      <div className={`w-11 h-11 rounded-xl border flex items-center justify-center ${track.color}`}>
+                        <IconComp size={22} />
+                      </div>
+                      <span className="text-[11px] font-bold px-2 py-0.5 rounded-md bg-neutral-100 dark:bg-neutral-800 text-neutral-600 dark:text-neutral-300">
+                        {track.badge}
+                      </span>
+                    </div>
+                    <h3 className="font-bold text-base text-neutral-900 dark:text-white mb-2">
+                      {track.title}
+                    </h3>
+                    <p className="text-xs sm:text-sm text-neutral-600 dark:text-neutral-400 leading-relaxed">
+                      {track.desc}
+                    </p>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </Container>
+      </Section>
 
       {/* =========================================================================
           WHY JOIN PUPCL SECTION
