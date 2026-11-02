@@ -2,7 +2,7 @@
 
 import { Box, Button, Card, Container, Flex, Grid, Heading, Text, TextField, TextArea } from "@radix-ui/themes";
 import { Mail, MapPin, Send, MessageCircle } from "lucide-react";
-import { motion } from "framer-motion";
+import { motion } from "motion/react";
 import { useState } from "react";
 import { siteConfig } from "@/lib/data/site-config";
 import { toast } from "sonner";

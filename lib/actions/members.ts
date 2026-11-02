@@ -1,7 +1,7 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
-import { handleFileUpload } from "@/lib/supabase-helpers";
+import { handleFileUpload } from "@/lib/supabase/storage";
 import { createClient } from "@/lib/supabase/server";
 import { Member, MemberUpdateData } from "@/lib/types";
 import { checkAuth, DEFAULT_IMAGES } from "./utils";

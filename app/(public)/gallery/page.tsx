@@ -5,7 +5,7 @@ import { Image as ImageIcon } from "lucide-react";
 import NextImage from "next/image";
 import { getGalleryItems, GalleryItem } from "@/app/actions";
 import { useEffect, useState } from "react";
-import { motion } from "framer-motion";
+import { motion } from "motion/react";
 import { SearchBar } from "@/components/SearchBar";
 import { Pagination } from "@/components/Pagination";
 import { useSearchAndPagination } from "@/lib/hooks/useSearchAndPagination";
