@@ -242,7 +242,7 @@ export default function ContactPage() {
                   <div>
                     <div className="flex items-center gap-2">
                       <h4 className="font-bold text-sm sm:text-base text-neutral-900 dark:text-white group-hover:text-emerald-600 transition-colors">
-                        WhatsApp Official Admin
+                        WhatsApp Admin PUPCL
                       </h4>
                       <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-emerald-100 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-300 text-[10px] font-extrabold">
                         <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />

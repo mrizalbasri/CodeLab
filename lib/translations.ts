@@ -39,7 +39,7 @@ export const translations = {
       trackDevOpsTitle: "Software Craftsmanship",
       trackDevOpsBadge: "Best Practices",
       trackDevOpsDesc: "Git collaboration workflows, pull request reviews, clean code architecture, and CI/CD basics.",
-      heroBadge: "Official Tech Community • President University Pekanbaru",
+      heroBadge: "Student Tech Community • President University Pekanbaru",
       techExplore: "Technologies We Explore",
       whyTitle: "Why Join PUPCL?",
       whySubtitle:
