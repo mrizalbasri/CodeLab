@@ -22,6 +22,7 @@ import { useSearchAndPagination } from "@/lib/hooks/useSearchAndPagination";
 import { InteractiveHoverButton } from "@/components/ui/interactive-hover-button";
 import { formatDate, formatTime } from "@/lib/utils";
 import { useLanguage } from "@/context/LanguageContext";
+import { siteConfig } from "@/lib/data/site-config";
 
 export default function ProgramsPage() {
   const [programs, setPrograms] = useState<Program[]>([]);
@@ -51,7 +52,7 @@ export default function ProgramsPage() {
       selectedCategory !== "Semua" &&
       !categories.includes(selectedCategory)
     ) {
-      setSelectedCategory("Semua");
+      setSelectedCategory("Semua"); // fallback
     }
   }, [categories, selectedCategory]);
 
@@ -355,9 +356,12 @@ export default function ProgramsPage() {
                         {/* ✅ FIX: Navigasi ke /contact untuk pendaftaran */}
                         <InteractiveHoverButton
                           className="w-full"
-                          onClick={() => router.push("/contact")}
+                          onClick={() => {
+                            const waMsg = `Halo Admin PUPCL, saya ingin mendaftar program: "${program.title}". Mohon info pendaftarannya.`;
+                            window.open(`${siteConfig.links.whatsapp}?text=${encodeURIComponent(waMsg)}`, "_blank");
+                          }}
                         >
-                          Daftar Sekarang
+                          Daftar via WhatsApp
                         </InteractiveHoverButton>
                       </Box>
                     </div>

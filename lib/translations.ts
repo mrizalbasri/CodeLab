@@ -39,6 +39,41 @@ export const translations = {
       card3Title: "Build Real-World Projects",
       card3Desc:
         "Don't just learn theory. Work collaboratively on real applications, compete together in national hackathons, and build a standout portfolio that impresses recruiters.",
+      badge: "Student Tech & Innovation Hub",
+      headline: "Where Passionate Coders Build Real Impact",
+      statMembers: "Active Members",
+      statMembersDesc: "Students & tech enthusiasts",
+      statProjects: "Shipped Projects",
+      statProjectsDesc: "Web, Mobile & AI apps",
+      statWorkshops: "Hands-on Workshops",
+      statWorkshopsDesc: "Intensive coding sessions",
+      statAwards: "National Awards",
+      statAwardsDesc: "Hackathon & IT competitions",
+      upcomingTitle: "Upcoming Workshops & Events",
+      upcomingSubtitle: "Join our intensive hands-on sessions and build real-world software together.",
+      upcomingEmpty: "No upcoming events right now. Stay tuned on Instagram!",
+      viewAllPrograms: "View All Programs",
+      registerWorkshop: "Register via WhatsApp",
+      faqTitle: "Frequently Asked Questions",
+      faqSubtitle: "Everything you need to know about learning and growing with PUPCL.",
+      faqs: [
+        {
+          q: "Can beginners with zero coding experience join?",
+          a: "Absolutely! PUPCL welcomes students of all skill levels. We provide structured study tracks and step-by-step mentorship from programming basics to advanced development.",
+        },
+        {
+          q: "Is there any membership or workshop registration fee?",
+          a: "No! All regular workshops, study circles, and club activities are 100% free for President University Pekanbaru students.",
+        },
+        {
+          q: "When and where do routine workshops take place?",
+          a: "Our sessions typically run on weekends (Saturday/Sunday) in the campus Computer Lab with hybrid streaming on our Discord server.",
+        },
+        {
+          q: "How can I join the Hackathon & Competition Squad?",
+          a: "Active members who complete our foundational workshops can join our hackathon squad incubation for dedicated mentoring and team matchmaking.",
+        },
+      ],
     },
     about: {
       headerTitle: "About Us",
@@ -160,6 +195,41 @@ export const translations = {
       card3Title: "Bangun Proyek Nyata",
       card3Desc:
         "Jangan hanya belajar teori. Buat aplikasi nyata secara kolaboratif, ikuti hackathon nasional bersama, dan bangun portofolio menonjol yang memikat rekruter.",
+      badge: "Student Tech & Innovation Hub",
+      headline: "Tempat Mahasiswa Koding Membangun Dampak Nyata",
+      statMembers: "Anggota Aktif",
+      statMembersDesc: "Mahasiswa & tech enthusiasts",
+      statProjects: "Proyek Selesai",
+      statProjectsDesc: "Aplikasi Web, Mobile & AI",
+      statWorkshops: "Workshop Intensif",
+      statWorkshopsDesc: "Sesi koding & tech talks",
+      statAwards: "Prestasi Nasional",
+      statAwardsDesc: "Juara hackathon & IT contest",
+      upcomingTitle: "Workshop & Agenda Terdekat",
+      upcomingSubtitle: "Ikuti sesi koding intensif kami dan bangun perangkat lunak nyata bersama mentor berpengalaman.",
+      upcomingEmpty: "Belum ada agenda mendatang saat ini. Pantau Instagram kami!",
+      viewAllPrograms: "Lihat Semua Program",
+      registerWorkshop: "Daftar via WhatsApp",
+      faqTitle: "Pertanyaan yang Sering Diajukan",
+      faqSubtitle: "Hal-hal yang perlu kamu ketahui seputar bergabung dan berproses di PUPCL.",
+      faqs: [
+        {
+          q: "Apakah pemula yang belum pernah koding bisa bergabung?",
+          a: "Tentu saja! PUPCL terbuka untuk semua mahasiswa dari berbagai tingkat kemampuan. Kami memiliki alur belajar terstruktur dan mentoring dari dasar hingga mahir.",
+        },
+        {
+          q: "Apakah ada biaya pendaftaran atau iuran anggota?",
+          a: "Tidak ada! Seluruh workshop rutin, sesi belajar, dan kegiatan komunitas 100% gratis untuk seluruh mahasiswa President University Pekanbaru.",
+        },
+        {
+          q: "Kapan dan di mana jadwal pertemuan rutin diadakan?",
+          a: "Pertemuan dan workshop biasanya diadakan pada akhir pekan (Sabtu/Minggu) di Lab Komputer Kampus dan disiarkan secara hybrid via Discord.",
+        },
+        {
+          q: "Bagaimana cara bergabung dengan Tim Lomba / Hackathon Squad?",
+          a: "Anggota aktif yang telah mengikuti workshop dasar dapat mengikuti inkubasi khusus hackathon dengan bimbingan langsung dari mentor berprestasi.",
+        },
+      ],
     },
     about: {
       headerTitle: "Tentang Kami",
