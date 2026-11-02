@@ -54,6 +54,10 @@ web_codelab/
 │   └── ThemeToggle.tsx       # Pengalih mode gelap/terang
 ├── context/                  # React Context Providers
 │   └── LanguageContext.tsx   # Pengaturan bahasa (ID / EN) & persistensi
+├── docs/                     # Dokumentasi komprehensif proyek
+│   ├── ARCHITECTURE.md       # Rancangan arsitektur, data flow, & routing
+│   ├── DATABASE.md           # Skema tabel Supabase, RLS policies, & storage
+│   └── CONTRIBUTING.md       # Panduan alur kerja git & standar kode
 ├── lib/                      # Utilitas & Business Logic
 │   ├── actions/              # Next.js Server Actions (CRUD & mutasi data)
 │   │   ├── contact.ts        # Action submit pesan kontak
@@ -79,10 +83,20 @@ web_codelab/
 │   ├── translations.ts       # Kamus terjemahan Bahasa Indonesia & Inggris
 │   ├── types.ts              # Deklarasi TypeScript types & interfaces
 │   └── utils.ts              # Helper format tanggal, waktu, & class merge (cn)
-├── public/                   # Asset statis (gambar, SVG, logo)
+├── public/                   # Asset statis (logo, favicon)
 ├── middleware.ts             # Middleware autentikasi route /admin
 └── components.json           # Konfigurasi shadcn/ui
 ```
+
+---
+
+## 📚 Dokumentasi Lanjutan
+
+Dokumentasi teknis terperinci dapat dilihat pada folder [`docs/`](file:///d:/Coding/web_codelab/docs):
+
+- 🏗️ [**Architecture & Data Flow**](docs/ARCHITECTURE.md): Penjelasan alur request, middleware auth, Server Actions, dan state management.
+- 🗄️ [**Database & Storage Schema**](docs/DATABASE.md): Skrip SQL DDL tabel `members`, `gallery`, `programs`, konfigurasi storage bucket, dan Row Level Security (RLS) policies.
+- 🤝 [**Contributing Guide**](docs/CONTRIBUTING.md): Panduan alur kerja git, konvensi commit, dan standar kode.
 
 ---
 
@@ -138,8 +152,9 @@ Buka browser di `http://localhost:3000`.
 
 ---
 
-## 🤝 Panduan Kontribusi
+## 🤝 Panduan Kontribusi Singkat
 
 1. Buat branch baru dari `main` dengan format: `<type>/<deskripsi-singkat>` (contoh: `feat/event-filter`, `fix/navbar-mobile`).
 2. Gunakan konvensi **Conventional Commits** (`feat:`, `fix:`, `refactor:`, `docs:`, `chore:`).
 3. Pastikan `npx tsc --noEmit` dan `npm run build` lulus tanpa error sebelum membuat Pull Request.
+4. Baca panduan lengkap di [CONTRIBUTING.md](docs/CONTRIBUTING.md).
