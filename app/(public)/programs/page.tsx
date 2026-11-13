@@ -22,12 +22,13 @@ import { useSearchAndPagination } from "@/lib/hooks/useSearchAndPagination";
 import { InteractiveHoverButton } from "@/components/ui/interactive-hover-button";
 import { formatDate, formatTime } from "@/lib/utils";
 import { useLanguage } from "@/context/LanguageContext";
+import { siteConfig } from "@/lib/data/site-config";
 
 export default function ProgramsPage() {
   const [programs, setPrograms] = useState<Program[]>([]);
   const [selectedCategory, setSelectedCategory] = useState<string>("Semua");
   const router = useRouter();
-  const { t, language } = useLanguage();
+  const { language } = useLanguage();
 
   useEffect(() => {
     async function loadPrograms() {
@@ -45,21 +46,14 @@ export default function ProgramsPage() {
     return ["Semua", ...unique];
   }, [programs]);
 
-  // Reset ke "Semua" kalau kategori yang dipilih tidak ada di data terbaru
-  useEffect(() => {
-    if (
-      selectedCategory !== "Semua" &&
-      !categories.includes(selectedCategory)
-    ) {
-      setSelectedCategory("Semua");
-    }
-  }, [categories, selectedCategory]);
+  // Derived category fallback — no effect or cascading render
+  const effectiveCategory = categories.includes(selectedCategory) ? selectedCategory : "Semua";
 
   // Filter programs by category
   const filteredByCategory =
-    selectedCategory === "Semua"
+    effectiveCategory === "Semua"
       ? programs
-      : programs.filter((p) => p.category === selectedCategory);
+      : programs.filter((p) => p.category === effectiveCategory);
 
   // Setup search dan pagination
   const {
@@ -117,28 +111,9 @@ export default function ProgramsPage() {
   return (
     <Box>
       {/* Hero Header */}
-      <Box
-        style={{
-          backgroundColor: "var(--gray-2)",
-          borderBottom: "1px solid var(--gray-4)",
-          paddingTop: "140px",
-          paddingBottom: "var(--space-9)",
-          position: "relative",
-          overflow: "hidden",
-        }}
-      >
-        <Box
-          className="bg-grid"
-          style={{
-            position: "absolute",
-            top: 0,
-            left: 0,
-            right: 0,
-            bottom: 0,
-            zIndex: 0,
-          }}
-        />
-        <Container size="3" px="4" style={{ position: "relative", zIndex: 1 }}>
+      <Box className="pt-28 pb-12 sm:pt-36 sm:pb-16 border-b border-neutral-200/70 dark:border-neutral-800/80 bg-neutral-50/50 dark:bg-neutral-950/50 relative overflow-hidden">
+        <div className="absolute inset-0 pointer-events-none opacity-30 dark:opacity-15 [background-image:radial-gradient(#94a3b8_1px,transparent_1px)] [background-size:24px_24px]" />
+        <Container size="3" px="4" className="relative z-10">
           <motion.div
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -195,12 +170,12 @@ export default function ProgramsPage() {
                   className="shrink-0"
                 >
                   <Button
-                    variant={selectedCategory === cat ? "soft" : "outline"}
+                    variant={effectiveCategory === cat ? "soft" : "outline"}
                     radius="full"
                     color={
-                      selectedCategory === cat ? getFilterColor(cat) : "gray"
+                      effectiveCategory === cat ? getFilterColor(cat) : "gray"
                     }
-                    highContrast={selectedCategory === cat}
+                    highContrast={effectiveCategory === cat}
                     style={{ cursor: "pointer", minHeight: "36px" }}
                     onClick={() => setSelectedCategory(cat)}
                   >
@@ -248,13 +223,23 @@ export default function ProgramsPage() {
             <Text size="5" color="gray">
               {searchQuery
                 ? "Tidak ada program yang ditemukan"
-                : `Belum ada program ${selectedCategory !== "Semua" ? selectedCategory : ""} tersedia`}
+                : `Belum ada program ${effectiveCategory !== "Semua" ? selectedCategory : ""} tersedia`}
             </Text>
-            <Text size="2" color="gray">
+            <Text size="2" color="gray" className="leading-relaxed">
               {searchQuery
-                ? "Coba kata kunci yang berbeda"
-                : "Tambahkan program melalui Admin Dashboard"}
+                ? (language === "en" ? "Try adjusting your search terms or filter." : "Coba gunakan kata kunci pencarian yang lain.")
+                : (language === "en"
+                  ? "We are preparing exciting workshops and sessions. Have a topic suggestion? Contact our team!"
+                  : "Kami sedang menyiapkan agenda workshop dan sesi belajar berikutnya. Punya ide topik atau ingin kolaborasi? Hubungi kami!")}
             </Text>
+            <div className="pt-2">
+              <button
+                onClick={() => router.push("/contact")}
+                className="px-5 py-2.5 rounded-xl font-bold bg-[#0047BA] text-white hover:bg-[#003894] text-xs sm:text-sm cursor-pointer transition-all shadow-xs"
+              >
+                {language === "en" ? "Propose a Topic / Contact" : "Usulkan Topik / Hubungi Kami"}
+              </button>
+            </div>
           </Flex>
         ) : (
           <>
@@ -355,9 +340,12 @@ export default function ProgramsPage() {
                         {/* ✅ FIX: Navigasi ke /contact untuk pendaftaran */}
                         <InteractiveHoverButton
                           className="w-full"
-                          onClick={() => router.push("/contact")}
+                          onClick={() => {
+                            const waMsg = `Halo Admin PUPCL, saya ingin mendaftar program: "${program.title}". Mohon info pendaftarannya.`;
+                            window.open(`${siteConfig.links.whatsapp}?text=${encodeURIComponent(waMsg)}`, "_blank");
+                          }}
                         >
-                          Daftar Sekarang
+                          Daftar via WhatsApp
                         </InteractiveHoverButton>
                       </Box>
                     </div>
@@ -423,7 +411,7 @@ export default function ProgramsPage() {
                       <Box>
                         <Heading size="4">Weekly Code Review</Heading>
                         <Text size="2" color="gray">
-                          Bedah kode bersama setiap Kamis malam.
+                          Sesi belajar dan eksplorasi kode bersama rekan sesama mahasiswa.
                         </Text>
                       </Box>
                     </Flex>
@@ -444,7 +432,7 @@ export default function ProgramsPage() {
                       <Box>
                         <Heading size="4">Lightning Talks</Heading>
                         <Text size="2" color="gray">
-                          Sesi berbagi ilmu singkat 5 menit.
+                          Presentasi mini dan diskusi wawasan seputar teknologi terbaru.
                         </Text>
                       </Box>
                     </Flex>

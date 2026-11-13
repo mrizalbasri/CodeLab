@@ -22,7 +22,7 @@ const jetbrainsMono = JetBrains_Mono({
 
 export const metadata: Metadata = {
   title: "CodeLab - President University Pekanbaru",
-  description: "The official hub for young innovators and developers at President University Pekanbaru. Join us to learn, share, and build the future.",
+  description: "The coding and tech community for students at President University Pekanbaru. Join us to learn, share, and build the future.",
   keywords: ["CodeLab", "PUPCL", "Coding Club", "Polytechnic", "Pekanbaru", "President University", "Programming", "Community", "Developer"],
   icons: {
     icon: "/logo.jpeg",

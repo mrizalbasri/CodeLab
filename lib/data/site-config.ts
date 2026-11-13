@@ -1,7 +1,7 @@
 export const siteConfig = {
   name: "PUPCL",
   fullName: "President University Pekanbaru Code Lab",
-  shortDescription: "Student Tech & Innovation Hub",
+  shortDescription: "Student Coding & Tech Community",
   headline: "Where Passionate Coders Build Real Impact",
   subheadline:
     "Komunitas teknologi terdepan di President University Pekanbaru. Kami belajar koding, berkolaborasi membangun proyek nyata, menjuarai kompetisi nasional, dan mengakselerasi karier di industri teknologi.",

@@ -29,7 +29,7 @@ import { motion } from "motion/react";
 
 export default function AboutPage() {
   const [members, setMembers] = useState<Member[]>(initialMembers);
-  const [isLoading, setIsLoading] = useState(false);
+  const isLoading = false;
   const router = useRouter();
   const { t } = useLanguage();
 
@@ -50,18 +50,9 @@ export default function AboutPage() {
   return (
     <Box>
       {/* Header Section */}
-      <Box
-        style={{
-          backgroundColor: "var(--gray-2)",
-          borderBottom: "1px solid var(--gray-4)",
-          paddingTop: "140px",
-          paddingBottom: "var(--space-6)",
-          position: "relative",
-          overflow: "hidden",
-        }}
-      >
-        <Box className="bg-grid absolute inset-0 z-0 pointer-events-none" />
-        <Container size="4" px="4" style={{ position: "relative", zIndex: 1 }}>
+      <Box className="pt-28 pb-12 sm:pt-36 sm:pb-16 border-b border-neutral-200/70 dark:border-neutral-800/80 bg-neutral-50/50 dark:bg-neutral-950/50 relative overflow-hidden">
+        <div className="absolute inset-0 pointer-events-none opacity-30 dark:opacity-15 [background-image:radial-gradient(#94a3b8_1px,transparent_1px)] [background-size:24px_24px]" />
+        <Container size="4" px="4" className="relative z-10">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
