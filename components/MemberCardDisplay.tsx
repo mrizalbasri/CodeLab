@@ -135,7 +135,7 @@ export function MemberCardDisplay({
                 }}
               >
                 {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src="/codelab-mark.svg" alt="" width="24" height="24" />
+                <img src="/logo.jpeg" alt="" width="24" height="24" />
               </div>
               <span
                 style={{

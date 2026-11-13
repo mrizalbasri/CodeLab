@@ -25,9 +25,9 @@ export const metadata: Metadata = {
   description: "The coding and tech community for students at President University Pekanbaru. Join us to learn, share, and build the future.",
   keywords: ["CodeLab", "PUPCL", "Coding Club", "Polytechnic", "Pekanbaru", "President University", "Programming", "Community", "Developer"],
   icons: {
-    icon: "/codelab-mark.svg",
-    shortcut: "/codelab-mark.svg",
-    apple: "/codelab-mark.svg",
+    icon: "/logo.jpeg",
+    shortcut: "/logo.jpeg",
+    apple: "/logo.jpeg",
   },
 };
 
