@@ -3,7 +3,7 @@
 import { revalidatePath } from "next/cache";
 import { createClient } from "@/lib/supabase/server";
 import { handleFileUpload } from "@/lib/supabase/storage";
-import { Project, ProjectStatus } from "@/lib/types";
+import { Project, ProjectListResult, ProjectStatus } from "@/lib/types";
 import { getCurrentProfile } from "./auth";
 
 const PROJECT_COVER_FALLBACK = "/logo.jpeg";
@@ -35,7 +35,7 @@ export async function getMyProjects(): Promise<Project[]> {
   return (data ?? []) as Project[];
 }
 
-export async function getPublishedProjects(): Promise<Project[]> {
+export async function getPublishedProjects(): Promise<ProjectListResult> {
   const supabase = await createClient();
   const { data, error } = await supabase
     .from("projects")
@@ -46,11 +46,16 @@ export async function getPublishedProjects(): Promise<Project[]> {
     .order("created_at", { ascending: false });
 
   if (error) {
-    console.error("Error fetching published projects:", error);
-    throw new Error("Unable to load published projects.");
+    console.error("Error fetching published projects:", {
+      message: error.message,
+      code: error.code,
+      details: error.details,
+      hint: error.hint,
+    });
+    return { projects: [], error: "PROJECTS_UNAVAILABLE" };
   }
 
-  return (data ?? []) as Project[];
+  return { projects: (data ?? []) as Project[], error: null };
 }
 
 export async function createProject(formData: FormData) {

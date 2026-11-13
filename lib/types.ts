@@ -65,6 +65,10 @@ export type Project = {
   owner?: Pick<Profile, "id" | "full_name" | "member_id" | "avatar_url">;
 };
 
+export type ProjectListResult =
+  | { projects: Project[]; error: null }
+  | { projects: []; error: "PROJECTS_UNAVAILABLE" };
+
 // Radix UI valid color types
 export type RadixColor = 
   | "gray" 

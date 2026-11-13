@@ -4,7 +4,8 @@ import { Badge, Box, Card, Container, Flex, Heading, Text } from "@radix-ui/them
 import { getPublishedProjects } from "@/app/actions";
 
 export default async function ProjectsPage() {
-  const projects = await getPublishedProjects();
+  const result = await getPublishedProjects();
+  const projects = result.projects;
 
   return (
     <Box>
@@ -26,7 +27,17 @@ export default async function ProjectsPage() {
       </Box>
 
       <Container size="4" py={{ initial: "7", md: "9" }} px="6">
-        {projects.length === 0 ? (
+        {result.error ? (
+          <Box className="rounded-3xl border border-amber-200 bg-amber-50/70 px-6 py-16 text-center dark:border-amber-900/60 dark:bg-amber-950/20">
+            <Flex direction="column" align="center" gap="3">
+              <FolderKanban size={24} className="text-amber-700 dark:text-amber-400" />
+              <Heading size="5">Showcase belum tersedia.</Heading>
+              <Text size="2" color="gray" className="max-w-lg">
+                Koneksi Supabase belum tersedia atau migration project belum diterapkan. Coba lagi setelah konfigurasi backend selesai.
+              </Text>
+            </Flex>
+          </Box>
+        ) : projects.length === 0 ? (
           <Box className="rounded-3xl border border-dashed border-neutral-300 bg-neutral-50/70 px-6 py-16 text-center dark:border-neutral-700 dark:bg-neutral-900/50">
             <Flex direction="column" align="center" gap="3">
               <FolderKanban size={24} className="text-[#0047BA]" />
