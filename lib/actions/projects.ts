@@ -6,7 +6,7 @@ import { handleFileUpload } from "@/lib/supabase/storage";
 import { Project, ProjectListResult, ProjectStatus } from "@/lib/types";
 import { getCurrentProfile } from "./auth";
 
-const PROJECT_COVER_FALLBACK = "/logo.jpeg";
+const PROJECT_COVER_FALLBACK = "/logo.webp";
 
 function parseTechStack(value: FormDataEntryValue | null) {
   return String(value ?? "")

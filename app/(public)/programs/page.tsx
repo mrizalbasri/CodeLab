@@ -266,7 +266,7 @@ export default function ProgramsPage() {
                         height="200px"
                         style={{
                           backgroundImage: `url('${
-                            program.image_url || "/logo.jpeg"
+                            program.image_url || "/logo.webp"
                           }')`,
                           backgroundSize: "cover",
                           backgroundPosition: "center",

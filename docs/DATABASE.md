@@ -14,7 +14,7 @@ CREATE TABLE IF NOT EXISTS public.members (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     name TEXT NOT NULL,
     role TEXT NOT NULL,
-    image TEXT NOT NULL DEFAULT '/logo.jpeg',
+    image TEXT NOT NULL DEFAULT '/logo.webp',
     color TEXT NOT NULL DEFAULT 'indigo' CHECK (color IN ('indigo', 'pink', 'teal', 'orange', 'blue', 'red')),
     created_at TIMESTAMPTZ NOT NULL DEFAULT timezone('utc'::text, now())
 );
@@ -39,7 +39,7 @@ CREATE TABLE IF NOT EXISTS public.programs (
     time TEXT,
     location TEXT,
     speaker TEXT,
-    image_url TEXT DEFAULT '/logo.jpeg',
+    image_url TEXT DEFAULT '/logo.webp',
     status TEXT DEFAULT 'Upcoming' CHECK (status IN ('Upcoming', 'Ongoing', 'Completed')),
     created_at TIMESTAMPTZ NOT NULL DEFAULT timezone('utc'::text, now())
 );

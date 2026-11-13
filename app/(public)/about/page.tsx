@@ -132,7 +132,7 @@ export default function AboutPage() {
                   }}
                 >
                   <NextImage
-                    src="/logo.jpeg"
+                    src="/logo.webp"
                     alt="PUPCL Logo"
                     width={260}
                     height={260}

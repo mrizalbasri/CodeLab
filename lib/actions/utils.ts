@@ -1,9 +1,9 @@
 import { createClient } from "@/lib/supabase/server";
 
 export const DEFAULT_IMAGES = {
-  member: "/logo.jpeg",
-  gallery: "/logo.jpeg",
-  program: "/logo.jpeg",
+  member: "/logo.webp",
+  gallery: "/logo.webp",
+  program: "/logo.webp",
 } as const;
 
 export async function checkAuth() {

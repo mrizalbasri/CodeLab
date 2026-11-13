@@ -48,7 +48,7 @@ export function Footer() {
                 <Flex align="center" gap="3">
                   <Box className="logo-circle-sm">
                     <NextImage
-                      src="/logo.jpeg"
+                      src="/logo.webp"
                       alt="PUPCL Logo"
                       width={32}
                       height={32}
