@@ -6,6 +6,7 @@ import { createClient } from "@/lib/supabase/client";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
+import { getCurrentProfile } from "@/app/actions";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
@@ -30,7 +31,8 @@ export default function LoginPage() {
         throw error;
       }
 
-      router.push("/admin");
+      const profile = await getCurrentProfile();
+      router.push(profile?.role === "admin" ? "/admin" : "/dashboard");
       router.refresh();
     } catch (err) {
       const errorMessage = err instanceof Error ? err.message : "Something went wrong";

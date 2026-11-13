@@ -2,4 +2,14 @@ export * from "@/lib/actions/members";
 export * from "@/lib/actions/gallery";
 export * from "@/lib/actions/programs";
 export * from "@/lib/actions/contact";
-export type { Member, GalleryItem, Program } from "@/lib/types";
+export * from "@/lib/actions/auth";
+export * from "@/lib/actions/projects";
+export type {
+  Member,
+  GalleryItem,
+  Program,
+  Profile,
+  ProfileRole,
+  Project,
+  ProjectStatus,
+} from "@/lib/types";

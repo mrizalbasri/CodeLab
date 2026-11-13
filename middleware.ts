@@ -10,6 +10,7 @@ export const config = {
     /*
      * Hanya jalankan middleware pada route yang memerlukan auth:
      * - /admin dan semua sub-route-nya
+     * - /dashboard dan semua sub-route-nya
      * - /login
      *
      * Halaman publik (/, /about, /programs, /gallery, /contact)
@@ -17,6 +18,7 @@ export const config = {
      * Supabase yang tidak perlu dan tidak menyebabkan delay.
      */
     "/admin/:path*",
+    "/dashboard/:path*",
     "/login",
   ],
 };

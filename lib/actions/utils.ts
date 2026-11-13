@@ -15,5 +15,21 @@ export async function checkAuth() {
   if (!user) {
     throw new Error("Unauthorized");
   }
+
+  const { data: profile, error } = await supabase
+    .from("profiles")
+    .select("role")
+    .eq("id", user.id)
+    .maybeSingle();
+
+  if (error) {
+    console.error("Error checking admin role:", error);
+    throw new Error("Unable to verify permissions.");
+  }
+
+  if (profile?.role !== "admin") {
+    throw new Error("Forbidden");
+  }
+
   return supabase;
 }
