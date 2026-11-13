@@ -59,7 +59,7 @@ export default function Home() {
 
       {/* ── HERO ──────────────────────────────────────────────────── */}
       <section className="pt-28 pb-20 sm:pt-36 sm:pb-28 border-b border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-950">
-        <div className="max-w-3xl mx-auto px-6 flex flex-col items-center text-center">
+        <div className="max-w-4xl mx-auto px-6 sm:px-8 flex flex-col items-center text-center">
 
           {/* Badge */}
           <motion.div
@@ -121,7 +121,7 @@ export default function Home() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.28 }}
-            className="mt-14 w-full max-w-3xl"
+            className="mt-16 w-full max-w-4xl"
           >
             <div className="rounded-2xl overflow-hidden border border-neutral-200 dark:border-neutral-800 shadow-lg">
               <HeroCodeWindow />
@@ -132,7 +132,7 @@ export default function Home() {
 
       {/* ── TRACKS ────────────────────────────────────────────────── */}
       <section className="py-16 sm:py-20 border-b border-neutral-200 dark:border-neutral-800 bg-neutral-50 dark:bg-neutral-950/60">
-        <div className="max-w-5xl mx-auto px-6">
+        <div className="max-w-6xl mx-auto px-6 sm:px-8">
 
           <div className="text-center mb-10">
             <p className="text-xs font-bold text-neutral-400 uppercase tracking-widest mb-2">
@@ -185,27 +185,32 @@ export default function Home() {
 
       {/* ── FAQ ───────────────────────────────────────────────────── */}
       {t.home.faqs && t.home.faqs.length > 0 && (
-        <section className="py-16 sm:py-20 border-b border-neutral-200 dark:border-neutral-800 bg-neutral-50 dark:bg-neutral-950/60">
-          <div className="max-w-2xl mx-auto px-6">
+        <section className="py-20 sm:py-24 border-b border-neutral-200 dark:border-neutral-800 bg-neutral-50 dark:bg-neutral-950/60">
+          <div className="max-w-3xl mx-auto px-6 sm:px-8">
 
-            <div className="text-center mb-10">
+            <div className="text-center mb-12">
               <p className="text-xs font-bold text-neutral-400 uppercase tracking-widest mb-2">FAQ</p>
               <h2 className="text-2xl sm:text-3xl font-black text-neutral-900 dark:text-white tracking-tight">
                 {t.home.faqTitle}
               </h2>
+              <p className="mt-3 text-sm text-neutral-500 dark:text-neutral-400">
+                {t.home.faqSubtitle}
+              </p>
             </div>
 
-            <div className="space-y-2">
+            <div className="space-y-3">
               {t.home.faqs.map((faq, idx) => {
                 const isOpen = openFaq === idx;
                 return (
                   <div
                     key={idx}
-                    className="rounded-xl border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-900 overflow-hidden"
+                    className="rounded-2xl border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-900 overflow-hidden shadow-sm"
                   >
                     <button
                       onClick={() => setOpenFaq(isOpen ? null : idx)}
-                      className="w-full px-5 py-4 flex items-center justify-between text-left text-sm font-semibold text-neutral-900 dark:text-white cursor-pointer hover:bg-neutral-50 dark:hover:bg-neutral-800/50 transition-colors"
+                      aria-expanded={isOpen}
+                      aria-controls={`faq-answer-${idx}`}
+                      className="w-full px-5 py-5 flex items-center justify-between text-left text-sm font-semibold text-neutral-900 dark:text-white cursor-pointer hover:bg-neutral-50 dark:hover:bg-neutral-800/50 transition-colors"
                     >
                       <span>{faq.q}</span>
                       <ChevronDown
@@ -219,10 +224,11 @@ export default function Home() {
                           initial={{ height: 0, opacity: 0 }}
                           animate={{ height: "auto", opacity: 1 }}
                           exit={{ height: 0, opacity: 0 }}
-                          transition={{ duration: 0.2 }}
-                          className="overflow-hidden"
+                            transition={{ duration: 0.22, ease: "easeOut" }}
+                            className="overflow-hidden"
+                            id={`faq-answer-${idx}`}
                         >
-                          <p className="px-5 pb-4 pt-1 text-xs text-neutral-500 dark:text-neutral-400 leading-relaxed border-t border-neutral-100 dark:border-neutral-800">
+                            <p className="px-5 pb-5 pt-4 text-sm text-neutral-500 dark:text-neutral-400 leading-relaxed border-t border-neutral-100 dark:border-neutral-800">
                             {faq.a}
                           </p>
                         </motion.div>
@@ -238,7 +244,7 @@ export default function Home() {
 
       {/* ── CTA ───────────────────────────────────────────────────── */}
       <section className="py-16 sm:py-20 bg-white dark:bg-neutral-950">
-        <div className="max-w-2xl mx-auto px-6 text-center">
+        <div className="max-w-3xl mx-auto px-6 sm:px-8 text-center">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-neutral-100 dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 text-neutral-500 dark:text-neutral-400 text-xs font-medium mb-6">
             <span className="relative flex h-1.5 w-1.5">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#7b1200] opacity-75" />

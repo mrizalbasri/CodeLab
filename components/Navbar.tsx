@@ -2,15 +2,24 @@
 
 import Link from "next/link";
 import NextImage from "next/image";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 import {
-  Button,
   Flex,
   Text,
   Box,
   IconButton,
 } from "@radix-ui/themes";
-import { Menu, X, ArrowRight, Home, Users, Sparkles, LogIn } from "lucide-react";
+import {
+  Menu,
+  X,
+  ArrowRight,
+  Home,
+  Users,
+  Sparkles,
+  LogIn,
+  CalendarDays,
+  BookOpen,
+} from "lucide-react";
 import { useState, useEffect } from "react";
 import { ThemeToggle } from "./ThemeToggle";
 import { LanguageToggle } from "./LanguageToggle";
@@ -19,11 +28,9 @@ import { motion, AnimatePresence } from "motion/react";
 
 export function Navbar() {
   const pathname = usePathname();
-  const router = useRouter();
   const { t } = useLanguage();
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const [isNavigating, setIsNavigating] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -37,36 +44,23 @@ export function Navbar() {
     if (isOpen) {
       document.body.style.overflow = "hidden";
     } else {
-      document.body.style.overflow = "unset";
+      document.body.style.overflow = "";
     }
+
+    return () => {
+      document.body.style.overflow = "";
+    };
   }, [isOpen]);
-
-  const handleNavigation = (href: string) => {
-    if (href === pathname) {
-      setIsOpen(false);
-      return;
-    }
-    setIsNavigating(true);
-    setIsOpen(false);
-    router.push(href);
-    setTimeout(() => setIsNavigating(false), 300);
-  };
-
-  const handleKeyDown = (event: React.KeyboardEvent, href: string) => {
-    if (event.key === "Enter" || event.key === " ") {
-      event.preventDefault();
-      handleNavigation(href);
-    }
-  };
 
   if (pathname.startsWith("/admin")) {
     return null;
   }
 
-  // Hanya 3 menu utama yang tersedia
   const navItems = [
     { name: t.nav.home, href: "/", icon: Home },
     { name: t.nav.programs, href: "/programs", icon: Sparkles },
+    { name: t.nav.events, href: "/events", icon: CalendarDays },
+    { name: t.nav.blog, href: "/blog", icon: BookOpen },
     { name: t.nav.about, href: "/about", icon: Users },
   ];
 
@@ -77,37 +71,29 @@ export function Navbar() {
         style={{ paddingTop: "1rem", pointerEvents: "none", zIndex: 100 }}
       >
         <Box
-          className={`glass-navbar ${scrolled ? "glass-navbar-scrolled" : ""} ${isNavigating ? "navbar-navigating" : ""}`}
+          className={`glass-navbar ${scrolled ? "glass-navbar-scrolled" : ""}`}
           px="4"
           py="2"
           style={{
             pointerEvents: "auto",
-            width: "92%",
-            maxWidth: "960px",
-            transform: isNavigating ? "scale(0.98)" : "scale(1)",
-            transition: "all 0.4s cubic-bezier(0.4, 0, 0.2, 1)",
+            width: "min(1120px, calc(100% - 32px))",
             position: "relative",
             zIndex: 100,
           }}
         >
-          {/* Loading bar */}
-          <div className="nav-loading-bar" />
-
           <Flex justify="between" align="center" style={{ height: "48px" }}>
             {/* Logo */}
-            <button
-              onClick={() => handleNavigation("/")}
-              onKeyDown={(e) => handleKeyDown(e, "/")}
+            <Link
+              href="/"
+              prefetch
+              onClick={() => setIsOpen(false)}
               className="no-underline"
               style={{
                 textDecoration: "none",
-                background: "none",
-                border: "none",
-                cursor: "pointer",
               }}
               aria-label="CodeLab Home"
             >
-              <Flex align="center" gap="2" style={{ cursor: "pointer" }}>
+              <Flex align="center" gap="2">
                 <Box className="logo-circle">
                   <NextImage
                     src="/logo.jpeg"
@@ -125,37 +111,29 @@ export function Navbar() {
                   CodeLab
                 </Text>
               </Flex>
-            </button>
+            </Link>
 
-            {/* Desktop Navigation — only 3 links */}
             <Flex
-              gap="1"
+              gap="2"
               display={{ initial: "none", md: "flex" }}
               align="center"
               className="nav-pill"
             >
               {navItems.map((item) => (
-                <button
+                <Link
                   key={item.href}
-                  onClick={() => handleNavigation(item.href)}
-                  onKeyDown={(e) => handleKeyDown(e, item.href)}
+                  href={item.href}
+                  prefetch
+                  onClick={() => setIsOpen(false)}
                   className="no-underline nav-button"
                   style={{
                     textDecoration: "none",
-                    background: "none",
-                    border: "none",
-                    cursor: "pointer",
                   }}
                   aria-label={`Navigate to ${item.name}`}
                   aria-current={pathname === item.href ? "page" : undefined}
                 >
                   <Box
-                    className={`nav-item ${pathname === item.href ? "nav-item-active" : ""} ${isNavigating ? "nav-item-loading" : ""}`}
-                    style={{
-                      transition: "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
-                      position: "relative",
-                      overflow: "hidden",
-                    }}
+                    className={`nav-item ${pathname === item.href ? "nav-item-active" : ""}`}
                   >
                     <Text
                       size="2"
@@ -165,7 +143,6 @@ export function Navbar() {
                           pathname === item.href
                             ? "var(--gray-12)"
                             : "var(--gray-10)",
-                        transition: "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
                         position: "relative",
                         zIndex: 2,
                       }}
@@ -173,9 +150,8 @@ export function Navbar() {
                     >
                       {item.name}
                     </Text>
-                    <div className="nav-ripple" />
                   </Box>
-                </button>
+                </Link>
               ))}
             </Flex>
 
@@ -188,10 +164,10 @@ export function Navbar() {
                 <ThemeToggle />
               </Box>
 
-              {/* Login / Masuk button */}
               <Box display={{ initial: "none", md: "block" }}>
-                <button
-                  onClick={() => handleNavigation("/login")}
+                <Link
+                  href="/login"
+                  prefetch
                   style={{
                     display: "inline-flex",
                     alignItems: "center",
@@ -205,6 +181,7 @@ export function Navbar() {
                     fontWeight: 600,
                     cursor: "pointer",
                     transition: "all 0.2s ease",
+                    textDecoration: "none",
                   }}
                   onMouseEnter={(e) => {
                     e.currentTarget.style.borderColor = "#0047BA";
@@ -217,7 +194,7 @@ export function Navbar() {
                 >
                   <LogIn size={14} />
                   {t.nav.login}
-                </button>
+                </Link>
               </Box>
 
               {/* Mobile Burger */}
@@ -308,16 +285,17 @@ export function Navbar() {
                 </IconButton>
               </Flex>
 
-              {/* Nav Links — 3 only */}
               <Flex direction="column" gap="2" py="4">
                 {navItems.map((item) => {
                   const Icon = item.icon;
                   const isActive = pathname === item.href;
                   return (
-                    <button
+                    <Link
                       key={item.href}
-                      onClick={() => handleNavigation(item.href)}
-                      className="w-full flex items-center justify-between p-3 rounded-2xl transition-all cursor-pointer text-left"
+                      href={item.href}
+                      prefetch
+                      onClick={() => setIsOpen(false)}
+                      className="w-full flex items-center justify-between p-3 rounded-2xl transition-all cursor-pointer text-left no-underline"
                       style={{
                         backgroundColor: isActive ? "var(--indigo-3)" : "var(--gray-2)",
                         color: isActive ? "var(--indigo-11)" : "var(--gray-12)",
@@ -357,7 +335,7 @@ export function Navbar() {
                           Active
                         </Box>
                       )}
-                    </button>
+                    </Link>
                   );
                 })}
               </Flex>
@@ -375,38 +353,35 @@ export function Navbar() {
                 </Flex>
 
                 {/* Login CTA */}
-                <Button
-                  size="3"
-                  variant="outline"
-                  radius="large"
-                  className="w-full"
+                <Link
+                  href="/login"
+                  prefetch
+                  className="w-full inline-flex items-center justify-center rounded-full py-3"
                   style={{
-                    cursor: "pointer",
                     borderColor: "#0047BA",
                     color: "#0047BA",
                     fontWeight: 700,
                     marginBottom: "10px",
+                    border: "1px solid #0047BA",
+                    textDecoration: "none",
                   }}
-                  onClick={() => handleNavigation("/login")}
                 >
                   <LogIn size={16} style={{ marginRight: "6px" }} />
                   {t.nav.login}
-                </Button>
+                </Link>
 
-                <Button
-                  size="3"
-                  variant="solid"
-                  radius="large"
-                  className="w-full py-3 font-bold"
+                <Link
+                  href="/contact"
+                  prefetch
+                  className="w-full inline-flex items-center justify-center rounded-full py-3 font-bold"
                   style={{
                     backgroundColor: "#0047BA",
                     color: "white",
-                    cursor: "pointer",
+                    textDecoration: "none",
                   }}
-                  onClick={() => handleNavigation("/contact")}
                 >
                   {t.nav.joinNow} <ArrowRight size={18} style={{ marginLeft: "6px" }} />
-                </Button>
+                </Link>
               </Box>
             </motion.div>
           </motion.div>

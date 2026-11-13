@@ -5,6 +5,8 @@ export const translations = {
     nav: {
       home: "Home",
       programs: "Programs",
+      events: "Events",
+      blog: "Blog",
       about: "Community",
       gallery: "Gallery",
       contact: "Contact",
@@ -46,7 +48,7 @@ export const translations = {
       whyTitle: "Why Join PUPCL?",
       whySubtitle:
         "The student coding & tech community at President University Pekanbaru that is supportive, collaborative, and ready to help you grow into a great developer.",
-      bento1Stat: "500+",
+      bento1Stat: "50+",
       bento1Title: "Active Coders & Members",
       bento2Title: "Trusted Tech Community",
       bento2Desc:
@@ -106,6 +108,14 @@ export const translations = {
         {
           q: "How can I join the Hackathon & Competition Squad?",
           a: "Active members who complete our foundational workshops can join our hackathon squad incubation for dedicated mentoring and team matchmaking.",
+        },
+        {
+          q: "Where can I find campus and external tech events?",
+          a: "Check the Events page for opportunities from PUPCL, campus partners, and selected external communities. Each listing includes its source and registration link.",
+        },
+        {
+          q: "Can I share a tech event or write for the blog?",
+          a: "Yes. Reach out through our contact channel with the event details or article idea, and the team will review it for publication.",
         },
       ],
     },
@@ -195,6 +205,8 @@ export const translations = {
     nav: {
       home: "Beranda",
       programs: "Program",
+      events: "Events",
+      blog: "Blog",
       about: "Komunitas",
       gallery: "Galeri",
       contact: "Kontak",
@@ -236,7 +248,7 @@ export const translations = {
       whyTitle: "Kenapa Gabung PUPCL?",
       whySubtitle:
         "Komunitas coding & teknologi mahasiswa President University Pekanbaru yang supportive, kolaboratif, dan siap bantu kamu berkembang jadi developer yang lebih baik.",
-      bento1Stat: "500+",
+      bento1Stat: "50+",
       bento1Title: "Coders & Member Aktif",
       bento2Title: "Komunitas Terpercaya",
       bento2Desc:
@@ -296,6 +308,14 @@ export const translations = {
         {
           q: "Bagaimana cara bergabung dengan Tim Lomba / Hackathon Squad?",
           a: "Anggota aktif yang telah mengikuti workshop dasar dapat mengikuti inkubasi khusus hackathon dengan bimbingan langsung dari mentor berprestasi.",
+        },
+        {
+          q: "Di mana saya bisa menemukan event teknologi kampus dan eksternal?",
+          a: "Cek halaman Events untuk peluang dari PUPCL, partner kampus, dan komunitas eksternal terpilih. Setiap agenda akan mencantumkan sumber dan link pendaftaran.",
+        },
+        {
+          q: "Apakah saya bisa membagikan event atau menulis untuk blog?",
+          a: "Bisa. Kirim detail event atau ide artikel melalui kanal kontak kami, lalu tim akan meninjaunya sebelum dipublikasikan.",
         },
       ],
     },

@@ -7,7 +7,7 @@ export const siteConfig = {
     "Komunitas teknologi terdepan di President University Pekanbaru. Kami belajar koding, berkolaborasi membangun proyek nyata, menjuarai kompetisi nasional, dan mengakselerasi karier di industri teknologi.",
   stats: [
     {
-      value: "500+",
+      value: "50+",
       label: "Active Members",
       description: "Mahasiswa & tech enthusiasts",
       color: "indigo",
