@@ -10,7 +10,7 @@ import {
   Box,
   IconButton,
 } from "@radix-ui/themes";
-import { Menu, X, ArrowRight, Home, Users, Sparkles, Image as ImageIcon, Mail } from "lucide-react";
+import { Menu, X, ArrowRight, Home, Users, Sparkles, LogIn } from "lucide-react";
 import { useState, useEffect } from "react";
 import { ThemeToggle } from "./ThemeToggle";
 import { LanguageToggle } from "./LanguageToggle";
@@ -25,7 +25,6 @@ export function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [isNavigating, setIsNavigating] = useState(false);
 
-  // Handle scroll effect
   useEffect(() => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 20);
@@ -34,7 +33,6 @@ export function Navbar() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Lock body scroll when menu is open
   useEffect(() => {
     if (isOpen) {
       document.body.style.overflow = "hidden";
@@ -43,41 +41,33 @@ export function Navbar() {
     }
   }, [isOpen]);
 
-  // Handle navigation with loading state
   const handleNavigation = (href: string) => {
     if (href === pathname) {
-        setIsOpen(false);
-        return;
+      setIsOpen(false);
+      return;
     }
-    
     setIsNavigating(true);
     setIsOpen(false);
-    
     router.push(href);
-    // Reset navigation state shortly after push
     setTimeout(() => setIsNavigating(false), 300);
   };
 
-  // Handle keyboard navigation
   const handleKeyDown = (event: React.KeyboardEvent, href: string) => {
-    if (event.key === 'Enter' || event.key === ' ') {
+    if (event.key === "Enter" || event.key === " ") {
       event.preventDefault();
       handleNavigation(href);
     }
   };
 
-  // Hide navbar on admin pages
   if (pathname.startsWith("/admin")) {
     return null;
   }
 
-  // Link Items with icons for mobile
+  // Hanya 3 menu utama yang tersedia
   const navItems = [
     { name: t.nav.home, href: "/", icon: Home },
-    { name: t.nav.about, href: "/about", icon: Users },
     { name: t.nav.programs, href: "/programs", icon: Sparkles },
-    { name: t.nav.gallery, href: "/gallery", icon: ImageIcon },
-    { name: t.nav.contact, href: "/contact", icon: Mail },
+    { name: t.nav.about, href: "/about", icon: Users },
   ];
 
   return (
@@ -93,40 +83,37 @@ export function Navbar() {
           style={{
             pointerEvents: "auto",
             width: "92%",
-            maxWidth: "1000px",
+            maxWidth: "960px",
             transform: isNavigating ? "scale(0.98)" : "scale(1)",
             transition: "all 0.4s cubic-bezier(0.4, 0, 0.2, 1)",
             position: "relative",
-            zIndex: 100
+            zIndex: 100,
           }}
         >
           {/* Loading bar */}
           <div className="nav-loading-bar" />
-          
+
           <Flex justify="between" align="center" style={{ height: "48px" }}>
-            {/* Logo Section */}
+            {/* Logo */}
             <button
               onClick={() => handleNavigation("/")}
               onKeyDown={(e) => handleKeyDown(e, "/")}
               className="no-underline"
-              style={{ 
-                textDecoration: "none", 
-                background: "none", 
-                border: "none", 
+              style={{
+                textDecoration: "none",
+                background: "none",
+                border: "none",
                 cursor: "pointer",
-                transition: "transform 0.2s ease"
               }}
-              onMouseEnter={(e) => e.currentTarget.style.transform = "scale(1.05)"}
-              onMouseLeave={(e) => e.currentTarget.style.transform = "scale(1)"}
               aria-label="CodeLab Home"
             >
-              <Flex align="center" gap="3" style={{ cursor: "pointer" }}>
+              <Flex align="center" gap="2" style={{ cursor: "pointer" }}>
                 <Box className="logo-circle">
                   <NextImage
                     src="/logo.jpeg"
                     alt="CodeLab Logo"
-                    width={36}
-                    height={36}
+                    width={32}
+                    height={32}
                     className="logo-img"
                   />
                 </Box>
@@ -140,7 +127,7 @@ export function Navbar() {
               </Flex>
             </button>
 
-            {/* Desktop Navigation */}
+            {/* Desktop Navigation — only 3 links */}
             <Flex
               gap="1"
               display={{ initial: "none", md: "flex" }}
@@ -153,21 +140,21 @@ export function Navbar() {
                   onClick={() => handleNavigation(item.href)}
                   onKeyDown={(e) => handleKeyDown(e, item.href)}
                   className="no-underline nav-button"
-                  style={{ 
-                    textDecoration: "none", 
-                    background: "none", 
-                    border: "none", 
-                    cursor: "pointer"
+                  style={{
+                    textDecoration: "none",
+                    background: "none",
+                    border: "none",
+                    cursor: "pointer",
                   }}
                   aria-label={`Navigate to ${item.name}`}
                   aria-current={pathname === item.href ? "page" : undefined}
                 >
                   <Box
                     className={`nav-item ${pathname === item.href ? "nav-item-active" : ""} ${isNavigating ? "nav-item-loading" : ""}`}
-                    style={{ 
+                    style={{
                       transition: "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
                       position: "relative",
-                      overflow: "hidden"
+                      overflow: "hidden",
                     }}
                   >
                     <Text
@@ -180,13 +167,12 @@ export function Navbar() {
                             : "var(--gray-10)",
                         transition: "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
                         position: "relative",
-                        zIndex: 2
+                        zIndex: 2,
                       }}
                       className="hover:text-[var(--gray-12)]"
                     >
                       {item.name}
                     </Text>
-                    {/* Ripple effect */}
                     <div className="nav-ripple" />
                   </Box>
                 </button>
@@ -202,29 +188,43 @@ export function Navbar() {
                 <ThemeToggle />
               </Box>
 
+              {/* Login / Masuk button */}
               <Box display={{ initial: "none", md: "block" }}>
-                <Button
-                  size="2"
-                  variant="solid"
-                  highContrast
-                  radius="full"
-                  className="btn-primary-pill"
-                  onClick={() => handleNavigation("/contact")}
+                <button
+                  onClick={() => handleNavigation("/login")}
                   style={{
+                    display: "inline-flex",
+                    alignItems: "center",
+                    gap: "6px",
+                    padding: "7px 16px",
+                    borderRadius: "9999px",
+                    border: "1.5px solid var(--gray-6)",
+                    background: "transparent",
+                    color: "var(--gray-12)",
+                    fontSize: "13px",
+                    fontWeight: 600,
                     cursor: "pointer",
-                    transition: "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
-                    transform: isNavigating ? "scale(0.95)" : "scale(1)"
+                    transition: "all 0.2s ease",
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.borderColor = "#0047BA";
+                    e.currentTarget.style.color = "#0047BA";
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.borderColor = "var(--gray-6)";
+                    e.currentTarget.style.color = "var(--gray-12)";
                   }}
                 >
-                  {t.nav.joinNow}
-                </Button>
+                  <LogIn size={14} />
+                  {t.nav.login}
+                </button>
               </Box>
 
-              {/* Mobile Burger Button */}
+              {/* Mobile Burger */}
               <Box display={{ initial: "block", md: "none" }}>
-                <IconButton 
-                  variant="ghost" 
-                  color="gray" 
+                <IconButton
+                  variant="ghost"
+                  color="gray"
                   radius="full"
                   size="3"
                   onClick={() => setIsOpen(!isOpen)}
@@ -239,7 +239,7 @@ export function Navbar() {
         </Box>
       </Box>
 
-      {/* Mobile Drawer Overlay */}
+      {/* Mobile Drawer */}
       <AnimatePresence>
         {isOpen && (
           <motion.div
@@ -274,7 +274,7 @@ export function Navbar() {
               className="rounded-3xl p-5 sm:p-6 flex flex-col overflow-y-auto max-h-[90vh]"
               onClick={(e) => e.stopPropagation()}
             >
-              {/* Top Drawer Header */}
+              {/* Drawer Header */}
               <Flex justify="between" align="center" pb="4" style={{ borderBottom: "1px solid var(--gray-5)" }}>
                 <Flex align="center" gap="3">
                   <Box className="logo-circle">
@@ -308,7 +308,7 @@ export function Navbar() {
                 </IconButton>
               </Flex>
 
-              {/* Navigation Links */}
+              {/* Nav Links — 3 only */}
               <Flex direction="column" gap="2" py="4">
                 {navItems.map((item) => {
                   const Icon = item.icon;
@@ -329,7 +329,7 @@ export function Navbar() {
                           p="2"
                           style={{
                             borderRadius: "10px",
-                            backgroundColor: isActive ? "var(--indigo-9)" : "var(--gray-4)",
+                            backgroundColor: isActive ? "#0047BA" : "var(--gray-4)",
                             color: isActive ? "white" : "var(--gray-11)",
                             display: "flex",
                             alignItems: "center",
@@ -348,7 +348,7 @@ export function Navbar() {
                           py="1"
                           style={{
                             borderRadius: "9999px",
-                            backgroundColor: "var(--indigo-9)",
+                            backgroundColor: "#0047BA",
                             color: "white",
                             fontSize: "11px",
                             fontWeight: "bold",
@@ -362,7 +362,7 @@ export function Navbar() {
                 })}
               </Flex>
 
-              {/* Preferences Row (Language & Theme) */}
+              {/* Preferences */}
               <Box pt="4" style={{ borderTop: "1px solid var(--gray-5)" }}>
                 <Flex justify="between" align="center" mb="4">
                   <Text size="2" color="gray" weight="medium">
@@ -374,7 +374,25 @@ export function Navbar() {
                   </Flex>
                 </Flex>
 
-                {/* Thumb-friendly CTA Button */}
+                {/* Login CTA */}
+                <Button
+                  size="3"
+                  variant="outline"
+                  radius="large"
+                  className="w-full"
+                  style={{
+                    cursor: "pointer",
+                    borderColor: "#0047BA",
+                    color: "#0047BA",
+                    fontWeight: 700,
+                    marginBottom: "10px",
+                  }}
+                  onClick={() => handleNavigation("/login")}
+                >
+                  <LogIn size={16} style={{ marginRight: "6px" }} />
+                  {t.nav.login}
+                </Button>
+
                 <Button
                   size="3"
                   variant="solid"
