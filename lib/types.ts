@@ -111,6 +111,9 @@ export type ProjectFormData = Omit<
   Project,
   "id" | "owner_id" | "status" | "reviewed_at" | "created_at" | "updated_at" | "owner"
 >;
+export type ProjectUpdateData = Partial<
+  Omit<Project, "id" | "owner_id" | "created_at" | "updated_at" | "owner">
+>;
 
 // Helper function types
 export type UploadFileResult = {

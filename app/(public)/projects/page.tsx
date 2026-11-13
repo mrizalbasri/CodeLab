@@ -3,6 +3,8 @@ import { ArrowRight, ExternalLink, FolderKanban } from "lucide-react";
 import { Badge, Box, Card, Container, Flex, Heading, Text } from "@radix-ui/themes";
 import { getPublishedProjects } from "@/app/actions";
 
+export const dynamic = "force-dynamic";
+
 export default async function ProjectsPage() {
   const result = await getPublishedProjects();
   const projects = result.projects;

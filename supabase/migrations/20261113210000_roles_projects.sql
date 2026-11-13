@@ -139,6 +139,7 @@ create policy "Members can create their own projects"
 on public.projects for insert
 with check (
   owner_id = auth.uid()
+  and status in ('draft', 'pending')
   and exists (
     select 1 from public.profiles
     where profiles.id = auth.uid() and profiles.role = 'member'

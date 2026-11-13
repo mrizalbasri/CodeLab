@@ -12,9 +12,9 @@ import {
   TextField,
 } from "@radix-ui/themes";
 import { FolderKanban, Upload } from "lucide-react";
-import { useTransition } from "react";
+import { useState, useTransition } from "react";
 import { toast } from "sonner";
-import { createProject } from "@/app/actions";
+import { createProject, updateProject } from "@/app/actions";
 import { MemberCardDisplay } from "@/components/MemberCardDisplay";
 import { Profile, Project } from "@/lib/types";
 
@@ -32,8 +32,9 @@ const statusLabels: Record<Project["status"], string> = {
 
 export function MemberDashboard({ profile, projects }: MemberDashboardProps) {
   const [isPending, startTransition] = useTransition();
+  const [editingProjectId, setEditingProjectId] = useState<string | null>(null);
 
-  const refreshProjects = async () => {
+  const reloadDashboard = async () => {
     window.location.reload();
   };
 
@@ -79,7 +80,7 @@ export function MemberDashboard({ profile, projects }: MemberDashboardProps) {
                   try {
                     await createProject(formData);
                     toast.success("Project berhasil dikirim untuk review.");
-                    await refreshProjects();
+                    await reloadDashboard();
                   } catch (error) {
                     toast.error(error instanceof Error ? error.message : "Gagal mengirim project.");
                   }
@@ -140,19 +141,96 @@ export function MemberDashboard({ profile, projects }: MemberDashboardProps) {
               <Flex direction="column" gap="3">
                 {projects.map((project) => (
                   <Card key={project.id} size="2">
-                    <Flex justify="between" align="start" gap="4">
-                      <Box>
-                        <Heading size="3">{project.title}</Heading>
-                        <Text as="p" size="2" color="gray" className="mt-1">{project.summary}</Text>
-                      </Box>
-                      <Badge color={project.status === "published" ? "green" : project.status === "rejected" ? "red" : "amber"} variant="soft">
-                        {statusLabels[project.status]}
-                      </Badge>
-                    </Flex>
-                    {project.rejection_reason && (
-                      <Text as="p" size="2" color="red" className="mt-3">
-                        Catatan admin: {project.rejection_reason}
-                      </Text>
+                    {editingProjectId === project.id ? (
+                      <form
+                        action={(formData) => {
+                          startTransition(async () => {
+                            try {
+                              await updateProject(formData);
+                              toast.success("Project berhasil dikirim ulang untuk review.");
+                              setEditingProjectId(null);
+                              await reloadDashboard();
+                            } catch (error) {
+                              toast.error(
+                                error instanceof Error
+                                  ? error.message
+                                  : "Gagal mengirim ulang project.",
+                              );
+                            }
+                          });
+                        }}
+                      >
+                        <input type="hidden" name="id" value={project.id} />
+                        <Flex direction="column" gap="3">
+                          <TextField.Root
+                            name="title"
+                            defaultValue={project.title}
+                            placeholder="Nama project"
+                            required
+                          />
+                          <TextArea
+                            name="summary"
+                            defaultValue={project.summary}
+                            placeholder="Ringkasan singkat project"
+                            required
+                          />
+                          <TextArea
+                            name="description"
+                            defaultValue={project.description ?? ""}
+                            placeholder="Deskripsi project"
+                          />
+                          <TextField.Root
+                            name="techStack"
+                            defaultValue={project.tech_stack.join(", ")}
+                            placeholder="Next.js, Supabase, TypeScript"
+                          />
+                          <Box className="grid gap-3 sm:grid-cols-2">
+                            <TextField.Root
+                              name="demoUrl"
+                              type="url"
+                              defaultValue={project.demo_url ?? ""}
+                              placeholder="Demo URL"
+                            />
+                            <TextField.Root
+                              name="repositoryUrl"
+                              type="url"
+                              defaultValue={project.repository_url ?? ""}
+                              placeholder="Repository URL"
+                            />
+                          </Box>
+                          <input name="cover" type="file" accept="image/*" className="w-full text-sm" />
+                          <Flex gap="2">
+                            <Button type="submit" disabled={isPending} style={{ cursor: "pointer", backgroundColor: "#0047BA" }}>
+                              {isPending ? "Mengirim..." : "Kirim Ulang"}
+                            </Button>
+                            <Button type="button" variant="soft" onClick={() => setEditingProjectId(null)}>
+                              Batal
+                            </Button>
+                          </Flex>
+                        </Flex>
+                      </form>
+                    ) : (
+                      <>
+                        <Flex justify="between" align="start" gap="4">
+                          <Box>
+                            <Heading size="3">{project.title}</Heading>
+                            <Text as="p" size="2" color="gray" className="mt-1">{project.summary}</Text>
+                          </Box>
+                          <Badge color={project.status === "published" ? "green" : project.status === "rejected" ? "red" : "amber"} variant="soft">
+                            {statusLabels[project.status]}
+                          </Badge>
+                        </Flex>
+                        {project.rejection_reason && (
+                          <Flex justify="between" align="end" gap="3" className="mt-3">
+                            <Text as="p" size="2" color="red">
+                              Catatan admin: {project.rejection_reason}
+                            </Text>
+                            <Button type="button" variant="soft" onClick={() => setEditingProjectId(project.id)}>
+                              Revisi
+                            </Button>
+                          </Flex>
+                        )}
+                      </>
                     )}
                   </Card>
                 ))}

@@ -3,7 +3,12 @@
 import { revalidatePath } from "next/cache";
 import { createClient } from "@/lib/supabase/server";
 import { handleFileUpload } from "@/lib/supabase/storage";
-import { Project, ProjectListResult, ProjectStatus } from "@/lib/types";
+import {
+  Project,
+  ProjectListResult,
+  ProjectStatus,
+  ProjectUpdateData,
+} from "@/lib/types";
 import { getCurrentProfile } from "./auth";
 
 const PROJECT_COVER_FALLBACK = "/logo.jpeg";
@@ -36,26 +41,25 @@ export async function getMyProjects(): Promise<Project[]> {
 }
 
 export async function getPublishedProjects(): Promise<ProjectListResult> {
-  const supabase = await createClient();
-  const { data, error } = await supabase
-    .from("projects")
-    .select(
-      "*, owner:profiles!projects_owner_id_fkey(id, full_name, member_id, avatar_url)",
-    )
-    .eq("status", "published")
-    .order("created_at", { ascending: false });
+  try {
+    const supabase = await createClient();
+    const { data, error } = await supabase
+      .from("projects")
+      .select(
+        "*, owner:profiles!projects_owner_id_fkey(id, full_name, member_id, avatar_url)",
+      )
+      .eq("status", "published")
+      .order("created_at", { ascending: false });
 
-  if (error) {
-    console.error("Error fetching published projects:", {
-      message: error.message,
-      code: error.code,
-      details: error.details,
-      hint: error.hint,
-    });
+    if (error) {
+      throw error;
+    }
+
+    return { projects: (data ?? []) as Project[], error: null };
+  } catch (error) {
+    console.error("Error fetching published projects:", error);
     return { projects: [], error: "PROJECTS_UNAVAILABLE" };
   }
-
-  return { projects: (data ?? []) as Project[], error: null };
 }
 
 export async function createProject(formData: FormData) {
@@ -114,7 +118,7 @@ export async function updateProject(formData: FormData) {
       )
     : undefined;
 
-  const updateData: Record<string, unknown> = {
+  const updateData: ProjectUpdateData = {
     title: String(formData.get("title") ?? "").trim(),
     summary: String(formData.get("summary") ?? "").trim(),
     description: String(formData.get("description") ?? "").trim() || null,
