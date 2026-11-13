@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useRef } from "react";
-import { CreditCard, Download, Share2, QrCode, Users, Code2 } from "lucide-react";
+import { Download, Share2, QrCode } from "lucide-react";
 import { motion } from "motion/react";
 
 interface MemberCardDisplayProps {
@@ -131,9 +131,11 @@ export function MemberCardDisplay({
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center",
+                  overflow: "hidden",
                 }}
               >
-                <Code2 size={14} color="#0047BA" />
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src="/codelab-mark.svg" alt="" width="24" height="24" />
               </div>
               <span
                 style={{

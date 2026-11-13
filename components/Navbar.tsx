@@ -98,7 +98,7 @@ export function Navbar() {
               <Flex align="center" gap="2">
                 <Box className="logo-circle">
                   <NextImage
-                    src="/logo.jpeg"
+                    src="/codelab-mark.svg"
                     alt="CodeLab Logo"
                     width={32}
                     height={32}
@@ -258,7 +258,7 @@ export function Navbar() {
                 <Flex align="center" gap="3">
                   <Box className="logo-circle">
                     <NextImage
-                      src="/logo.jpeg"
+                      src="/codelab-mark.svg"
                       alt="CodeLab Logo"
                       width={36}
                       height={36}

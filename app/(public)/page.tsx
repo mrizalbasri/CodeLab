@@ -12,6 +12,7 @@ import {
   MessageCircle,
 } from "lucide-react";
 import Link from "next/link";
+import Image from "next/image";
 import { useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { HeroCodeWindow } from "@/components/HeroCodeWindow";
@@ -58,73 +59,93 @@ export default function Home() {
     <Box className="overflow-hidden">
 
       {/* ── HERO ──────────────────────────────────────────────────── */}
-      <section className="pt-28 pb-20 sm:pt-36 sm:pb-28 border-b border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-950">
-        <div className="max-w-4xl mx-auto px-6 sm:px-8 flex flex-col items-center text-center">
-
-          {/* Badge */}
+      <section className="border-b border-neutral-200 bg-white pb-20 pt-28 dark:border-neutral-800 dark:bg-neutral-950 sm:pb-28 sm:pt-36">
+        <div className="mx-auto flex max-w-4xl flex-col items-center px-6 text-center sm:px-8">
           <motion.div
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.4 }}
           >
-            <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-neutral-100 dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 text-neutral-600 dark:text-neutral-400 text-xs font-medium mb-6">
-              <span className="w-1.5 h-1.5 rounded-full bg-[#0047BA] animate-pulse" />
+            <span className="mb-6 inline-flex items-center gap-2 rounded-full border border-neutral-200 bg-neutral-100 px-4 py-1.5 text-xs font-medium text-neutral-600 dark:border-neutral-800 dark:bg-neutral-900 dark:text-neutral-400">
+              <span className="h-1.5 w-1.5 rounded-full bg-[#0047BA] animate-pulse" />
               {language === "id"
-                ? "Komunitas Teknologi • President University Pekanbaru"
-                : "Student Tech Community • President University Pekanbaru"}
+                ? "President University Club • Pekanbaru"
+                : "President University Club • Pekanbaru"}
             </span>
           </motion.div>
 
-          {/* Headline */}
           <motion.h1
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.45, delay: 0.05 }}
-            className="text-4xl sm:text-6xl font-black tracking-tight text-neutral-900 dark:text-white leading-[1.1]"
+            className="text-4xl font-black leading-[1.1] tracking-tight text-neutral-900 dark:text-white sm:text-6xl"
           >
             PU Pekanbaru{" "}
             <span className="text-[#0047BA]">Code Lab</span>
           </motion.h1>
 
-          {/* Subtitle */}
           <motion.p
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.4, delay: 0.12 }}
-            className="mt-5 text-sm sm:text-base text-neutral-500 dark:text-neutral-400 max-w-xl leading-relaxed"
+            className="mt-5 max-w-xl text-sm leading-relaxed text-neutral-500 dark:text-neutral-400 sm:text-base"
           >
             {t.home.subtitle}
           </motion.p>
 
-          {/* CTAs */}
           <motion.div
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.4, delay: 0.18 }}
-            className="flex flex-wrap items-center justify-center gap-3 mt-8"
+            className="mt-8 flex flex-wrap items-center justify-center gap-3"
           >
             <Link href="/programs">
-              <button className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full font-semibold bg-[#0047BA] text-white text-sm hover:bg-[#003894] transition-colors cursor-pointer">
+              <button className="inline-flex cursor-pointer items-center gap-2 rounded-full bg-[#0047BA] px-6 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-[#003894]">
                 {t.home.explorePrograms}
                 <ArrowRight size={15} />
               </button>
             </Link>
             <Link href="/about">
-              <button className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full font-semibold bg-transparent border border-neutral-300 dark:border-neutral-700 text-neutral-700 dark:text-neutral-300 text-sm hover:border-neutral-400 dark:hover:border-neutral-600 transition-colors cursor-pointer">
+              <button className="inline-flex cursor-pointer items-center gap-2 rounded-full border border-neutral-300 bg-transparent px-6 py-2.5 text-sm font-semibold text-neutral-700 transition-colors hover:border-neutral-400 dark:border-neutral-700 dark:text-neutral-300 dark:hover:border-neutral-600">
                 {language === "id" ? "Tentang Kami" : "About Us"}
               </button>
             </Link>
           </motion.div>
 
-          {/* Code Window */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.28 }}
             className="mt-16 w-full max-w-4xl"
           >
-            <div className="rounded-2xl overflow-hidden border border-neutral-200 dark:border-neutral-800 shadow-lg">
-              <HeroCodeWindow />
+            <div className="relative pt-10">
+              <div className="group absolute right-3 -top-4 z-20 sm:-top-8 sm:right-10">
+                <span className="pointer-events-none absolute right-full top-1/2 mr-2 -translate-y-1/2 whitespace-nowrap rounded-2xl border border-neutral-200 bg-white px-3 py-2 text-xs font-medium text-neutral-700 opacity-0 shadow-md transition-opacity duration-200 group-hover:opacity-100 group-focus-within:opacity-100 dark:border-neutral-700 dark:bg-neutral-900 dark:text-neutral-200">
+                  👋 {language === "id" ? "Hai! Aku KUBI." : "Hi! I’m KUBI."}
+                  <span className="absolute -right-1.5 top-1/2 h-3 w-3 -translate-y-1/2 rotate-45 border-r border-t border-neutral-200 bg-white dark:border-neutral-700 dark:bg-neutral-900" />
+                </span>
+                <button
+                  type="button"
+                  aria-label={language === "id" ? "Sapa KUBI" : "Say hi to KUBI"}
+                  className="rounded-full focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#0047BA]"
+                >
+                  <Image
+                    src="/club-pixel-mascot.svg"
+                    alt="KUBI, maskot PU Pekanbaru Code Lab"
+                    width={84}
+                    height={84}
+                    priority
+                    className="h-16 w-16 transition-transform duration-200 group-hover:scale-105 sm:h-20 sm:w-20"
+                  />
+                </button>
+              </div>
+              <motion.div
+                className="overflow-hidden rounded-2xl border border-neutral-200 shadow-lg dark:border-neutral-800"
+                whileHover={{ y: -3 }}
+                transition={{ duration: 0.2, ease: "easeOut" }}
+              >
+                <HeroCodeWindow />
+              </motion.div>
             </div>
           </motion.div>
         </div>
