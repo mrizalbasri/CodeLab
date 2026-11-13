@@ -56,7 +56,7 @@ export default async function ProjectsPage() {
               <Card key={project.id} size="2" className="overflow-hidden">
                 <Box className="h-44 overflow-hidden bg-neutral-100 dark:bg-neutral-800">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src={project.cover_url || "/logo.jpeg"} alt="" className="h-full w-full object-cover" />
+                  <img src={project.cover_url || "/logo.webp"} alt="" className="h-full w-full object-cover" />
                 </Box>
                 <Flex direction="column" gap="3" p="1">
                   <Box>
