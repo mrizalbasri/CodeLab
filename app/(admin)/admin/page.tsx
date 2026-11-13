@@ -17,23 +17,28 @@ import {
   GalleryItem,
   getPrograms,
   Program,
+  getCurrentProfile,
+  getProjectsForAdmin,
+  Project,
 } from "@/app/actions";
-import { useEffect, useState, useTransition } from "react";
+import { useCallback, useEffect, useState, useTransition } from "react";
 import { createClient } from "@/lib/supabase/client";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { MembersTab } from "@/components/admin/MembersTab";
 import { GalleryTab } from "@/components/admin/GalleryTab";
 import { ProgramsTab } from "@/components/admin/ProgramsTab";
+import { ProjectsTab } from "@/components/admin/ProjectsTab";
 
 export default function AdminPage() {
   const [members, setMembers] = useState<Member[]>([]);
   const [galleryItems, setGalleryItems] = useState<GalleryItem[]>([]);
   const [programs, setPrograms] = useState<Program[]>([]);
+  const [projects, setProjects] = useState<Project[]>([]);
   const [initialLoading, setInitialLoading] = useState(true);
 
   // This hook is used for all child components to show loading states
-  const [isPending, startTransition] = useTransition();
+  const [, startTransition] = useTransition();
 
   const router = useRouter();
   const supabase = createClient();
@@ -44,21 +49,29 @@ export default function AdminPage() {
     router.refresh();
   };
 
-  const refreshData = async () => {
+  const refreshData = useCallback(async () => {
     try {
-      const [membersData, galleryData, programsData] = await Promise.all([
+      const profile = await getCurrentProfile();
+      if (!profile || profile.role !== "admin") {
+        router.replace("/dashboard");
+        return;
+      }
+
+      const [membersData, galleryData, programsData, projectsData] = await Promise.all([
         getMembers(),
         getGalleryItems(),
         getPrograms(),
+        getProjectsForAdmin(),
       ]);
       setMembers(membersData);
       setGalleryItems(galleryData);
       setPrograms(programsData);
+      setProjects(projectsData);
     } catch (error) {
       console.error("Failed to refresh data", error);
       toast.error("Gagal memuat data terbaru.");
     }
-  };
+  }, [router]);
 
   useEffect(() => {
     const load = async () => {
@@ -69,7 +82,7 @@ export default function AdminPage() {
       }
     };
     void load();
-  }, []);
+  }, [refreshData]);
 
   return (
     <Box
@@ -116,6 +129,7 @@ export default function AdminPage() {
                 <Tabs.Trigger value="team" className="min-h-[38px] cursor-pointer">Team Members</Tabs.Trigger>
                 <Tabs.Trigger value="gallery" className="min-h-[38px] cursor-pointer">Gallery</Tabs.Trigger>
                 <Tabs.Trigger value="programs" className="min-h-[38px] cursor-pointer">Programs</Tabs.Trigger>
+                <Tabs.Trigger value="projects" className="min-h-[38px] cursor-pointer">Projects</Tabs.Trigger>
               </Tabs.List>
             </Box>
 
@@ -139,6 +153,14 @@ export default function AdminPage() {
               <Tabs.Content value="programs">
                 <ProgramsTab
                   programs={programs}
+                  onRefresh={refreshData}
+                  startTransition={startTransition}
+                />
+              </Tabs.Content>
+
+              <Tabs.Content value="projects">
+                <ProjectsTab
+                  projects={projects}
                   onRefresh={refreshData}
                   startTransition={startTransition}
                 />

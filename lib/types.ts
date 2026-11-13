@@ -31,6 +31,44 @@ export type Program = {
   created_at?: string;
 };
 
+export type ProfileRole = "admin" | "member";
+
+export type Profile = {
+  id: string;
+  full_name: string;
+  role: ProfileRole;
+  member_id?: string | null;
+  division?: string | null;
+  batch?: string | null;
+  avatar_url?: string | null;
+  skills: string[];
+  created_at?: string;
+};
+
+export type ProjectStatus = "draft" | "pending" | "published" | "rejected";
+
+export type Project = {
+  id: string;
+  owner_id: string;
+  title: string;
+  summary: string;
+  description?: string | null;
+  cover_url?: string | null;
+  demo_url?: string | null;
+  repository_url?: string | null;
+  tech_stack: string[];
+  status: ProjectStatus;
+  rejection_reason?: string | null;
+  reviewed_at?: string | null;
+  created_at?: string;
+  updated_at?: string;
+  owner?: Pick<Profile, "id" | "full_name" | "member_id" | "avatar_url">;
+};
+
+export type ProjectListResult =
+  | { projects: Project[]; error: null }
+  | { projects: []; error: "PROJECTS_UNAVAILABLE" };
+
 // Radix UI valid color types
 export type RadixColor = 
   | "gray" 
@@ -69,6 +107,10 @@ export type ProgramFormData = Omit<Program, "id" | "created_at">;
 export type MemberUpdateData = Partial<MemberFormData>;
 export type GalleryUpdateData = Partial<GalleryFormData>;
 export type ProgramUpdateData = Partial<ProgramFormData>;
+export type ProjectFormData = Omit<
+  Project,
+  "id" | "owner_id" | "status" | "reviewed_at" | "created_at" | "updated_at" | "owner"
+>;
 
 // Helper function types
 export type UploadFileResult = {

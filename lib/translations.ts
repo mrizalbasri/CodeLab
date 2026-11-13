@@ -5,6 +5,7 @@ export const translations = {
     nav: {
       home: "Home",
       programs: "Programs",
+      projects: "Projects",
       events: "Events",
       blog: "Blog",
       about: "Community",
@@ -205,6 +206,7 @@ export const translations = {
     nav: {
       home: "Beranda",
       programs: "Program",
+      projects: "Projects",
       events: "Events",
       blog: "Blog",
       about: "Komunitas",

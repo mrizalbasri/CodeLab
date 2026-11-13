@@ -19,6 +19,7 @@ import {
   LogIn,
   CalendarDays,
   BookOpen,
+  FolderKanban,
 } from "lucide-react";
 import { useState, useEffect } from "react";
 import { ThemeToggle } from "./ThemeToggle";
@@ -59,6 +60,7 @@ export function Navbar() {
   const navItems = [
     { name: t.nav.home, href: "/", icon: Home },
     { name: t.nav.programs, href: "/programs", icon: Sparkles },
+    { name: t.nav.projects, href: "/projects", icon: FolderKanban },
     { name: t.nav.events, href: "/events", icon: CalendarDays },
     { name: t.nav.blog, href: "/blog", icon: BookOpen },
     { name: t.nav.about, href: "/about", icon: Users },

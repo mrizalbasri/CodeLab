@@ -53,7 +53,7 @@ await pupcl.startLearning();`;
   };
 
   return (
-    <div className="w-full rounded-2xl border border-neutral-700/80 dark:border-neutral-800 bg-[#0d1117] text-slate-200 shadow-2xl overflow-hidden font-mono text-xs sm:text-sm">
+    <div className="w-full rounded-2xl border border-neutral-700/80 dark:border-neutral-800 bg-[#0d1117] text-left text-slate-200 shadow-2xl overflow-hidden font-mono text-xs sm:text-sm">
       {/* Window Titlebar */}
       <div className="flex items-center justify-between px-4 py-3 bg-[#161b22] border-b border-neutral-800/80">
         <div className="flex items-center gap-2">
@@ -107,6 +107,7 @@ await pupcl.startLearning();`;
             </>
           )}
         </button>
+
       </div>
 
       {/* Code Editor Body with Clean Syntax Styling */}

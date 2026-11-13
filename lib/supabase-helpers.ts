@@ -1,5 +1,3 @@
-import { SupabaseClient } from "@supabase/supabase-js";
-
 // Re-export storage helpers from organized location
 export { uploadFile, handleFileUpload } from "./supabase/storage";
 
@@ -116,6 +114,90 @@ export interface Database {
           image_url?: string;
           status?: string;
           created_at?: string;
+        };
+      };
+      profiles: {
+        Row: {
+          id: string;
+          full_name: string;
+          role: "admin" | "member";
+          member_id: string | null;
+          division: string | null;
+          batch: string | null;
+          avatar_url: string | null;
+          skills: string[];
+          created_at: string;
+        };
+        Insert: {
+          id: string;
+          full_name: string;
+          role?: "admin" | "member";
+          member_id?: string | null;
+          division?: string | null;
+          batch?: string | null;
+          avatar_url?: string | null;
+          skills?: string[];
+          created_at?: string;
+        };
+        Update: {
+          id?: string;
+          full_name?: string;
+          role?: "admin" | "member";
+          member_id?: string | null;
+          division?: string | null;
+          batch?: string | null;
+          avatar_url?: string | null;
+          skills?: string[];
+          created_at?: string;
+        };
+      };
+      projects: {
+        Row: {
+          id: string;
+          owner_id: string;
+          title: string;
+          summary: string;
+          description: string | null;
+          cover_url: string | null;
+          demo_url: string | null;
+          repository_url: string | null;
+          tech_stack: string[];
+          status: "draft" | "pending" | "published" | "rejected";
+          rejection_reason: string | null;
+          reviewed_at: string | null;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: {
+          id?: string;
+          owner_id: string;
+          title: string;
+          summary: string;
+          description?: string | null;
+          cover_url?: string | null;
+          demo_url?: string | null;
+          repository_url?: string | null;
+          tech_stack?: string[];
+          status?: "draft" | "pending" | "published" | "rejected";
+          rejection_reason?: string | null;
+          reviewed_at?: string | null;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Update: {
+          id?: string;
+          owner_id?: string;
+          title?: string;
+          summary?: string;
+          description?: string | null;
+          cover_url?: string | null;
+          demo_url?: string | null;
+          repository_url?: string | null;
+          tech_stack?: string[];
+          status?: "draft" | "pending" | "published" | "rejected";
+          rejection_reason?: string | null;
+          reviewed_at?: string | null;
+          updated_at?: string;
         };
       };
     };
