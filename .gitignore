@@ -24,6 +24,7 @@
 .DS_Store
 *.pem
 .vscode/
+.codegraph/
 
 # debug
 npm-debug.log*

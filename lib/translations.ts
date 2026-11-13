@@ -4,11 +4,13 @@ export const translations = {
   en: {
     nav: {
       home: "Home",
-      about: "About",
       programs: "Programs",
+      about: "Community",
       gallery: "Gallery",
       contact: "Contact",
       joinNow: "Join Now",
+      login: "Login",
+      profile: "Member Card",
     },
     home: {
       title1: "PU PEKANBARU CODE LAB",
@@ -43,7 +45,22 @@ export const translations = {
       techExplore: "Technologies We Explore",
       whyTitle: "Why Join PUPCL?",
       whySubtitle:
-        "We provide the collaborative ecosystem you need to go from zero to hero in the modern tech industry.",
+        "The student coding & tech community at President University Pekanbaru that is supportive, collaborative, and ready to help you grow into a great developer.",
+      bento1Stat: "500+",
+      bento1Title: "Active Coders & Members",
+      bento2Title: "Trusted Tech Community",
+      bento2Desc:
+        "Quality discussions, real networking with peers and industry practitioners, and meaningful collaboration.",
+      bento3Title: "Level Up Together",
+      bento3Desc:
+        "Track your coding progress, share achievements, and see how your skills grow from ground zero to production-ready.",
+      bento4Title: "Safe Space to Learn",
+      bento4Desc:
+        "A welcoming space for all levels. From beginners writing their first lines of code to seasoned hackathon winners.",
+      bento5Title: "Digital Member Card",
+      bento5Desc:
+        "Login to claim your exclusive digital member pass complete with your unique ID, tech badges, and verification QR code.",
+      bento5Cta: "Claim Member Card",
       card1Badge: "Community & Network",
       card1Title: "Networking & Mentorship",
       card1Desc:
@@ -177,11 +194,13 @@ export const translations = {
   id: {
     nav: {
       home: "Beranda",
-      about: "Tentang Kami",
       programs: "Program",
+      about: "Komunitas",
       gallery: "Galeri",
       contact: "Kontak",
       joinNow: "Gabung Sekarang",
+      login: "Masuk",
+      profile: "Kartu Member",
     },
     home: {
       title1: "PU PEKANBARU CODE LAB",
@@ -214,9 +233,24 @@ export const translations = {
       trackDevOpsDesc: "Workflow kolaborasi Git, review kode, clean code architecture, dan dasar-dasar CI/CD modern.",
       heroBadge: "Komunitas Teknologi Mahasiswa • President University Pekanbaru",
       techExplore: "Teknologi yang Dipelajari",
-      whyTitle: "Mengapa Bergabung dengan PUPCL?",
+      whyTitle: "Kenapa Gabung PUPCL?",
       whySubtitle:
-        "Kami menyediakan ekosistem kolaboratif yang kamu butuhkan untuk berkembang dari nol hingga siap berkarya di industri teknologi modern.",
+        "Komunitas coding & teknologi mahasiswa President University Pekanbaru yang supportive, kolaboratif, dan siap bantu kamu berkembang jadi developer yang lebih baik.",
+      bento1Stat: "500+",
+      bento1Title: "Coders & Member Aktif",
+      bento2Title: "Komunitas Terpercaya",
+      bento2Desc:
+        "Diskusi berkualitas, networking real dengan sesama mahasiswa & praktisi industri, dan kolaborasi yang meaningful.",
+      bento3Title: "Level Up Bareng",
+      bento3Desc:
+        "Tracking progress coding kamu, share achievement, dan lihat gimana skill kamu berkembang dari nol sampai mahir.",
+      bento4Title: "Safe Space untuk Belajar",
+      bento4Desc:
+        "Tempat belajar untuk semua level. Dari pemula yang baru kenal syntax koding sampai yang sudah sering ikut hackathon.",
+      bento5Title: "Digital Member Card",
+      bento5Desc:
+        "Login untuk klaim kartu identitas digital anggota eksklusif lengkap dengan custom ID, badges, dan QR code.",
+      bento5Cta: "Klaim Kartu Member",
       card1Badge: "Komunitas & Jaringan",
       card1Title: "Networking & Mentorship",
       card1Desc:

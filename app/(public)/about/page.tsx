@@ -119,25 +119,25 @@ export default function AboutPage() {
                 <Box
                   style={{
                     width: "100%",
-                    maxWidth: "350px",
-                    aspectRatio: "1/1",
-                    borderRadius: "12px",
+                    maxWidth: "300px",
+                    borderRadius: "16px",
                     overflow: "hidden",
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "center",
                     border: "1px solid var(--gray-alpha-4)",
                     background: "var(--color-panel-solid)",
-                    boxShadow: "0 8px 24px -6px rgba(0,0,0,0.15)",
-                    position: "relative",
+                    boxShadow: "0 4px 20px -4px rgba(0,0,0,0.1)",
+                    padding: "24px",
                   }}
                 >
                   <NextImage
                     src="/logo.jpeg"
                     alt="PUPCL Logo"
-                    fill
-                    style={{ objectFit: "contain" }}
-                    sizes="(max-width: 768px) 100vw, 350px"
+                    width={260}
+                    height={260}
+                    style={{ objectFit: "contain", width: "100%", height: "auto" }}
+                    sizes="(max-width: 768px) 80vw, 260px"
                     priority
                   />
                 </Box>
@@ -515,3 +515,4 @@ export default function AboutPage() {
     </Box>
   );
 }
+

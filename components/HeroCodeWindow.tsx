@@ -131,7 +131,7 @@ await pupcl.startLearning();`;
                 <span className="text-[#a5d6ff]">&quot;@pupcl/community&quot;</span>;
               </div>
               <div className="text-neutral-500 italic mt-1">
-                // Inisialisasi wadah belajar teknologi
+                {"// Inisialisasi wadah belajar teknologi"}
               </div>
               <div>
                 <span className="text-[#ff7b72]">export const</span>{" "}
@@ -173,7 +173,7 @@ await pupcl.startLearning();`;
               </div>
               <div>{`});`}</div>
               <div className="text-neutral-500 italic mt-2">
-                // Belajar, bangun solusi, dan berkembang
+                {"// Belajar, bangun solusi, dan berkembang"}
               </div>
               <div>
                 <span className="text-[#ff7b72]">await</span>{" "}
