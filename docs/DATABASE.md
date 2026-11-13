@@ -100,6 +100,40 @@ CREATE POLICY "Authenticated users can manage programs"
 
 ## 3. Konfigurasi Supabase Storage Bucket
 
+## 3.1 Role Member, Project Showcase, dan Approval
+
+Skema role dan project showcase tersedia di:
+
+```text
+supabase/migrations/20261113210000_roles_projects.sql
+```
+
+Jalankan migration tersebut setelah tabel dasar di atas tersedia. Migration ini membuat:
+
+- `profiles`: profil user dengan role `admin` atau `member`, member ID, divisi, batch, avatar, dan skills.
+- `projects`: project milik member dengan status `draft`, `pending`, `published`, atau `rejected`.
+- Trigger pembuatan profile otomatis saat user Supabase Auth baru dibuat.
+- Profile untuk user Auth yang sudah ada akan dibuat otomatis saat migration dijalankan.
+- RLS agar member hanya dapat mengelola project miliknya, sedangkan admin dapat melakukan review dan publish.
+
+Setelah migration, promosikan akun pengurus secara manual melalui SQL Editor:
+
+```sql
+UPDATE public.profiles
+SET role = 'admin'
+WHERE id = '<AUTH_USER_UUID>';
+```
+
+Alur showcase:
+
+```text
+Member submit -> pending review -> Admin publish/reject -> Published showcase
+```
+
+Folder cover project menggunakan bucket `pupcl-uploads/projects`.
+
+## 4. Konfigurasi Supabase Storage Bucket
+
 Aplikasi menggunakan bucket penyimpanan file untuk foto profil anggota, thumbnail workshop, dan foto galeri.
 
 ### Setup Bucket:
