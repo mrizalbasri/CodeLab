@@ -16,7 +16,7 @@ export function CommunityBento() {
 
   return (
     <section className="py-16 sm:py-20 border-b border-neutral-200/70 dark:border-neutral-800/70">
-      <div className="max-w-5xl mx-auto px-6">
+      <div className="max-w-6xl mx-auto px-6 sm:px-8">
 
         {/* Section Header */}
         <div className="text-center mb-10">
@@ -29,18 +29,18 @@ export function CommunityBento() {
         </div>
 
         {/* Bento Grid — 3 kolom di desktop, 1 kolom di mobile */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
 
           {/* Row 1 kiri: Stat card — tinggi penuh vertikal */}
           <div className="md:row-span-2 flex flex-col gap-4">
 
-            {/* Card: 500+ Stat */}
+            {/* Card: member stat */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.4, delay: 0 }}
-              className="flex-1 rounded-2xl border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-900 p-6 flex flex-col justify-between min-h-[180px]"
+              className="flex-1 rounded-3xl border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-900 p-7 flex flex-col justify-between min-h-[180px] shadow-sm"
             >
               <div
                 className="text-6xl font-black tracking-tight leading-none"
@@ -61,7 +61,7 @@ export function CommunityBento() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.4, delay: 0.08 }}
-              className="flex-1 rounded-2xl border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-900 p-6 flex flex-col justify-between min-h-[180px]"
+              className="flex-1 rounded-3xl border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-900 p-7 flex flex-col justify-between min-h-[180px] shadow-sm"
             >
               <div
                 className="w-11 h-11 rounded-xl flex items-center justify-center shrink-0"
@@ -86,7 +86,7 @@ export function CommunityBento() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.4, delay: 0.12 }}
-            className="md:col-span-2 rounded-2xl border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-900 p-6 flex flex-col justify-between min-h-[220px]"
+            className="md:col-span-2 rounded-3xl border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-900 p-7 flex flex-col justify-between min-h-[220px] shadow-sm"
           >
             <div>
               <div
@@ -129,7 +129,7 @@ export function CommunityBento() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.4, delay: 0.16 }}
-            className="rounded-2xl border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-900 p-6 flex flex-col justify-between min-h-[220px]"
+            className="rounded-3xl border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-900 p-7 flex flex-col justify-between min-h-[220px] shadow-sm"
           >
             <div>
               <div
@@ -168,7 +168,7 @@ export function CommunityBento() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.4, delay: 0.2 }}
-            className="rounded-2xl border border-neutral-800 bg-neutral-900 dark:bg-black p-6 flex flex-col justify-between min-h-[220px]"
+            className="rounded-3xl border border-neutral-800 bg-neutral-900 dark:bg-black p-7 flex flex-col justify-between min-h-[220px]"
           >
             <div>
               <div className="flex items-start justify-between mb-4">
