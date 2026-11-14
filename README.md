@@ -158,73 +158,86 @@ web_codelab/
 
 ---
 
-## Panduan Instalasi dan Penggunaan
+## 🚀 Panduan Memulai (Quick Start)
 
 ### 1. Prasyarat Sistem
-- Node.js versi 20.x atau lebih baru
-- Manajer paket: npm, pnpm, atau yarn
-- Proyek Supabase aktif (opsional untuk pengembangan dengan data dinamis)
+- **Node.js**: versi `20.x` atau `22.x` (LTS direkomendasikan)
+- **Package Manager**: `npm`, `pnpm`, atau `yarn`
+- **Git**: versi terbaru
 
-### 2. Kloning Repositori
+### 2. Instalasi dan Setup
+
+Kloning repositori ke mesin lokal Anda:
 ```bash
 git clone git@github.com:mrizalbasri/CodeLab.git
 cd CodeLab
 ```
 
-### 3. Instalasi Dependensi
+Instal dependensi proyek:
 ```bash
 npm install
 ```
 
-### 4. Konfigurasi Variabel Lingkungan
-Salin berkas template lingkungan:
+### 3. Konfigurasi Environment Variables
+
+Salin berkas konfigurasi template:
 ```bash
 cp .env.local.example .env.local
 ```
 
-Lengkapi konfigurasi pada `.env.local`:
-```env
-# Konfigurasi Supabase (Diperlukan untuk data dinamis & portal admin)
-NEXT_PUBLIC_SUPABASE_URL=https://your-project.supabase.co
-NEXT_PUBLIC_SUPABASE_ANON_KEY=your-supabase-anon-key
+Sesuaikan nilai variabel lingkungan pada `.env.local`:
 
-# Kunci API Web3Forms (Opsional - untuk penerimaan pesan kontak)
-WEB3FORMS_ACCESS_KEY=your-web3forms-access-key
+| Nama Variabel | Wajib/Opsional | Deskripsi |
+|---|---|---|
+| `NEXT_PUBLIC_SUPABASE_URL` | Direkomendasikan | URL endpoint REST API proyek Supabase |
+| `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Direkomendasikan | Kunci API anonim publik untuk komunikasi klien |
+| `WEB3FORMS_ACCESS_KEY` | Opsional | Kunci akses API untuk gateway formulir kontak |
+| `NEXT_PUBLIC_GA_ID` | Opsional | Measurement ID Google Analytics 4 |
 
-# Pelacakan Google Analytics (Opsional)
-NEXT_PUBLIC_GA_ID=G-XXXXXXXXXX
-```
+> [!NOTE]
+> Jika variabel Supabase tidak diisi saat pengembangan lokal, aplikasi akan otomatis beralih ke mode **Fallback Statis** (`lib/data/`), sehingga seluruh rute publik tetap dapat dijelajahi dengan sempurna tanpa koneksi database.
 
-> **Catatan:** Apabila variabel Supabase tidak dikonfigurasi, sistem secara otomatis beralih ke data fallback statis (`lib/data/`), sehingga antarmuka publik tetap dapat diuji coba tanpa ketergantungan koneksi basis data eksternal.
+### 4. Menjalankan Server Pengembangan
 
-### 5. Menjalankan Server Pengembangan
+Jalankan server pengembangan:
 ```bash
 npm run dev
 ```
-Akses aplikasi melalui peramban pada alamat `http://localhost:3000`.
+
+Buka peramban di [http://localhost:3000](http://localhost:3000) untuk melihat hasilnya.
 
 ---
 
-## Konfigurasi Variabel Lingkungan
+## ⌨️ Perintah Kerja (NPM Scripts)
 
-| Variabel | Status | Keterangan |
-|---|---|---|
-| `NEXT_PUBLIC_SUPABASE_URL` | Direkomendasikan | URL endpoint REST API proyek Supabase |
-| `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Direkomendasikan | Kunci anon publik untuk autentikasi komunikasi ke Supabase |
-| `WEB3FORMS_ACCESS_KEY` | Opsional | Kunci akses layanan Web3Forms untuk penerimaan formulir kontak |
-| `NEXT_PUBLIC_GA_ID` | Opsional | Measurement ID Google Analytics untuk monitoring trafik |
-
----
-
-## Perintah Kerja (Scripts)
-
-| Perintah | Deskripsi |
+| Perintah | Fungsi / Kegunaan |
 |---|---|
-| `npm run dev` | Menjalankan server pengembangan lokal dengan kompilasi Turbopack |
-| `npm run build` | Menjalankan proses kompilasi dan optimasi berkas produksi |
-| `npm run start` | Menjalankan server produksi lokal setelah tahap build |
+| `npm run dev` | Menjalankan local development server dengan Turbopack |
+| `npm run build` | Menjalankan kompilasi dan optimasi bundle produksi Next.js |
+| `npm run start` | Menjalankan server aplikasi produksi lokal |
 | `npm run lint` | Melakukan audit statis kualitas kode dengan ESLint |
-| `npx tsc --noEmit` | Memverifikasi konsistensi type safety TypeScript pada seluruh berkas |
+| `npm test` | Menjalankan rangkaian unit test otomatis dengan Vitest |
+| `npm run test:coverage` | Menjalankan pengujian unit sekaligus menghitung coverage report |
+| `npx tsc --noEmit` | Memverifikasi konsistensi type safety TypeScript secara menyeluruh |
+
+---
+
+## 🧪 Pengujian & Kualitas Kode
+
+Proyek ini menerapkan standar kualitas kode tinggi melalui pengujian otomatis dan type-checking:
+
+```bash
+# 1. Jalankan unit test
+npm test
+
+# 2. Cek laporan cakupan kode (coverage)
+npm run test:coverage
+
+# 3. Validasi tipe TypeScript
+npx tsc --noEmit
+```
+
+Setiap Pull Request yang diajukan ke branch `main` akan diuji secara otomatis oleh pipeline GitHub Actions CI untuk memastikan tidak ada regresi kode.
 
 ---
 
