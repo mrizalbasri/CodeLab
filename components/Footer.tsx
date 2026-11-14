@@ -21,8 +21,8 @@ export function Footer() {
   const pathname = usePathname();
   const { t } = useLanguage();
 
-  // Hide footer on admin pages
-  if (pathname.startsWith("/admin")) {
+  // Hide footer on admin and login pages
+  if (pathname.startsWith("/admin") || pathname === "/login") {
     return null;
   }
 
@@ -31,8 +31,8 @@ export function Footer() {
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.6, ease: "easeOut" }}
+        viewport={{ once: true, margin: "-40px" }}
+        transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
       >
         <Container size="4" px="4">
           <Flex

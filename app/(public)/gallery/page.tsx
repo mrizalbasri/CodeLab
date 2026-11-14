@@ -104,7 +104,8 @@ export default function GalleryPage() {
                             style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 280px), 1fr))", gap: "20px" }}
                             variants={containerVariants}
                             initial="hidden"
-                            animate="visible"
+                            whileInView="visible"
+                            viewport={{ once: true, margin: "-40px" }}
                             transition={{ duration: 0.4 }}
                         >
                             {paginatedData.length > 0 ? (

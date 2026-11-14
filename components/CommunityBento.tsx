@@ -19,14 +19,20 @@ export function CommunityBento() {
       <div className="max-w-6xl mx-auto px-6 sm:px-8">
 
         {/* Section Header */}
-        <div className="text-center mb-10">
+        <motion.div
+          initial={{ opacity: 0, y: 24 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-50px" }}
+          transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+          className="text-center mb-10"
+        >
           <h2 className="text-2xl sm:text-3xl md:text-4xl font-black tracking-tight text-neutral-900 dark:text-white">
             {t.home.whyTitle}
           </h2>
           <p className="mt-3 text-sm sm:text-base text-neutral-500 dark:text-neutral-400 max-w-lg mx-auto leading-relaxed">
             {t.home.whySubtitle}
           </p>
-        </div>
+        </motion.div>
 
         {/* Bento Grid — 3 kolom di desktop, 1 kolom di mobile */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
@@ -36,10 +42,10 @@ export function CommunityBento() {
 
             {/* Card: member stat */}
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 24 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.4, delay: 0 }}
+              viewport={{ once: true, margin: "-40px" }}
+              transition={{ duration: 0.45, delay: 0, ease: [0.22, 1, 0.36, 1] }}
               className="flex-1 rounded-3xl border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-900 p-7 flex flex-col justify-between min-h-[180px] shadow-sm"
             >
               <div
@@ -57,10 +63,10 @@ export function CommunityBento() {
 
             {/* Card: Komunitas Terpercaya */}
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 24 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.4, delay: 0.08 }}
+              viewport={{ once: true, margin: "-40px" }}
+              transition={{ duration: 0.45, delay: 0.08, ease: [0.22, 1, 0.36, 1] }}
               className="flex-1 rounded-3xl border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-900 p-7 flex flex-col justify-between min-h-[180px] shadow-sm"
             >
               <div
@@ -82,10 +88,10 @@ export function CommunityBento() {
 
           {/* Row 1 tengah + kanan: Level Up (lebar 2 col) */}
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 24 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.4, delay: 0.12 }}
+            viewport={{ once: true, margin: "-40px" }}
+            transition={{ duration: 0.45, delay: 0.12, ease: [0.22, 1, 0.36, 1] }}
             className="md:col-span-2 rounded-3xl border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-900 p-7 flex flex-col justify-between min-h-[220px] shadow-sm"
           >
             <div>
@@ -125,10 +131,10 @@ export function CommunityBento() {
 
           {/* Row 2 tengah: Safe Space */}
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 24 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.4, delay: 0.16 }}
+            viewport={{ once: true, margin: "-40px" }}
+            transition={{ duration: 0.45, delay: 0.16, ease: [0.22, 1, 0.36, 1] }}
             className="rounded-3xl border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-900 p-7 flex flex-col justify-between min-h-[220px] shadow-sm"
           >
             <div>
@@ -164,10 +170,10 @@ export function CommunityBento() {
 
           {/* Row 2 kanan: Digital Member Card */}
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 24 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.4, delay: 0.2 }}
+            viewport={{ once: true, margin: "-40px" }}
+            transition={{ duration: 0.45, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
             className="rounded-3xl border border-neutral-800 bg-neutral-900 dark:bg-black p-7 flex flex-col justify-between min-h-[220px]"
           >
             <div>

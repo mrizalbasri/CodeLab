@@ -251,7 +251,8 @@ export default function ProgramsPage() {
               }}
               variants={containerVariants}
               initial="hidden"
-              animate="visible"
+              whileInView="visible"
+              viewport={{ once: true, margin: "-40px" }}
             >
               {filteredPrograms.map((program) => (
                 <motion.div

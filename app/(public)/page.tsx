@@ -155,14 +155,20 @@ export default function Home() {
       <section className="py-16 sm:py-20 border-b border-neutral-200 dark:border-neutral-800 bg-neutral-50 dark:bg-neutral-950/60">
         <div className="max-w-6xl mx-auto px-6 sm:px-8">
 
-          <div className="text-center mb-10">
+          <motion.div
+            initial={{ opacity: 0, y: 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-50px" }}
+            transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+            className="text-center mb-10"
+          >
             <p className="text-xs font-bold text-neutral-400 uppercase tracking-widest mb-2">
               {t.home.tracksBadge}
             </p>
             <h2 className="text-2xl sm:text-3xl font-black text-neutral-900 dark:text-white tracking-tight">
               {t.home.tracksTitle}
             </h2>
-          </div>
+          </motion.div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
             {tracks.map((track, i) => {
@@ -170,10 +176,10 @@ export default function Home() {
               return (
                 <motion.div
                   key={i}
-                  initial={{ opacity: 0, y: 16 }}
+                  initial={{ opacity: 0, y: 24 }}
                   whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.35, delay: i * 0.07 }}
+                  viewport={{ once: true, margin: "-40px" }}
+                  transition={{ duration: 0.45, delay: i * 0.08, ease: [0.22, 1, 0.36, 1] }}
                   className="p-5 rounded-2xl border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-900 hover:border-[#0047BA]/50 dark:hover:border-[#0047BA]/40 hover:-translate-y-0.5 transition-all"
                 >
                   <div
@@ -209,7 +215,13 @@ export default function Home() {
         <section className="py-20 sm:py-24 border-b border-neutral-200 dark:border-neutral-800 bg-neutral-50 dark:bg-neutral-950/60">
           <div className="max-w-3xl mx-auto px-6 sm:px-8">
 
-            <div className="text-center mb-12">
+            <motion.div
+              initial={{ opacity: 0, y: 24 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-50px" }}
+              transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+              className="text-center mb-12"
+            >
               <p className="text-xs font-bold text-neutral-400 uppercase tracking-widest mb-2">FAQ</p>
               <h2 className="text-2xl sm:text-3xl font-black text-neutral-900 dark:text-white tracking-tight">
                 {t.home.faqTitle}
@@ -217,14 +229,18 @@ export default function Home() {
               <p className="mt-3 text-sm text-neutral-500 dark:text-neutral-400">
                 {t.home.faqSubtitle}
               </p>
-            </div>
+            </motion.div>
 
             <div className="space-y-3">
               {t.home.faqs.map((faq, idx) => {
                 const isOpen = openFaq === idx;
                 return (
-                  <div
+                  <motion.div
                     key={idx}
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, margin: "-30px" }}
+                    transition={{ duration: 0.4, delay: idx * 0.06, ease: [0.22, 1, 0.36, 1] }}
                     className="rounded-2xl border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-900 overflow-hidden shadow-sm"
                   >
                     <button
@@ -255,7 +271,7 @@ export default function Home() {
                         </motion.div>
                       )}
                     </AnimatePresence>
-                  </div>
+                  </motion.div>
                 );
               })}
             </div>
@@ -265,14 +281,26 @@ export default function Home() {
 
       {/* ── CTA ───────────────────────────────────────────────────── */}
       <section className="py-16 sm:py-20 bg-white dark:bg-neutral-950">
-        <div className="max-w-3xl mx-auto px-6 sm:px-8 text-center">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-neutral-100 dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 text-neutral-500 dark:text-neutral-400 text-xs font-medium mb-6">
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-60px" }}
+          transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
+          className="max-w-3xl mx-auto px-6 sm:px-8 text-center"
+        >
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.4, delay: 0.1 }}
+            className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-neutral-100 dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 text-neutral-500 dark:text-neutral-400 text-xs font-medium mb-6"
+          >
             <span className="relative flex h-1.5 w-1.5">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#7b1200] opacity-75" />
               <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-[#7b1200]" />
             </span>
             {t.home.recruitmentBadge}
-          </div>
+          </motion.div>
 
           <h2 className="text-2xl sm:text-4xl font-black text-neutral-900 dark:text-white tracking-tight">
             {t.home.recruitmentTitle}
@@ -305,7 +333,7 @@ export default function Home() {
               </button>
             </Link>
           </div>
-        </div>
+        </motion.div>
       </section>
 
     </Box>

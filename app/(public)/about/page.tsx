@@ -87,9 +87,10 @@ export default function AboutPage() {
         <Flex direction="column" gap="9">
           {/* About Section with Logo */}
           <motion.div
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
+            initial={{ opacity: 0, y: 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-50px" }}
+            transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
           >
             <Grid columns={{ initial: "1", md: "2" }} gap="9" align="center">
               <Box>
@@ -149,7 +150,13 @@ export default function AboutPage() {
           <Box mt="9">
             <Grid columns={{ initial: "1", md: "2" }} gap="6">
               {/* Visi Card */}
-              <div className="relative rounded-[1.25rem] border-[0.75px] border-border p-2 md:p-3 bg-gray-100 dark:bg-gray-900/40">
+              <motion.div
+                initial={{ opacity: 0, y: 24 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-40px" }}
+                transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+                className="relative rounded-[1.25rem] border-[0.75px] border-border p-2 md:p-3 bg-gray-100 dark:bg-gray-900/40"
+              >
                 <GlowingEffect
                   blur={0}
                   borderWidth={3}
@@ -184,10 +191,16 @@ export default function AboutPage() {
                     </div>
                   </div>
                 </div>
-              </div>
+              </motion.div>
 
               {/* Misi Card */}
-              <div className="relative rounded-[1.25rem] border-[0.75px] border-border p-2 md:p-3 bg-gray-100 dark:bg-gray-900/40">
+              <motion.div
+                initial={{ opacity: 0, y: 24 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-40px" }}
+                transition={{ duration: 0.5, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
+                className="relative rounded-[1.25rem] border-[0.75px] border-border p-2 md:p-3 bg-gray-100 dark:bg-gray-900/40"
+              >
                 <GlowingEffect
                   blur={0}
                   borderWidth={3}
@@ -231,16 +244,16 @@ export default function AboutPage() {
                     </Flex>
                   </div>
                 </div>
-              </div>
+              </motion.div>
             </Grid>
           </Box>
 
           {/* Tujuan & Sasaran */}
           <motion.div
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
+            initial={{ opacity: 0, y: 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-50px" }}
+            transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
           >
             <Box mt="4">
               <Heading size="7" mb="4">
@@ -277,93 +290,107 @@ export default function AboutPage() {
           </motion.div>
 
           {/* Tech Stack Section */}
-          <Box mt="9">
-            <Grid columns={{ initial: "1", md: "2" }} gap="9" align="center">
-              <Box>
-                <Badge
-                  color="cyan"
-                  size="2"
-                  radius="full"
-                  variant="soft"
-                  mb="2"
-                >
-                  {t.about.techBadge}
-                </Badge>
-                <Heading
-                  size={{ initial: "6", md: "8" }}
-                  mb="4"
-                  color="gray"
-                  highContrast
-                >
-                  {t.about.techTitle}
-                </Heading>
-                <Text
-                  as="p"
-                  size="4"
-                  color="gray"
-                  style={{ lineHeight: 1.8, marginBottom: "1.5rem" }}
-                >
-                  {t.about.techDesc}
-                </Text>
+          <motion.div
+            initial={{ opacity: 0, y: 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-50px" }}
+            transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
+          >
+            <Box mt="9">
+              <Grid columns={{ initial: "1", md: "2" }} gap="9" align="center">
+                <Box>
+                  <Badge
+                    color="cyan"
+                    size="2"
+                    radius="full"
+                    variant="soft"
+                    mb="2"
+                  >
+                    {t.about.techBadge}
+                  </Badge>
+                  <Heading
+                    size={{ initial: "6", md: "8" }}
+                    mb="4"
+                    color="gray"
+                    highContrast
+                  >
+                    {t.about.techTitle}
+                  </Heading>
+                  <Text
+                    as="p"
+                    size="4"
+                    color="gray"
+                    style={{ lineHeight: 1.8, marginBottom: "1.5rem" }}
+                  >
+                    {t.about.techDesc}
+                  </Text>
 
-                <Grid columns="2" gap="4">
-                  <Box>
-                    <Heading size="3" mb="2" color="indigo">
-                      Core
-                    </Heading>
-                    <Text size="2" color="gray">
-                      HTML, CSS, JavaScript, TypeScript, Java, Python
-                    </Text>
-                  </Box>
-                  <Box>
-                    <Heading size="3" mb="2" color="blue">
-                      Frameworks
-                    </Heading>
-                    <Text size="2" color="gray">
-                      React, Next.js, Laravel, Flutter, Tailwind
-                    </Text>
-                  </Box>
-                </Grid>
-              </Box>
+                  <Grid columns="2" gap="4">
+                    <Box>
+                      <Heading size="3" mb="2" color="indigo">
+                        Core
+                      </Heading>
+                      <Text size="2" color="gray">
+                        HTML, CSS, JavaScript, TypeScript, Java, Python
+                      </Text>
+                    </Box>
+                    <Box>
+                      <Heading size="3" mb="2" color="blue">
+                        Frameworks
+                      </Heading>
+                      <Text size="2" color="gray">
+                        React, Next.js, Laravel, Flutter, Tailwind
+                      </Text>
+                    </Box>
+                  </Grid>
+                </Box>
 
-              <Box style={{ position: "relative" }}>
-                <Card
-                  size="3"
-                  style={{
-                    background: "var(--gray-2)",
-                    overflow: "hidden",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    aspectRatio: "1/1",
-                    position: "relative",
-                    padding: 0,
-                  }}
-                >
-                  <TechStackBeam />
-                </Card>
-              </Box>
-            </Grid>
-          </Box>
+                <Box style={{ position: "relative" }}>
+                  <Card
+                    size="3"
+                    style={{
+                      background: "var(--gray-2)",
+                      overflow: "hidden",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      aspectRatio: "1/1",
+                      position: "relative",
+                      padding: 0,
+                    }}
+                  >
+                    <TechStackBeam />
+                  </Card>
+                </Box>
+              </Grid>
+            </Box>
+          </motion.div>
 
           {/* ─── Team Section ─────────────────────────────────────────────────────── */}
           <Section>
-            <Flex direction="column" align="center" gap="3" mb="8">
-              <Badge color="orange" size="2" radius="full" variant="soft">
-                {t.about.teamBadge}
-              </Badge>
-              <Heading size={{ initial: "6", md: "8" }} align="center">
-                {t.about.teamTitle}
-              </Heading>
-              <Text
-                align="center"
-                color="gray"
-                size="3"
-                style={{ maxWidth: 600 }}
-              >
-                {t.about.teamDesc}
-              </Text>
-            </Flex>
+            <motion.div
+              initial={{ opacity: 0, y: 24 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-50px" }}
+              transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+            >
+              <Flex direction="column" align="center" gap="3" mb="8">
+                <Badge color="orange" size="2" radius="full" variant="soft">
+                  {t.about.teamBadge}
+                </Badge>
+                <Heading size={{ initial: "6", md: "8" }} align="center">
+                  {t.about.teamTitle}
+                </Heading>
+                <Text
+                  align="center"
+                  color="gray"
+                  size="3"
+                  style={{ maxWidth: 600 }}
+                >
+                  {t.about.teamDesc}
+                </Text>
+              </Flex>
+            </motion.div>
 
             <Flex
               direction="column"
