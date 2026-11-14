@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import NextImage from "next/image";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import {
   Flex,
   Text,
@@ -17,6 +17,8 @@ import {
   Users,
   Sparkles,
   LogIn,
+  LogOut,
+  LayoutDashboard,
   CalendarDays,
   BookOpen,
   FolderKanban,
@@ -25,13 +27,34 @@ import { useState, useEffect } from "react";
 import { ThemeToggle } from "./ThemeToggle";
 import { LanguageToggle } from "./LanguageToggle";
 import { useLanguage } from "@/context/LanguageContext";
+import { createClient } from "@/lib/supabase/client";
 import { motion, AnimatePresence } from "motion/react";
 
 export function Navbar() {
   const pathname = usePathname();
+  const router = useRouter();
   const { t } = useLanguage();
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+  useEffect(() => {
+    const supabase = createClient();
+
+    supabase.auth.getSession().then(({ data }) => {
+      setIsAuthenticated(Boolean(data.session));
+    });
+
+    const { data: authListener } = supabase.auth.onAuthStateChange(
+      (_event, session) => {
+        setIsAuthenticated(Boolean(session));
+      },
+    );
+
+    return () => {
+      authListener.subscription.unsubscribe();
+    };
+  }, []);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -53,9 +76,17 @@ export function Navbar() {
     };
   }, [isOpen]);
 
-  if (pathname.startsWith("/admin")) {
+  if (pathname.startsWith("/admin") || pathname === "/login") {
     return null;
   }
+
+  const handleLogout = async () => {
+    const supabase = createClient();
+    await supabase.auth.signOut();
+    setIsOpen(false);
+    router.push("/");
+    router.refresh();
+  };
 
   const navItems = [
     { name: t.nav.home, href: "/", icon: Home },
@@ -167,36 +198,92 @@ export function Navbar() {
               </Box>
 
               <Box display={{ initial: "none", md: "block" }}>
-                <Link
-                  href="/login"
-                  prefetch
-                  style={{
-                    display: "inline-flex",
-                    alignItems: "center",
-                    gap: "6px",
-                    padding: "7px 16px",
-                    borderRadius: "9999px",
-                    border: "1.5px solid var(--gray-6)",
-                    background: "transparent",
-                    color: "var(--gray-12)",
-                    fontSize: "13px",
-                    fontWeight: 600,
-                    cursor: "pointer",
-                    transition: "all 0.2s ease",
-                    textDecoration: "none",
-                  }}
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.borderColor = "#0047BA";
-                    e.currentTarget.style.color = "#0047BA";
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.borderColor = "var(--gray-6)";
-                    e.currentTarget.style.color = "var(--gray-12)";
-                  }}
-                >
-                  <LogIn size={14} />
-                  {t.nav.login}
-                </Link>
+                {isAuthenticated ? (
+                  <Flex gap="2" align="center">
+                    <Link
+                      href="/dashboard"
+                      prefetch
+                      style={{
+                        display: "inline-flex",
+                        alignItems: "center",
+                        gap: "6px",
+                        padding: "7px 16px",
+                        borderRadius: "9999px",
+                        background: "#0047BA",
+                        color: "white",
+                        fontSize: "13px",
+                        fontWeight: 600,
+                        cursor: "pointer",
+                        transition: "all 0.2s ease",
+                        textDecoration: "none",
+                      }}
+                    >
+                      <LayoutDashboard size={14} />
+                      {t.nav.dashboard}
+                    </Link>
+                    <button
+                      type="button"
+                      onClick={handleLogout}
+                      aria-label={t.nav.logout}
+                      style={{
+                        display: "inline-flex",
+                        alignItems: "center",
+                        gap: "6px",
+                        padding: "7px 14px",
+                        borderRadius: "9999px",
+                        border: "1.5px solid var(--gray-6)",
+                        background: "transparent",
+                        color: "var(--gray-12)",
+                        fontSize: "13px",
+                        fontWeight: 600,
+                        cursor: "pointer",
+                        transition: "all 0.2s ease",
+                      }}
+                      onMouseEnter={(e) => {
+                        e.currentTarget.style.borderColor = "#E31B23";
+                        e.currentTarget.style.color = "#E31B23";
+                      }}
+                      onMouseLeave={(e) => {
+                        e.currentTarget.style.borderColor = "var(--gray-6)";
+                        e.currentTarget.style.color = "var(--gray-12)";
+                      }}
+                    >
+                      <LogOut size={14} />
+                      {t.nav.logout}
+                    </button>
+                  </Flex>
+                ) : (
+                  <Link
+                    href="/login"
+                    prefetch
+                    style={{
+                      display: "inline-flex",
+                      alignItems: "center",
+                      gap: "6px",
+                      padding: "7px 16px",
+                      borderRadius: "9999px",
+                      border: "1.5px solid var(--gray-6)",
+                      background: "transparent",
+                      color: "var(--gray-12)",
+                      fontSize: "13px",
+                      fontWeight: 600,
+                      cursor: "pointer",
+                      transition: "all 0.2s ease",
+                      textDecoration: "none",
+                    }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.borderColor = "#0047BA";
+                      e.currentTarget.style.color = "#0047BA";
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.borderColor = "var(--gray-6)";
+                      e.currentTarget.style.color = "var(--gray-12)";
+                    }}
+                  >
+                    <LogIn size={14} />
+                    {t.nav.login}
+                  </Link>
+                )}
               </Box>
 
               {/* Mobile Burger */}
@@ -354,23 +441,57 @@ export function Navbar() {
                   </Flex>
                 </Flex>
 
-                {/* Login CTA */}
-                <Link
-                  href="/login"
-                  prefetch
-                  className="w-full inline-flex items-center justify-center rounded-full py-3"
-                  style={{
-                    borderColor: "#0047BA",
-                    color: "#0047BA",
-                    fontWeight: 700,
-                    marginBottom: "10px",
-                    border: "1px solid #0047BA",
-                    textDecoration: "none",
-                  }}
-                >
-                  <LogIn size={16} style={{ marginRight: "6px" }} />
-                  {t.nav.login}
-                </Link>
+                {/* Auth CTA */}
+                {isAuthenticated ? (
+                  <>
+                    <Link
+                      href="/dashboard"
+                      prefetch
+                      onClick={() => setIsOpen(false)}
+                      className="w-full inline-flex items-center justify-center rounded-full py-3 font-bold"
+                      style={{
+                        backgroundColor: "#0047BA",
+                        color: "white",
+                        textDecoration: "none",
+                        marginBottom: "10px",
+                      }}
+                    >
+                      <LayoutDashboard size={16} style={{ marginRight: "6px" }} />
+                      {t.nav.dashboard}
+                    </Link>
+                    <button
+                      type="button"
+                      onClick={handleLogout}
+                      className="w-full inline-flex items-center justify-center rounded-full py-3 font-bold"
+                      style={{
+                        border: "1px solid #E31B23",
+                        color: "#E31B23",
+                        marginBottom: "10px",
+                        cursor: "pointer",
+                      }}
+                    >
+                      <LogOut size={16} style={{ marginRight: "6px" }} />
+                      {t.nav.logout}
+                    </button>
+                  </>
+                ) : (
+                  <Link
+                    href="/login"
+                    prefetch
+                    className="w-full inline-flex items-center justify-center rounded-full py-3"
+                    style={{
+                      borderColor: "#0047BA",
+                      color: "#0047BA",
+                      fontWeight: 700,
+                      marginBottom: "10px",
+                      border: "1px solid #0047BA",
+                      textDecoration: "none",
+                    }}
+                  >
+                    <LogIn size={16} style={{ marginRight: "6px" }} />
+                    {t.nav.login}
+                  </Link>
+                )}
 
                 <Link
                   href="/contact"
