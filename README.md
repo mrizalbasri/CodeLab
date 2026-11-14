@@ -67,7 +67,7 @@ Arsitektur aplikasi mengimplementasikan prinsip server-first rendering dengan Se
 - **🌐 Multibahasa (Bilingual ID / EN)**: Dukungan penuh dua bahasa (Bahasa Indonesia dan Bahasa Inggris) dengan pemuatan dinamis berbasis React Context.
 - **👥 Direktori Pengurus dan Anggota**: Sistem pencarian dan paginasi data profil kepengurusan, divisi, dan riwayat peran anggota.
 - **🚀 Manajemen Program dan Galeri**: Publikasi jadwal kegiatan, materi workshop, dan dokumentasi portofolio proyek secara terstruktur.
-- **🛡️ Panel Administrasi Terproteksi**: Modul CRUD data kegiatan dan anggota yang diamankan melalui Next.js Middleware dan Supabase Authentication.
+- **🛡️ Panel Administrasi Terproteksi**: Modul CRUD data kegiatan dan anggota yang diamankan melalui Next.js Proxy dan Supabase Authentication.
 - **🔒 Keamanan Data & Resiliensi**: Pengamanan level basis data menggunakan Row Level Security (RLS) Supabase serta ketersediaan data fallback saat koneksi offline.
 
 ---
@@ -76,7 +76,7 @@ Arsitektur aplikasi mengimplementasikan prinsip server-first rendering dengan Se
 
 ```mermaid
 flowchart LR
-    Client([Client / Browser]) -->|Request| Edge[Next.js Middleware]
+    Client([Client / Browser]) -->|Request| Edge[Next.js Proxy]
     Edge -->|Public Routes| Pages[Server / Client Components]
     Edge -->|Protected Routes| AuthCheck{Supabase Auth SSR}
     AuthCheck -->|Authenticated| Admin[Admin Dashboard & Actions]
@@ -153,7 +153,7 @@ web_codelab/
 │   ├── types.ts              # Definisi interface dan tipe TypeScript
 │   └── utils.ts              # Fungsi pembantu (format tanggal, class merger)
 ├── public/                   # Berkas aset statis publik
-└── middleware.ts             # Middleware proteksi autentikasi rute
+└── proxy.ts                  # Proxy (dahulu middleware) proteksi autentikasi rute
 ```
 
 ---
