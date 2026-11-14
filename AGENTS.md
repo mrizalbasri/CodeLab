@@ -13,6 +13,7 @@ These rules apply to all work in this repository.
   sync.
 - Keep commits focused and do not rewrite or force-push published history.
 - All features/fixes should be developed on a branch and merged via Pull Request into `main` so that GitHub recognizes co-authored contributions for the **Pair Extraordinaire** badge.
+- **NEVER use Squash Merge (`--squash`)** when merging pull requests. Always use a standard **Merge Commit** (`gh pr merge --merge` or GitHub's "Create a merge commit") to preserve full commit history and individual commit co-author attributions.
 
 ## Commit messages & Attribution
 
@@ -65,4 +66,4 @@ npm test -- --run
 ```
 
 Push the focused branch, open a pull request to `main`, and confirm the CI and
-deployment checks pass before merging.
+deployment checks pass before merging using a merge commit (never squash).
