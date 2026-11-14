@@ -72,19 +72,34 @@ Arsitektur aplikasi mengimplementasikan prinsip server-first rendering dengan Se
 
 ---
 
-## Arsitektur dan Teknologi
+## 🛠️ Arsitektur & Tech Stack
 
-| Kategori | Teknologi | Kegunaan |
+```mermaid
+flowchart LR
+    Client([Client / Browser]) -->|Request| Edge[Next.js Middleware]
+    Edge -->|Public Routes| Pages[Server / Client Components]
+    Edge -->|Protected Routes| AuthCheck{Supabase Auth SSR}
+    AuthCheck -->|Authenticated| Admin[Admin Dashboard & Actions]
+    AuthCheck -->|Unauthorized| Login[/login]
+    Pages -->|Data Query| Supabase[(Supabase PostgreSQL)]
+    Admin -->|CRUD / Storage| Supabase
+    Pages -.->|Offline / Fallback| StaticData[(lib/data Fallback)]
+```
+
+| Kategori | Teknologi | Deskripsi & Kegunaan |
 |---|---|---|
-| Framework | Next.js 16 (App Router) | Core framework, Server Components, Server Actions |
-| Runtime / UI Library | React 19 | Komponen antarmuka pengguna |
-| Bahasa Pemrograman | TypeScript 5 | Static typing dan standarisasi kontrak data |
-| Desain Sistem | Tailwind CSS 4, Radix UI | Utilitas styling dan komponen primitif yang aksesibel |
-| Animasi | Motion (Framer Motion) | Interaktivitas visual dan transisi halaman |
-| Basis Data & Autentikasi | Supabase (PostgreSQL) | Persistence layer, Supabase Auth SSR, RLS policies |
-| Media Storage | Supabase Storage | Penyimpanan berkas dan aset gambar (`pupcl-uploads`) |
-| Integrasi Kontak | Web3Forms | Gateway pengiriman notifikasi formulir kontak |
-| Platform Deployment | Vercel | Hosting serverless dan continuous deployment |
+| **Core Framework** | [Next.js 16 (App Router)](https://nextjs.org/) | Framework React full-stack dengan Server Components & Server Actions |
+| **UI Library** | [React 19](https://react.dev/) | Library antarmuka komponen deklaratif terkini |
+| **Type System** | [TypeScript 5](https://www.typescriptlang.org/) | Standarisasi type safety statis end-to-end |
+| **Styling** | [Tailwind CSS v4](https://tailwindcss.com/) | Engine utility-first CSS modern berbasis PostCSS |
+| **Primitif UI** | [Radix UI](https://www.radix-ui.com/) | Komponen UI primitif aksesibel tanpa styling terikat |
+| **Animasi** | [Motion (Framer)](https://motion.dev/) | Library animasi deklaratif untuk layout transition |
+| **Backend & Database** | [Supabase](https://supabase.com/) | PostgreSQL managed, Row Level Security (RLS), & Auth SSR |
+| **Storage** | Supabase Storage | Manajemen aset media dan upload file (`pupcl-uploads`) |
+| **Unit Testing** | [Vitest](https://vitest.dev/) | Framework pengujian unit super cepat berbasis Vite |
+| **Coverage Tool** | [@vitest/coverage-v8](https://vitest.dev/) | Pembuatan laporan cakupan kode uji (LCOV) |
+| **Continuous Integration** | GitHub Actions | Otomasi pengujian, linting, dan build linting otomatis |
+| **Hosting & Deploy** | [Vercel](https://vercel.com/) | Platform deployment serverless edge teroptimasi |
 
 ---
 
