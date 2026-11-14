@@ -75,19 +75,27 @@ export default function ProgramsPage() {
 
   // Animation Variants
   const containerVariants = {
-    hidden: { opacity: 0 },
+    hidden: { opacity: 0, filter: "blur(6px)" },
     visible: {
       opacity: 1,
+      filter: "blur(0px)",
       transition: { staggerChildren: 0.15 },
     },
   };
 
   const itemVariants = {
-    hidden: { opacity: 0, y: 30 },
+    hidden: (index: number) => ({
+      opacity: 0,
+      x: index % 2 === 0 ? -24 : 24,
+      y: index % 3 === 1 ? 18 : 8,
+      filter: "blur(8px)",
+    }),
     visible: {
       opacity: 1,
+      x: 0,
       y: 0,
-      transition: { type: "spring" as const, stiffness: 50 },
+      filter: "blur(0px)",
+      transition: { type: "spring" as const, stiffness: 50, damping: 16 },
     },
   };
 
@@ -251,11 +259,13 @@ export default function ProgramsPage() {
               }}
               variants={containerVariants}
               initial="hidden"
-              animate="visible"
+              whileInView="visible"
+              viewport={{ once: true, margin: "-40px" }}
             >
-              {filteredPrograms.map((program) => (
+              {filteredPrograms.map((program, index) => (
                 <motion.div
                   key={program.id}
+                  custom={index}
                   variants={itemVariants}
                   whileHover={{ y: -6 }}
                   transition={{ type: "spring", stiffness: 300 }}

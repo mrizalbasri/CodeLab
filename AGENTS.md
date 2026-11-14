@@ -12,8 +12,9 @@ These rules apply to all work in this repository.
   fast-forward the branch's base. Never overwrite local changes to complete a
   sync.
 - Keep commits focused and do not rewrite or force-push published history.
+- All features/fixes should be developed on a branch and merged via Pull Request into `main` so that GitHub recognizes co-authored contributions for the **Pair Extraordinaire** badge.
 
-## Commit messages
+## Commit messages & Attribution
 
 - Every commit MUST use Conventional Commits:
   `type(scope): imperative description`.
@@ -21,7 +22,19 @@ These rules apply to all work in this repository.
   or fewer.
 - Allowed types include `feat`, `fix`, `refactor`, `docs`, `style`, `perf`,
   `test`, `build`, `ci`, `chore`, and `revert`.
-- Do not add `Co-authored-by` trailers or any other assistant attribution.
+- When creating git commits in this repository, always include the co-author trailer at the bottom of the commit message (preceded by an empty line) so that contributions are attributed to both accounts:
+
+```text
+Co-authored-by: xanom23 <xanom55@gmail.com>
+```
+
+### Example Commit Message Format:
+
+```text
+feat(auth): redesign login page layout
+
+Co-authored-by: xanom23 <xanom55@gmail.com>
+```
 
 ## Code standards
 
@@ -53,4 +66,3 @@ npm test -- --run
 
 Push the focused branch, open a pull request to `main`, and confirm the CI and
 deployment checks pass before merging.
-

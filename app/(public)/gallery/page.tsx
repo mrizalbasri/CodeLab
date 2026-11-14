@@ -47,8 +47,23 @@ export default function GalleryPage() {
 
     // Simple Fade In Animation
     const containerVariants = {
-        hidden: { opacity: 0, scale: 0.98 },
-        visible: { opacity: 1, scale: 1 }
+        hidden: { opacity: 0, scale: 0.98, filter: "blur(6px)" },
+        visible: { opacity: 1, scale: 1, filter: "blur(0px)" }
+    };
+    const itemVariants = {
+        hidden: (index: number) => ({
+            opacity: 0,
+            x: index % 2 === 0 ? -18 : 18,
+            y: index % 3 === 1 ? 14 : 6,
+            filter: "blur(8px)",
+        }),
+        visible: {
+            opacity: 1,
+            x: 0,
+            y: 0,
+            filter: "blur(0px)",
+            transition: { duration: 0.45, ease: [0.22, 1, 0.36, 1] as const },
+        },
     };
 
     return (
@@ -104,12 +119,20 @@ export default function GalleryPage() {
                             style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 280px), 1fr))", gap: "20px" }}
                             variants={containerVariants}
                             initial="hidden"
-                            animate="visible"
+                            whileInView="visible"
+                            viewport={{ once: true, margin: "-40px" }}
                             transition={{ duration: 0.4 }}
                         >
                             {paginatedData.length > 0 ? (
-                                paginatedData.map((item) => (
-                                    <motion.div key={item.id} whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} transition={{ type: 'spring', stiffness: 300 }}>
+                                paginatedData.map((item, index) => (
+                                    <motion.div
+                                        key={item.id}
+                                        custom={index}
+                                        variants={itemVariants}
+                                        whileHover={{ scale: 1.02 }}
+                                        whileTap={{ scale: 0.98 }}
+                                        transition={{ type: 'spring', stiffness: 300 }}
+                                    >
                                         <Card style={{ padding: 0, overflow: 'hidden', cursor: 'pointer' }} className="group">
                                             <Inset clip="padding-box" side="top" pb="current">
                                                 <Box style={{ position: 'relative', overflow: 'hidden', height: 220 }}>
