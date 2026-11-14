@@ -8,6 +8,7 @@ describe("Site Configuration & Translations", () => {
   it("should have correct branding info", () => {
     expect(siteConfig.name).toBe("PUPCL");
     expect(siteConfig.fullName).toBe("President University Pekanbaru Code Lab");
+    expect(siteConfig.url).toBeDefined();
     expect(siteConfig.links.whatsapp).toContain("6287737476333");
   });
 

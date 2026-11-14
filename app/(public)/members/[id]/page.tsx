@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import { headers } from "next/headers";
 import { notFound } from "next/navigation";
 import { ExternalLink, FolderKanban } from "lucide-react";
@@ -8,6 +9,49 @@ import { Project } from "@/lib/types";
 
 interface MemberPageProps {
   params: Promise<{ id: string }>;
+}
+
+export async function generateMetadata({ params }: MemberPageProps): Promise<Metadata> {
+  const { id } = await params;
+  try {
+    const { profile } = await getPublicMemberProfile(id);
+    if (!profile) {
+      return {
+        title: "Member Not Found",
+        description: "Profil member tidak ditemukan.",
+      };
+    }
+
+    const title = `${profile.full_name} (${profile.division || "Member"})`;
+    const details = [profile.division, profile.batch].filter(Boolean).join(" · ");
+    const description = details
+      ? `${profile.full_name} - ${details} di President University Pekanbaru Code Lab.`
+      : `Profil member ${profile.full_name} di PUPCL.`;
+
+    return {
+      title,
+      description,
+      openGraph: {
+        title: `${title} | PUPCL`,
+        description,
+        type: "profile",
+        images: profile.avatar_url
+          ? [{ url: profile.avatar_url, alt: profile.full_name }]
+          : undefined,
+      },
+      twitter: {
+        card: "summary",
+        title: `${title} | PUPCL`,
+        description,
+        images: profile.avatar_url ? [profile.avatar_url] : undefined,
+      },
+    };
+  } catch {
+    return {
+      title: "Member Profile",
+      description: "Profil member President University Pekanbaru Code Lab.",
+    };
+  }
 }
 
 export default async function MemberPage({ params }: MemberPageProps) {

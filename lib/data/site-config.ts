@@ -2,6 +2,7 @@ export const siteConfig = {
   name: "PUPCL",
   fullName: "President University Pekanbaru Code Lab",
   shortDescription: "Student Coding & Tech Community",
+  url: process.env.NEXT_PUBLIC_SITE_URL || "https://codelab-five.vercel.app",
   headline: "Where Passionate Coders Build Real Impact",
   subheadline:
     "Komunitas teknologi terdepan di President University Pekanbaru. Kami belajar koding, berkolaborasi membangun proyek nyata, menjuarai kompetisi nasional, dan mengakselerasi karier di industri teknologi.",

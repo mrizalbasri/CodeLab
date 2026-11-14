@@ -20,10 +20,31 @@ const jetbrainsMono = JetBrains_Mono({
   display: "swap",
 });
 
+import { siteConfig } from "@/lib/data/site-config";
+
 export const metadata: Metadata = {
-  title: "CodeLab - President University Pekanbaru",
+  metadataBase: new URL(siteConfig.url),
+  title: {
+    default: "CodeLab - President University Pekanbaru",
+    template: "%s | PUPCL",
+  },
   description: "The coding and tech community for students at President University Pekanbaru. Join us to learn, share, and build the future.",
   keywords: ["CodeLab", "PUPCL", "Coding Club", "Polytechnic", "Pekanbaru", "President University", "Programming", "Community", "Developer"],
+  authors: [{ name: "PUPCL" }],
+  creator: "President University Pekanbaru Code Lab",
+  openGraph: {
+    type: "website",
+    locale: "id_ID",
+    url: "/",
+    siteName: siteConfig.name,
+    title: "CodeLab - President University Pekanbaru",
+    description: "The coding and tech community for students at President University Pekanbaru. Join us to learn, share, and build the future.",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "CodeLab - President University Pekanbaru",
+    description: "The coding and tech community for students at President University Pekanbaru. Join us to learn, share, and build the future.",
+  },
   icons: {
     icon: "/logo.webp",
     shortcut: "/logo.webp",
