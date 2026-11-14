@@ -70,9 +70,15 @@ export default function EventsPage() {
           {sources.map((source, index) => (
             <motion.div
               key={source.label}
-              initial={{ opacity: 0, y: 14 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.28, delay: index * 0.05 }}
+              initial={{
+                opacity: 0,
+                x: index % 2 === 0 ? -24 : 24,
+                y: index === 1 ? 18 : 8,
+                filter: "blur(10px)",
+              }}
+              whileInView={{ opacity: 1, x: 0, y: 0, filter: "blur(0px)" }}
+              viewport={{ once: true, margin: "-40px" }}
+              transition={{ duration: 0.45, delay: index * 0.08, ease: [0.22, 1, 0.36, 1] }}
               className="rounded-3xl border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-900 p-6 shadow-sm"
             >
               <div
@@ -91,7 +97,13 @@ export default function EventsPage() {
           ))}
         </div>
 
-        <Box className="mt-6 rounded-3xl border border-dashed border-neutral-300 dark:border-neutral-700 bg-neutral-50/70 dark:bg-neutral-900/50 px-6 py-16 text-center">
+        <motion.div
+          initial={{ opacity: 0, y: 24, scale: 0.97, filter: "blur(10px)" }}
+          whileInView={{ opacity: 1, y: 0, scale: 1, filter: "blur(0px)" }}
+          viewport={{ once: true, margin: "-40px" }}
+          transition={{ duration: 0.5, delay: 0.12, ease: [0.22, 1, 0.36, 1] }}
+          className="mt-6 rounded-3xl border border-dashed border-neutral-300 dark:border-neutral-700 bg-neutral-50/70 dark:bg-neutral-900/50 px-6 py-16 text-center"
+        >
           <Flex direction="column" align="center" gap="3">
             <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-white text-[#0047BA] shadow-sm dark:bg-neutral-800">
               <CalendarDays size={22} />
@@ -114,7 +126,7 @@ export default function EventsPage() {
               <ExternalLink size={14} />
             </Link>
           </Flex>
-        </Box>
+        </motion.div>
 
         <div className="mt-6 flex items-center justify-center gap-2 text-xs text-neutral-400">
           <MapPin size={14} />

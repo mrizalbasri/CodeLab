@@ -112,9 +112,10 @@ export default function ContactPage() {
         <Grid columns={{ initial: "1", md: "2" }} gap={{ initial: "6", md: "8" }} align="start">
           {/* Contact Form Card */}
           <motion.div
-            initial={{ opacity: 0, y: 15 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.4, delay: 0.1 }}
+            initial={{ opacity: 0, x: -24, filter: "blur(10px)" }}
+            whileInView={{ opacity: 1, x: 0, filter: "blur(0px)" }}
+            viewport={{ once: true, margin: "-40px" }}
+            transition={{ duration: 0.5, delay: 0.08, ease: [0.22, 1, 0.36, 1] }}
           >
             <div className="rounded-3xl border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-900 p-6 sm:p-8 shadow-xs">
               <Heading size="5" weight="bold" mb="1" className="text-neutral-900 dark:text-white">
@@ -220,9 +221,10 @@ export default function ContactPage() {
 
           {/* Contact Info & Map Column */}
           <motion.div
-            initial={{ opacity: 0, y: 15 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.4, delay: 0.2 }}
+            initial={{ opacity: 0, x: 24, filter: "blur(10px)" }}
+            whileInView={{ opacity: 1, x: 0, filter: "blur(0px)" }}
+            viewport={{ once: true, margin: "-40px" }}
+            transition={{ duration: 0.5, delay: 0.16, ease: [0.22, 1, 0.36, 1] }}
             className="space-y-4"
           >
             {/* WhatsApp Admin Card */}
