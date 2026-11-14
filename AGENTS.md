@@ -23,11 +23,13 @@ These rules apply to all work in this repository.
   or fewer.
 - Allowed types include `feat`, `fix`, `refactor`, `docs`, `style`, `perf`,
   `test`, `build`, `ci`, `chore`, and `revert`.
-- When creating git commits in this repository, always include the co-author trailer at the bottom of the commit message (preceded by an empty line) so that contributions are attributed to both accounts:
+- When creating git commits in this repository, include only the following co-author trailer at the bottom of the commit message (preceded by an empty line):
 
 ```text
 Co-authored-by: xanom23 <xanom55@gmail.com>
 ```
+
+- Do not add a Copilot co-author trailer or any other co-author attribution.
 
 ### Example Commit Message Format:
 
