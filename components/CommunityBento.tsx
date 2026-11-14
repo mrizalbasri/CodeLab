@@ -20,8 +20,8 @@ export function CommunityBento() {
 
         {/* Section Header */}
         <motion.div
-          initial={{ opacity: 0, y: 24 }}
-          whileInView={{ opacity: 1, y: 0 }}
+          initial={{ opacity: 0, y: 24, filter: "blur(10px)" }}
+          whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
           viewport={{ once: true, margin: "-50px" }}
           transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
           className="text-center mb-10"
@@ -42,8 +42,8 @@ export function CommunityBento() {
 
             {/* Card: member stat */}
             <motion.div
-              initial={{ opacity: 0, y: 24 }}
-              whileInView={{ opacity: 1, y: 0 }}
+              initial={{ opacity: 0, x: -24, filter: "blur(10px)" }}
+              whileInView={{ opacity: 1, x: 0, filter: "blur(0px)" }}
               viewport={{ once: true, margin: "-40px" }}
               transition={{ duration: 0.45, delay: 0, ease: [0.22, 1, 0.36, 1] }}
               className="flex-1 rounded-3xl border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-900 p-7 flex flex-col justify-between min-h-[180px] shadow-sm"
@@ -63,8 +63,8 @@ export function CommunityBento() {
 
             {/* Card: Komunitas Terpercaya */}
             <motion.div
-              initial={{ opacity: 0, y: 24 }}
-              whileInView={{ opacity: 1, y: 0 }}
+              initial={{ opacity: 0, y: 24, filter: "blur(10px)" }}
+              whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
               viewport={{ once: true, margin: "-40px" }}
               transition={{ duration: 0.45, delay: 0.08, ease: [0.22, 1, 0.36, 1] }}
               className="flex-1 rounded-3xl border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-900 p-7 flex flex-col justify-between min-h-[180px] shadow-sm"
@@ -88,8 +88,8 @@ export function CommunityBento() {
 
           {/* Row 1 tengah + kanan: Level Up (lebar 2 col) */}
           <motion.div
-            initial={{ opacity: 0, y: 24 }}
-            whileInView={{ opacity: 1, y: 0 }}
+            initial={{ opacity: 0, x: 24, filter: "blur(10px)" }}
+            whileInView={{ opacity: 1, x: 0, filter: "blur(0px)" }}
             viewport={{ once: true, margin: "-40px" }}
             transition={{ duration: 0.45, delay: 0.12, ease: [0.22, 1, 0.36, 1] }}
             className="md:col-span-2 rounded-3xl border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-900 p-7 flex flex-col justify-between min-h-[220px] shadow-sm"
@@ -131,8 +131,8 @@ export function CommunityBento() {
 
           {/* Row 2 tengah: Safe Space */}
           <motion.div
-            initial={{ opacity: 0, y: 24 }}
-            whileInView={{ opacity: 1, y: 0 }}
+            initial={{ opacity: 0, x: -20, filter: "blur(10px)" }}
+            whileInView={{ opacity: 1, x: 0, filter: "blur(0px)" }}
             viewport={{ once: true, margin: "-40px" }}
             transition={{ duration: 0.45, delay: 0.16, ease: [0.22, 1, 0.36, 1] }}
             className="rounded-3xl border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-900 p-7 flex flex-col justify-between min-h-[220px] shadow-sm"
@@ -170,8 +170,8 @@ export function CommunityBento() {
 
           {/* Row 2 kanan: Digital Member Card */}
           <motion.div
-            initial={{ opacity: 0, y: 24 }}
-            whileInView={{ opacity: 1, y: 0 }}
+            initial={{ opacity: 0, y: 24, scale: 0.97, filter: "blur(10px)" }}
+            whileInView={{ opacity: 1, y: 0, scale: 1, filter: "blur(0px)" }}
             viewport={{ once: true, margin: "-40px" }}
             transition={{ duration: 0.45, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
             className="rounded-3xl border border-neutral-800 bg-neutral-900 dark:bg-black p-7 flex flex-col justify-between min-h-[220px]"

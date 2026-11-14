@@ -87,8 +87,8 @@ export default function AboutPage() {
         <Flex direction="column" gap="9">
           {/* About Section with Logo */}
           <motion.div
-            initial={{ opacity: 0, y: 24 }}
-            whileInView={{ opacity: 1, y: 0 }}
+            initial={{ opacity: 0, y: 24, filter: "blur(10px)" }}
+            whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
             viewport={{ once: true, margin: "-50px" }}
             transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
           >
@@ -151,8 +151,8 @@ export default function AboutPage() {
             <Grid columns={{ initial: "1", md: "2" }} gap="6">
               {/* Visi Card */}
               <motion.div
-                initial={{ opacity: 0, y: 24 }}
-                whileInView={{ opacity: 1, y: 0 }}
+                initial={{ opacity: 0, x: -24, filter: "blur(10px)" }}
+                whileInView={{ opacity: 1, x: 0, filter: "blur(0px)" }}
                 viewport={{ once: true, margin: "-40px" }}
                 transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
                 className="relative rounded-[1.25rem] border-[0.75px] border-border p-2 md:p-3 bg-gray-100 dark:bg-gray-900/40"
@@ -195,8 +195,8 @@ export default function AboutPage() {
 
               {/* Misi Card */}
               <motion.div
-                initial={{ opacity: 0, y: 24 }}
-                whileInView={{ opacity: 1, y: 0 }}
+                initial={{ opacity: 0, x: 24, filter: "blur(10px)" }}
+                whileInView={{ opacity: 1, x: 0, filter: "blur(0px)" }}
                 viewport={{ once: true, margin: "-40px" }}
                 transition={{ duration: 0.5, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
                 className="relative rounded-[1.25rem] border-[0.75px] border-border p-2 md:p-3 bg-gray-100 dark:bg-gray-900/40"
@@ -250,8 +250,8 @@ export default function AboutPage() {
 
           {/* Tujuan & Sasaran */}
           <motion.div
-            initial={{ opacity: 0, y: 24 }}
-            whileInView={{ opacity: 1, y: 0 }}
+            initial={{ opacity: 0, y: 24, filter: "blur(10px)" }}
+            whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
             viewport={{ once: true, margin: "-50px" }}
             transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
           >
@@ -291,8 +291,8 @@ export default function AboutPage() {
 
           {/* Tech Stack Section */}
           <motion.div
-            initial={{ opacity: 0, y: 24 }}
-            whileInView={{ opacity: 1, y: 0 }}
+            initial={{ opacity: 0, x: -20, filter: "blur(10px)" }}
+            whileInView={{ opacity: 1, x: 0, filter: "blur(0px)" }}
             viewport={{ once: true, margin: "-50px" }}
             transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
           >
@@ -369,8 +369,8 @@ export default function AboutPage() {
           {/* ─── Team Section ─────────────────────────────────────────────────────── */}
           <Section>
             <motion.div
-              initial={{ opacity: 0, y: 24 }}
-              whileInView={{ opacity: 1, y: 0 }}
+              initial={{ opacity: 0, y: 24, filter: "blur(10px)" }}
+              whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
               viewport={{ once: true, margin: "-50px" }}
               transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
             >
