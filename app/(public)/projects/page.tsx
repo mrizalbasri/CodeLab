@@ -7,6 +7,7 @@ import { ScrollReveal, ScrollStagger, ScrollStaggerItem } from "@/components/ui/
 export default async function ProjectsPage() {
   const result = await getPublishedProjects();
   const projects = result.projects;
+  const revealDirections = ["left", "up", "right"] as const;
 
   return (
     <Box>
@@ -59,8 +60,13 @@ export default async function ProjectsPage() {
           </ScrollReveal>
         ) : (
           <ScrollStagger className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
-            {projects.map((project) => (
-              <ScrollStaggerItem key={project.id}>
+            {projects.map((project, index) => (
+              <ScrollStaggerItem
+                key={project.id}
+                direction={revealDirections[index % revealDirections.length]}
+                blur={8}
+                distance={30}
+              >
                 <Card size="2" className="overflow-hidden h-full">
                   <Box className="h-44 overflow-hidden bg-neutral-100 dark:bg-neutral-800">
                     {/* eslint-disable-next-line @next/next/no-img-element */}

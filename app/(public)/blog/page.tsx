@@ -43,8 +43,8 @@ export default function BlogPage() {
 
       <Container size="3" py={{ initial: "7", md: "9" }} px="6">
         <motion.div
-          initial={{ opacity: 0, y: 24 }}
-          whileInView={{ opacity: 1, y: 0 }}
+          initial={{ opacity: 0, y: 24, scale: 0.97, filter: "blur(10px)" }}
+          whileInView={{ opacity: 1, y: 0, scale: 1, filter: "blur(0px)" }}
           viewport={{ once: true, margin: "-40px" }}
           transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
           className="rounded-3xl border border-dashed border-neutral-300 dark:border-neutral-700 bg-neutral-50/70 dark:bg-neutral-900/50 px-6 py-16 text-center"

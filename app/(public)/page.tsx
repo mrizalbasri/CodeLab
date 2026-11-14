@@ -156,8 +156,8 @@ export default function Home() {
         <div className="max-w-6xl mx-auto px-6 sm:px-8">
 
           <motion.div
-            initial={{ opacity: 0, y: 24 }}
-            whileInView={{ opacity: 1, y: 0 }}
+            initial={{ opacity: 0, y: 24, filter: "blur(10px)" }}
+            whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
             viewport={{ once: true, margin: "-50px" }}
             transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
             className="text-center mb-10"
@@ -176,8 +176,13 @@ export default function Home() {
               return (
                 <motion.div
                   key={i}
-                  initial={{ opacity: 0, y: 24 }}
-                  whileInView={{ opacity: 1, y: 0 }}
+                  initial={{
+                    opacity: 0,
+                    x: i % 2 === 0 ? -24 : 24,
+                    y: i % 2 === 0 ? 8 : 24,
+                    filter: "blur(10px)",
+                  }}
+                  whileInView={{ opacity: 1, x: 0, y: 0, filter: "blur(0px)" }}
                   viewport={{ once: true, margin: "-40px" }}
                   transition={{ duration: 0.45, delay: i * 0.08, ease: [0.22, 1, 0.36, 1] }}
                   className="p-5 rounded-2xl border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-900 hover:border-[#0047BA]/50 dark:hover:border-[#0047BA]/40 hover:-translate-y-0.5 transition-all"
@@ -216,8 +221,8 @@ export default function Home() {
           <div className="max-w-3xl mx-auto px-6 sm:px-8">
 
             <motion.div
-              initial={{ opacity: 0, y: 24 }}
-              whileInView={{ opacity: 1, y: 0 }}
+              initial={{ opacity: 0, y: 24, filter: "blur(10px)" }}
+              whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
               viewport={{ once: true, margin: "-50px" }}
               transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
               className="text-center mb-12"
@@ -237,8 +242,13 @@ export default function Home() {
                 return (
                   <motion.div
                     key={idx}
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
+                    initial={{
+                      opacity: 0,
+                      x: idx % 2 === 0 ? -20 : 20,
+                      y: 10,
+                      filter: "blur(8px)",
+                    }}
+                    whileInView={{ opacity: 1, x: 0, y: 0, filter: "blur(0px)" }}
                     viewport={{ once: true, margin: "-30px" }}
                     transition={{ duration: 0.4, delay: idx * 0.06, ease: [0.22, 1, 0.36, 1] }}
                     className="rounded-2xl border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-900 overflow-hidden shadow-sm"
@@ -282,15 +292,15 @@ export default function Home() {
       {/* ── CTA ───────────────────────────────────────────────────── */}
       <section className="py-16 sm:py-20 bg-white dark:bg-neutral-950">
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
+          initial={{ opacity: 0, y: 30, filter: "blur(12px)" }}
+          whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
           viewport={{ once: true, margin: "-60px" }}
           transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
           className="max-w-3xl mx-auto px-6 sm:px-8 text-center"
         >
           <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
-            whileInView={{ opacity: 1, scale: 1 }}
+            initial={{ opacity: 0, scale: 0.95, filter: "blur(8px)" }}
+            whileInView={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
             viewport={{ once: true }}
             transition={{ duration: 0.4, delay: 0.1 }}
             className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-neutral-100 dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 text-neutral-500 dark:text-neutral-400 text-xs font-medium mb-6"
