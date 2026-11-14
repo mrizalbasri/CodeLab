@@ -138,8 +138,8 @@ export default function LoginPage() {
       {/* Main Split-Card: Midnight Developer Showcase on LEFT, Login Form on RIGHT */}
       <div className="relative z-10 mx-auto my-auto w-full max-w-5xl py-2 sm:py-4">
         <div className="grid overflow-hidden rounded-[26px] border border-slate-200/90 bg-white shadow-xl sm:rounded-[32px] lg:grid-cols-12 dark:border-zinc-800/90 dark:bg-[#101318] dark:shadow-2xl">
-          {/* SISI KIRI: Midnight Developer Showcase Panel with Codi Sitting on the Card */}
-          <section className="relative order-2 flex flex-col justify-between overflow-hidden bg-gradient-to-b from-[#08152e] via-[#091b3d] to-[#040d1f] p-7 text-white sm:p-10 lg:order-1 lg:col-span-5 lg:p-12">
+          {/* SISI KIRI: Desktop-only Midnight Developer Showcase Panel with Codi Sitting on the Card */}
+          <section className="relative hidden flex-col justify-between overflow-hidden bg-gradient-to-b from-[#08152e] via-[#091b3d] to-[#040d1f] p-7 text-white sm:p-10 lg:col-span-5 lg:flex lg:p-12">
             {/* Ambient Background Aura */}
             <div className="pointer-events-none absolute -right-20 -top-20 h-72 w-72 rounded-full bg-blue-500/15 blur-3xl" />
             <div className="pointer-events-none absolute -bottom-20 -left-20 h-72 w-72 rounded-full bg-indigo-500/20 blur-3xl" />
@@ -232,23 +232,49 @@ export default function LoginPage() {
           </section>
 
           {/* SISI KANAN: Clean Login Form */}
-          <section className="order-1 flex flex-col justify-center p-7 sm:p-10 lg:order-2 lg:col-span-7 lg:p-12">
+          <section className="flex flex-col justify-center p-7 sm:p-10 lg:col-span-7 lg:p-12">
             <div className="mx-auto w-full max-w-md">
-              {/* Logo & Brand Header */}
-              <div className="flex items-center gap-2.5">
-                <div className="flex h-9 w-9 items-center justify-center rounded-xl border border-slate-200/80 bg-slate-50 p-1.5 dark:border-zinc-700/80 dark:bg-zinc-850">
-                  <NextImage
-                    src="/logo.webp"
-                    alt="PUPCL Logo"
-                    width={24}
-                    height={24}
-                    className="object-contain"
-                    priority
-                  />
+              {/* Logo & Brand Header — Codi hops onto the form card on mobile
+                  while the desktop showcase panel is hidden */}
+              <div className="flex items-center justify-between gap-3">
+                <div className="flex items-center gap-2.5">
+                  <div className="flex h-9 w-9 items-center justify-center rounded-xl border border-slate-200/80 bg-slate-50 p-1.5 dark:border-zinc-700/80 dark:bg-zinc-850">
+                    <NextImage
+                      src="/logo.webp"
+                      alt="PUPCL Logo"
+                      width={24}
+                      height={24}
+                      className="object-contain"
+                      priority
+                    />
+                  </div>
+                  <span className="text-sm font-bold tracking-tight text-slate-900 dark:text-white">
+                    PUPCL <span className="font-normal text-slate-500 dark:text-zinc-400">CodeLab</span>
+                  </span>
                 </div>
-                <span className="text-sm font-bold tracking-tight text-slate-900 dark:text-white">
-                  PUPCL <span className="font-normal text-slate-500 dark:text-zinc-400">CodeLab</span>
-                </span>
+
+                <motion.div
+                  initial={{ y: 6, opacity: 0 }}
+                  animate={{ y: 0, opacity: 1 }}
+                  transition={{ duration: 0.5, delay: 0.15 }}
+                  className="flex items-center gap-2 lg:hidden"
+                >
+                  <div className="relative rounded-xl bg-[#0047BA] px-2.5 py-1 text-[11px] font-semibold text-white shadow-md">
+                    <span>{t.auth.mascotBubble}</span>
+                    {/* Bubble tail pointing to Codi on the right */}
+                    <span className="absolute -right-1 top-1/2 h-2 w-2 -translate-y-1/2 rotate-45 bg-[#0047BA]" />
+                  </div>
+                  <div className="flex h-12 w-12 shrink-0 items-center justify-center filter drop-shadow-md sm:h-14 sm:w-14">
+                    <NextImage
+                      src="/club-pixel-mascot.svg"
+                      alt="Codi, the CodeLab Mascot"
+                      width={56}
+                      height={56}
+                      className="h-full w-full object-contain"
+                      priority
+                    />
+                  </div>
+                </motion.div>
               </div>
 
               {/* Single Clear Heading & Subtitle */}
