@@ -11,7 +11,7 @@ Aplikasi dibangun menggunakan **Next.js 16 (App Router)** dengan paradigma hybri
 ```mermaid
 flowchart TD
     User["Pengguna / Klien"]
-    Middleware["Next.js Middleware (/login, /dashboard & /admin/*)"]
+    Proxy["Next.js Proxy (/login, /dashboard & /admin/*)"]
     
     subgraph Routing ["Next.js App Router (app/)"]
         PublicGroup["(public) Layout<br/>(Navbar, Footer, i18n, Theme)"]
@@ -32,9 +32,9 @@ flowchart TD
         Web3Forms["Web3Forms API (Email Contact)"]
     end
 
-    User -->|HTTP Request| Middleware
-    Middleware -->|Public Routes| PublicGroup
-    Middleware -->|Admin Auth Valid| AdminGroup
+    User -->|HTTP Request| Proxy
+    Proxy -->|Public Routes| PublicGroup
+    Proxy -->|Admin Auth Valid| AdminGroup
     
     PublicGroup --> PublicPages
     AdminGroup --> AdminPage
@@ -80,7 +80,7 @@ Menangani dashboard pengelolaan konten terproteksi:
 
 ## 3. Autentikasi & Proteksi Route
 
-- **Middleware Edge** ([`middleware.ts`](file:///d:/Coding/web_codelab/middleware.ts)):
+- **Proxy Edge** ([`proxy.ts`](file:///d:/Coding/web_codelab/proxy.ts)) — konvensi Next.js 16, dahulu bernama `middleware.ts`:
 - Dikonfigurasi dengan `matcher: ["/admin/:path*", "/dashboard/:path*", "/login"]`.
 - Menggunakan helper [`lib/supabase/middleware.ts`](file:///d:/Coding/web_codelab/lib/supabase/middleware.ts) untuk memvalidasi sesi dan membaca role dari `profiles`.
 - Pengguna tanpa sesi yang mengakses `/admin` atau `/dashboard` dialihkan ke `/login`.
