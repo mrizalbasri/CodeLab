@@ -249,6 +249,8 @@ export const translations = {
       invalidCredentials: "The email or password you entered is incorrect. Please verify and try again.",
       emailNotConfirmed: "Your email has not been verified yet. Please check your inbox.",
       rateLimited: "Too many sign-in attempts. Please wait a moment and try again.",
+      profileUnavailable:
+        "Your account profile is not ready yet. Please contact a CodeLab administrator.",
       generalError: "Unable to sign in. Please check your connection and try again.",
       successToast: "Successfully signed in! Redirecting...",
     },
@@ -548,6 +550,8 @@ export const translations = {
       invalidCredentials: "Email atau kata sandi yang Anda masukkan salah. Silakan periksa kembali.",
       emailNotConfirmed: "Email Anda belum diverifikasi. Silakan periksa kotak masuk email Anda.",
       rateLimited: "Terlalu banyak percobaan masuk. Mohon tunggu beberapa saat lagi.",
+      profileUnavailable:
+        "Profile akunmu belum siap. Silakan hubungi administrator CodeLab.",
       generalError: "Gagal masuk. Silakan periksa koneksi internet Anda dan coba lagi.",
       successToast: "Berhasil masuk! Mengalihkan...",
     },

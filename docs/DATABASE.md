@@ -51,7 +51,8 @@ CREATE TABLE IF NOT EXISTS public.programs (
 
 Aktifkan RLS untuk memastikan data aman. Aturannya:
 - **Publik**: Hanya dapat membaca data (`SELECT`).
-- **Pengguna Terautentikasi (Admin)**: Memiliki hak akses penuh (`INSERT`, `UPDATE`, `DELETE`).
+- **Admin terautentikasi**: Memiliki hak akses penuh (`INSERT`, `UPDATE`, `DELETE`) pada data operasional.
+- **Member terautentikasi**: Hanya dapat mengelola profile dan project miliknya sesuai policy.
 
 ```sql
 -- Aktifkan RLS di setiap tabel
@@ -98,9 +99,7 @@ CREATE POLICY "Authenticated users can manage programs"
 
 ---
 
-## 3. Konfigurasi Supabase Storage Bucket
-
-## 3.1 Role Member, Project Showcase, dan Approval
+## 3. Role, Login, Project Showcase, dan Approval
 
 Skema role dan project showcase tersedia di:
 
@@ -113,8 +112,10 @@ Jalankan migration tersebut setelah tabel dasar di atas tersedia. Migration ini 
 - `profiles`: profil user dengan role `admin` atau `member`, member ID, divisi, batch, avatar, dan skills.
 - `projects`: project milik member dengan status `draft`, `pending`, `published`, atau `rejected`.
 - Trigger pembuatan profile otomatis saat user Supabase Auth baru dibuat.
+- Trigger validasi email pada `auth.users` yang hanya mengizinkan `@president.ac.id` dan subdomain kampus.
 - Profile untuk user Auth yang sudah ada akan dibuat otomatis saat migration dijalankan.
 - RLS agar member hanya dapat mengelola project miliknya, sedangkan admin dapat melakukan review dan publish.
+- RLS pada `members`, `gallery`, dan `programs` membatasi perubahan data hanya untuk role `admin`.
 
 Setelah migration, promosikan akun pengurus secara manual melalui SQL Editor:
 
@@ -131,6 +132,18 @@ Member submit -> pending review -> Admin publish/reject -> Published showcase
 ```
 
 Folder cover project menggunakan bucket `pupcl-uploads/projects`.
+
+### Alur Login dan Redirect
+
+```text
+Supabase Auth login
+  -> validasi domain email di database
+  -> baca profiles.role
+  -> admin: /admin
+  -> member: /dashboard
+```
+
+Jika `profiles` belum tersedia, aplikasi tidak mempertahankan sesi login dan meminta pengguna menghubungi administrator.
 
 ## 4. Konfigurasi Supabase Storage Bucket
 

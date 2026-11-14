@@ -11,7 +11,7 @@ Aplikasi dibangun menggunakan **Next.js 16 (App Router)** dengan paradigma hybri
 ```mermaid
 flowchart TD
     User["Pengguna / Klien"]
-    Middleware["Next.js Middleware (/login & /admin/*)"]
+    Middleware["Next.js Middleware (/login, /dashboard & /admin/*)"]
     
     subgraph Routing ["Next.js App Router (app/)"]
         PublicGroup["(public) Layout<br/>(Navbar, Footer, i18n, Theme)"]
@@ -81,12 +81,23 @@ Menangani dashboard pengelolaan konten terproteksi:
 ## 3. Autentikasi & Proteksi Route
 
 - **Middleware Edge** ([`middleware.ts`](file:///d:/Coding/web_codelab/middleware.ts)):
-  - Dikonfigurasi dengan `matcher: ["/admin/:path*", "/login"]`.
-  - Menggunakan helper [`lib/supabase/middleware.ts`](file:///d:/Coding/web_codelab/lib/supabase/middleware.ts) untuk merefresh cookie token sesi.
-  - Jika sesi tidak ditemukan saat mengakses `/admin`, pengguna dialihkan otomatis ke `/login`.
-  - Jika pengguna yang sudah login mengakses `/login`, pengguna dialihkan langsung ke `/admin`.
+- Dikonfigurasi dengan `matcher: ["/admin/:path*", "/dashboard/:path*", "/login"]`.
+- Menggunakan helper [`lib/supabase/middleware.ts`](file:///d:/Coding/web_codelab/lib/supabase/middleware.ts) untuk memvalidasi sesi dan membaca role dari `profiles`.
+- Pengguna tanpa sesi yang mengakses `/admin` atau `/dashboard` dialihkan ke `/login`.
+- Admin diarahkan ke `/admin`, sedangkan member diarahkan ke `/dashboard`.
+- Pengguna yang sudah login tidak dapat membuka dashboard milik role lain.
 - **Action Guard** ([`lib/actions/utils.ts`](file:///d:/Coding/web_codelab/lib/actions/utils.ts)):
   - Fungsi `checkAuth()` memvalidasi sesi Supabase dari cookie server di setiap operasi mutasi data (Create, Update, Delete).
+
+### Alur Setelah Login
+
+1. Supabase memvalidasi email dan password.
+2. Database memastikan email akun memakai domain `president.ac.id` atau subdomain kampus melalui trigger pada `auth.users`.
+3. Trigger `handle_new_user` memastikan setiap user memiliki baris `profiles` dengan role default `member`.
+4. Aplikasi membaca role dari `profiles`:
+ - `admin` → `/admin`
+ - `member` → `/dashboard`
+5. Jika profile belum tersedia, sesi langsung diakhiri dan pengguna menerima pesan agar menghubungi administrator.
 
 ---
 
