@@ -55,6 +55,9 @@ export default function LoginPage() {
       if (message.includes("email not confirmed")) {
         return t.auth.emailNotConfirmed;
       }
+      if (message.includes("profile_unavailable")) {
+        return t.auth.profileUnavailable;
+      }
       if (
         message.includes("rate limit") ||
         message.includes("too many requests") ||
@@ -96,6 +99,11 @@ export default function LoginPage() {
       }
 
       const profile = await getCurrentProfile();
+      if (!profile) {
+        await supabase.auth.signOut();
+        throw new Error("profile_unavailable");
+      }
+
       const destination = profile?.role === "admin" ? "/admin" : "/dashboard";
 
       toast.success(t.auth.successToast);

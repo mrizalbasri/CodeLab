@@ -55,17 +55,63 @@ export async function updateSession(request: NextRequest) {
     console.error("Supabase middleware auth check failed:", error);
   }
 
-  // Protect /admin routes — redirect to /login if not authenticated
-  if (request.nextUrl.pathname.startsWith("/admin") && !user) {
+  const pathname = request.nextUrl.pathname;
+  let profileRole: "admin" | "member" | null = null;
+
+  if (
+    user &&
+    (pathname.startsWith("/admin") ||
+      pathname.startsWith("/dashboard") ||
+      pathname === "/login")
+  ) {
+    const { data: profile, error } = await supabase
+      .from("profiles")
+      .select("role")
+      .eq("id", user.id)
+      .maybeSingle();
+
+    if (error) {
+      console.error("Supabase middleware profile lookup failed:", error);
+    } else {
+      profileRole =
+        profile?.role === "admin"
+          ? "admin"
+          : profile?.role === "member"
+            ? "member"
+            : null;
+    }
+  }
+
+  // Protect admin routes — redirect unauthenticated users to login and members to their dashboard.
+  if (pathname.startsWith("/admin") && !user) {
     const url = request.nextUrl.clone();
     url.pathname = "/login";
     return NextResponse.redirect(url);
   }
 
-  // Redirect to /admin if already logged in and visiting /login
-  if (request.nextUrl.pathname.startsWith("/login") && user) {
+  if (pathname.startsWith("/admin") && user && profileRole !== "admin") {
+    const url = request.nextUrl.clone();
+    url.pathname = "/dashboard";
+    return NextResponse.redirect(url);
+  }
+
+  // Protect the member dashboard and keep admin/member destinations separate.
+  if (pathname.startsWith("/dashboard") && !user) {
+    const url = request.nextUrl.clone();
+    url.pathname = "/login";
+    return NextResponse.redirect(url);
+  }
+
+  if (pathname.startsWith("/dashboard") && user && profileRole === "admin") {
     const url = request.nextUrl.clone();
     url.pathname = "/admin";
+    return NextResponse.redirect(url);
+  }
+
+  // Redirect logged-in users away from login according to their database role.
+  if (pathname === "/login" && user) {
+    const url = request.nextUrl.clone();
+    url.pathname = profileRole === "admin" ? "/admin" : "/dashboard";
     return NextResponse.redirect(url);
   }
 
