@@ -42,7 +42,13 @@ export default function BlogPage() {
       </Box>
 
       <Container size="3" py={{ initial: "7", md: "9" }} px="6">
-        <Box className="rounded-3xl border border-dashed border-neutral-300 dark:border-neutral-700 bg-neutral-50/70 dark:bg-neutral-900/50 px-6 py-16 text-center">
+        <motion.div
+          initial={{ opacity: 0, y: 24 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-40px" }}
+          transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+          className="rounded-3xl border border-dashed border-neutral-300 dark:border-neutral-700 bg-neutral-50/70 dark:bg-neutral-900/50 px-6 py-16 text-center"
+        >
           <Flex direction="column" align="center" gap="3">
             <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-white text-[#0047BA] shadow-sm dark:bg-neutral-800">
               <PenLine size={22} />
@@ -63,7 +69,7 @@ export default function BlogPage() {
               <ArrowRight size={14} />
             </Link>
           </Flex>
-        </Box>
+        </motion.div>
 
         <div className="mt-6 flex items-center justify-center gap-2 text-xs text-neutral-400">
           <ExternalLink size={14} />
