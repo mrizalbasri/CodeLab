@@ -241,31 +241,75 @@ Setiap Pull Request yang diajukan ke branch `main` akan diuji secara otomatis ol
 
 ---
 
-## Dokumentasi Terkait
+## 🤝 Alur Kontribusi & Standar Commit
 
-Informasi arsitektur dan teknis lebih mendalam tersedia pada folder `docs/`:
+Kami sangat menyambut kontribusi dari seluruh anggota komunitas! Ikuti langkah-langkah berikut:
 
-- [Dokumentasi Arsitektur](docs/ARCHITECTURE.md): Alur otentikasi middleware, alur data Server Actions, dan strategi rendering.
-- [Skema Basis Data](docs/DATABASE.md): Spesifikasi tabel PostgreSQL, DDL migration, kebijakan RLS, dan storage bucket.
-- [Panduan Kontribusi](docs/CONTRIBUTING.md): Tata cara kolaborasi, alur percabangan git, dan konvensi commit.
-
----
-
-## Standar Kontribusi
-
-1. Buat branch baru dari `main` dengan konvensi penamaan standar:
-   - Fitur baru: `feat/nama-fitur`
-   - Perbaikan bug: `fix/nama-bug`
-   - Dokumentasi: `docs/nama-dokumen`
-2. Terapkan konvensi format **Conventional Commits** (`feat:`, `fix:`, `refactor:`, `docs:`, `chore:`).
-3. Jalankan pengujian dan validasi sebelum mengajukan Pull Request:
+1. **Buat Branch Fitur Baru**:
    ```bash
-   npx tsc --noEmit
-   npm run build
+   git checkout -b feat/nama-fitur-anda
+   ```
+2. **Terapkan Standar Conventional Commits**:
+   - `feat:` Penambahan fitur baru
+   - `fix:` Perbaikan bug / error
+   - `docs:` Pembaruan atau penambahan dokumentasi
+   - `refactor:` Restrukturisasi kode tanpa mengubah fungsionalitas
+   - `chore:` Pemeliharaan dependensi atau konfigurasi alat
+3. **Konvensi Kolaborasi & AI**:
+   - Untuk kolaborasi agen otomatis atau kontribusi bersama akun kedua, ikuti panduan trailer commit pada [AGENTS.md](AGENTS.md):
+     ```text
+     feat: add project showcase filter
+
+     Co-authored-by: xanom23 <xanom55@gmail.com>
+     ```
+4. **Verifikasi Sebelum Mengajukan PR**:
+   Pastikan seluruh pengujian dan build berhasil sebelum membuka Pull Request:
+   ```bash
+   npm test && npx tsc --noEmit && npm run build
    ```
 
 ---
 
-## Lisensi
+## 📚 Dokumentasi Terkait
 
-Proyek ini dikembangkan untuk **President University Pekanbaru Code Lab (PUPCL)**. Hak cipta dilindungi undang-undang dan didistribusikan di bawah lisensi [MIT](LICENSE).
+Untuk pemahaman teknis yang lebih komprehensif, silakan pelajari dokumen pendukung berikut:
+
+- 🏛️ [Dokumentasi Arsitektur](docs/ARCHITECTURE.md) — Alur data, otentikasi middleware, dan strategi rendering.
+- 🗄️ [Skema Basis Data](docs/DATABASE.md) — Struktur tabel PostgreSQL, migrasi DDL, dan kebijakan keamanan RLS.
+- 🤝 [Panduan Kontribusi](docs/CONTRIBUTING.md) — Tata cara kontribusi, alur branching, dan code review.
+- 🤖 [Panduan Agen & AI](AGENTS.md) — Konvensi pair-programming dan atribusi co-author.
+
+---
+
+## 👥 Tim & Kontributor
+
+Terima kasih kepada para pengembang yang berkontribusi dalam membangun dan mengembangkan platform ini:
+
+<table>
+  <tr>
+    <td align="center">
+      <a href="https://github.com/mrizalbasri">
+        <img src="https://avatars.githubusercontent.com/u/185875790?v=4" width="80px;" alt="M. Rizal Basri" style="border-radius: 50%;" /><br />
+        <sub><b>M. Rizal Basri</b></sub>
+      </a><br />
+      <sub>Lead Maintainer</sub>
+    </td>
+    <td align="center">
+      <a href="https://github.com/xanom23">
+        <img src="https://avatars.githubusercontent.com/u/251411990?v=4" width="80px;" alt="xanom23" style="border-radius: 50%;" /><br />
+        <sub><b>xanom23</b></sub>
+      </a><br />
+      <sub>Core Contributor</sub>
+    </td>
+  </tr>
+</table>
+
+---
+
+## 📄 Lisensi
+
+Proyek ini dikembangkan dan dikelola oleh **President University Pekanbaru Code Lab (PUPCL)**. Didistribusikan di bawah lisensi terbuka [MIT License](LICENSE).
+
+<div align="center">
+  <sub>Built with ❤️ by the President University Pekanbaru Code Lab Community</sub>
+</div>
