@@ -10,7 +10,13 @@ export default defineConfig({
       reporter: ["text", "json", "lcov", "clover"],
       reportsDirectory: "./coverage",
       include: ["lib/**/*.{ts,tsx}", "app/actions/**/*.{ts,tsx}"],
-      exclude: ["lib/types.ts", "**/*.d.ts"],
+      exclude: ["lib/types.ts", "lib/__tests__/**", "**/*.d.ts"],
+      thresholds: {
+        statements: 50,
+        lines: 50,
+        functions: 65,
+        branches: 65,
+      },
     },
   },
   resolve: {
