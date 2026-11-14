@@ -1,12 +1,58 @@
-# PUPCL — President University Pekanbaru Code Lab
+<div align="center">
 
-Platform web komunitas President University Pekanbaru Code Lab (PUPCL) yang berfungsi sebagai pusat informasi, kolaborasi, dan publikasi kegiatan teknologi mahasiswa. Proyek ini dibangun menggunakan arsitektur modern Next.js App Router, antarmuka responsif Tailwind CSS, serta integrasi backend Supabase.
+  <img src="public/logo.webp" alt="PUPCL Logo" width="120" height="120" style="border-radius: 24px; margin-bottom: 16px;" />
 
-[Live Demo](https://codelab-five.vercel.app) | [Dokumentasi Arsitektur](docs/ARCHITECTURE.md) | [Skema Database](docs/DATABASE.md) | [Panduan Kontribusi](docs/CONTRIBUTING.md)
+  # PUPCL — President University Pekanbaru Code Lab
+
+  **Official Web Platform for Innovation, Community Collaboration & Student Technology Showcase**
+
+  [![CI](https://github.com/mrizalbasri/CodeLab/actions/workflows/ci.yml/badge.svg)](https://github.com/mrizalbasri/CodeLab/actions/workflows/ci.yml)
+  [![Next.js](https://img.shields.io/badge/Next.js-16.1-black?style=flat&logo=next.js)](https://nextjs.org/)
+  [![React](https://img.shields.io/badge/React-19-61DAFB?style=flat&logo=react)](https://react.dev/)
+  [![TypeScript](https://img.shields.io/badge/TypeScript-5.x-3178C6?style=flat&logo=typescript)](https://www.typescriptlang.org/)
+  [![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-v4-38B2AC?style=flat&logo=tailwind-css)](https://tailwindcss.com/)
+  [![Supabase](https://img.shields.io/badge/Supabase-PostgreSQL-3ECF8E?style=flat&logo=supabase)](https://supabase.com/)
+  [![Vitest](https://img.shields.io/badge/Tested_with-Vitest-FCC72B?style=flat&logo=vitest)](https://vitest.dev/)
+  [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+
+  <p align="center">
+    <a href="https://codelab-five.vercel.app"><strong>Explore Live Demo »</strong></a>
+    <br />
+    <br />
+    <a href="docs/ARCHITECTURE.md">System Architecture</a>
+    ·
+    <a href="docs/DATABASE.md">Database Schema</a>
+    ·
+    <a href="docs/CONTRIBUTING.md">Contributing Guide</a>
+    ·
+    <a href="AGENTS.md">Agent & AI Conventions</a>
+  </p>
+
+</div>
 
 ---
 
-## Ringkasan Proyek
+## 📌 Daftar Isi (Table of Contents)
+
+- [Ringkasan Proyek](#-ringkasan-proyek)
+- [Fitur Utama](#-fitur-utama)
+- [Arsitektur & Tech Stack](#-arsitektur--tech-stack)
+- [Struktur Direktori](#-struktur-direktori)
+- [Panduan Memulai (Quick Start)](#-panduan-memulai-quick-start)
+  - [Prasyarat Sistem](#1-prasyarat-sistem)
+  - [Instalasi](#2-instalasi-dan-setup)
+  - [Variabel Lingkungan](#3-konfigurasi-environment-variables)
+  - [Menjalankan Aplikasi](#4-menjalankan-server-pengembangan)
+- [Perintah Kerja (NPM Scripts)](#-perintah-kerja-npm-scripts)
+- [Pengujian & Kualitas Kode](#-pengujian--kualitas-kode)
+- [Alur Kontribusi & Standar Commit](#-alur-kontribusi--standar-commit)
+- [Dokumentasi Terkait](#-dokumentasi-terkait)
+- [Tim & Kontributor](#-tim--kontributor)
+- [Lisensi](#-lisensi)
+
+---
+
+## 💡 Ringkasan Proyek
 
 PUPCL Web Platform dirancang untuk memfasilitasi kebutuhan publikasi dan operasional komunitas teknologi di President University Pekanbaru. Platform ini mencakup profil kelembagaan, direktori pengurus dan anggota, publikasi agenda kegiatan dan workshop, dokumentasi galeri proyek, serta sistem Content Management System (CMS) internal yang terproteksi.
 
@@ -14,16 +60,15 @@ Arsitektur aplikasi mengimplementasikan prinsip server-first rendering dengan Se
 
 ---
 
-## Fitur Utama
+## ✨ Fitur Utama
 
-- **Antarmuka Modern dan Responsif**: Dibangun menggunakan Tailwind CSS v4 dan Motion, mendukung transisi interaktif serta kompatibilitas lintas perangkat.
-- **Dukungan Tema Adaptif**: Fitur Dark Mode dan Light Mode dengan sinkronisasi preferensi sistem dan penyimpanan lokal pengguna.
-- **Multibahasa (Bilingual)**: Dukungan penuh dua bahasa (Bahasa Indonesia dan Bahasa Inggris) dengan pemuatan dinamis berbasis React Context.
-- **Direktori Pengurus dan Anggota**: Sistem pencarian dan paginasi data profil kepengurusan, divisi, dan riwayat peran anggota.
-- **Manajemen Program dan Galeri**: Publikasi jadwal kegiatan, materi workshop, dan dokumentasi portofolio proyek secara terstruktur.
-- **Panel Administrasi Terproteksi**: Modul CRUD (Create, Read, Update, Delete) data kegiatan dan anggota yang diamankan melalui Next.js Middleware dan Supabase Authentication.
-- **Formulir Kontak**: Integrasi pengiriman pesan via Server Actions yang terhubung dengan layanan Web3Forms.
-- **Keamanan dan Resiliensi Data**: Pengamanan level basis data menggunakan Row Level Security (RLS) Supabase serta ketersediaan data fallback saat koneksi offline.
+- **⚡ Antarmuka Modern & Responsif**: Dibangun menggunakan Tailwind CSS v4 dan Motion, mendukung transisi interaktif serta kompatibilitas lintas perangkat.
+- **🌗 Dukungan Tema Adaptif**: Fitur Dark Mode dan Light Mode dengan sinkronisasi preferensi sistem dan penyimpanan lokal pengguna.
+- **🌐 Multibahasa (Bilingual ID / EN)**: Dukungan penuh dua bahasa (Bahasa Indonesia dan Bahasa Inggris) dengan pemuatan dinamis berbasis React Context.
+- **👥 Direktori Pengurus dan Anggota**: Sistem pencarian dan paginasi data profil kepengurusan, divisi, dan riwayat peran anggota.
+- **🚀 Manajemen Program dan Galeri**: Publikasi jadwal kegiatan, materi workshop, dan dokumentasi portofolio proyek secara terstruktur.
+- **🛡️ Panel Administrasi Terproteksi**: Modul CRUD data kegiatan dan anggota yang diamankan melalui Next.js Middleware dan Supabase Authentication.
+- **🔒 Keamanan Data & Resiliensi**: Pengamanan level basis data menggunakan Row Level Security (RLS) Supabase serta ketersediaan data fallback saat koneksi offline.
 
 ---
 
