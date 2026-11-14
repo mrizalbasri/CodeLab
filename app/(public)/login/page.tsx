@@ -22,6 +22,14 @@ import { useLanguage } from "@/context/LanguageContext";
 import { createClient } from "@/lib/supabase/client";
 import { siteConfig } from "@/lib/data/site-config";
 
+// Only President University email addresses are allowed to sign in, including
+// campus subdomains such as @student.president.ac.id.
+const ALLOWED_EMAIL_DOMAIN = "president.ac.id";
+
+const isCampusEmail = (email: string) =>
+  email.endsWith(`@${ALLOWED_EMAIL_DOMAIN}`) ||
+  email.endsWith(`.${ALLOWED_EMAIL_DOMAIN}`);
+
 export default function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -65,6 +73,12 @@ export default function LoginPage() {
 
     if (!cleanEmail || !password) {
       setError(t.auth.invalidCredentials);
+      return;
+    }
+
+    if (!isCampusEmail(cleanEmail)) {
+      setError(t.auth.emailDomainNotAllowed);
+      toast.error(t.auth.emailDomainNotAllowed);
       return;
     }
 
@@ -125,7 +139,7 @@ export default function LoginPage() {
       <div className="relative z-10 mx-auto my-auto w-full max-w-5xl py-2 sm:py-4">
         <div className="grid overflow-hidden rounded-[26px] border border-slate-200/90 bg-white shadow-xl sm:rounded-[32px] lg:grid-cols-12 dark:border-zinc-800/90 dark:bg-[#101318] dark:shadow-2xl">
           {/* SISI KIRI: Midnight Developer Showcase Panel with Codi Sitting on the Card */}
-          <section className="relative flex flex-col justify-between overflow-hidden bg-gradient-to-b from-[#08152e] via-[#091b3d] to-[#040d1f] p-8 text-white sm:p-10 lg:col-span-5 lg:p-11">
+          <section className="relative order-2 flex flex-col justify-between overflow-hidden bg-gradient-to-b from-[#08152e] via-[#091b3d] to-[#040d1f] p-7 text-white sm:p-10 lg:order-1 lg:col-span-5 lg:p-12">
             {/* Ambient Background Aura */}
             <div className="pointer-events-none absolute -right-20 -top-20 h-72 w-72 rounded-full bg-blue-500/15 blur-3xl" />
             <div className="pointer-events-none absolute -bottom-20 -left-20 h-72 w-72 rounded-full bg-indigo-500/20 blur-3xl" />
@@ -145,7 +159,7 @@ export default function LoginPage() {
             </div>
 
             {/* The Code Card with Codi Perched / Sitting on Top */}
-            <div className="relative z-10 my-10 pt-20">
+            <div className="relative z-10 my-8 pt-16 sm:my-10 sm:pt-20">
               {/* The IDE / Terminal Card */}
               <div className="relative rounded-2xl border border-white/15 bg-slate-950/70 p-4.5 shadow-2xl backdrop-blur-xl sm:p-5">
                 {/* Codi Mascot Sitting on the Top Border of this Card */}
@@ -218,8 +232,8 @@ export default function LoginPage() {
           </section>
 
           {/* SISI KANAN: Clean Login Form */}
-          <section className="flex flex-col justify-between p-7 sm:p-10 lg:col-span-7 lg:p-12">
-            <div>
+          <section className="order-1 flex flex-col justify-center p-7 sm:p-10 lg:order-2 lg:col-span-7 lg:p-12">
+            <div className="mx-auto w-full max-w-md">
               {/* Logo & Brand Header */}
               <div className="flex items-center gap-2.5">
                 <div className="flex h-9 w-9 items-center justify-center rounded-xl border border-slate-200/80 bg-slate-50 p-1.5 dark:border-zinc-700/80 dark:bg-zinc-850">
@@ -238,7 +252,7 @@ export default function LoginPage() {
               </div>
 
               {/* Single Clear Heading & Subtitle */}
-              <div className="mt-8">
+              <div className="mt-7">
                 <h1 className="text-2xl font-bold tracking-tight text-slate-900 sm:text-3xl dark:text-white">
                   {t.auth.title}
                 </h1>
@@ -260,7 +274,7 @@ export default function LoginPage() {
               )}
 
               {/* Form Fields */}
-              <form onSubmit={handleLogin} className="mt-6 space-y-4">
+              <form onSubmit={handleLogin} className="mt-7 space-y-5">
                 <div>
                   <label
                     htmlFor="login-email"
@@ -292,6 +306,9 @@ export default function LoginPage() {
                       className="h-11 w-full rounded-xl border border-slate-200 bg-slate-50/60 pl-10 pr-4 text-sm text-slate-900 outline-none transition-all placeholder:text-slate-400 hover:bg-slate-50 focus:border-[#0047BA] focus:bg-white focus:ring-3 focus:ring-blue-500/10 disabled:opacity-60 dark:border-zinc-800 dark:bg-zinc-900/50 dark:text-zinc-100 dark:placeholder:text-zinc-500 dark:focus:border-blue-500 dark:focus:bg-zinc-900"
                     />
                   </div>
+                  <p className="mt-1.5 text-[11px] leading-none text-slate-400 dark:text-zinc-500">
+                    {t.auth.emailDomainHint}
+                  </p>
                 </div>
 
                 <div>
@@ -378,7 +395,7 @@ export default function LoginPage() {
             </div>
 
             {/* Bottom Support Link */}
-            <div className="mt-8 border-t border-slate-100 pt-4 text-xs text-slate-500 dark:border-zinc-800 dark:text-zinc-400">
+            <div className="mx-auto mt-8 w-full max-w-md border-t border-slate-100 pt-5 text-xs text-slate-500 dark:border-zinc-800 dark:text-zinc-400">
               {t.auth.noAccountHelp}{" "}
               <a
                 href={`${siteConfig.links.whatsapp}?text=${encodeURIComponent(
