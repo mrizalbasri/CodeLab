@@ -1,8 +1,12 @@
 "use client";
 
 import { useState, useRef } from "react";
-import { Download, Share2, QrCode } from "lucide-react";
+import { Download, Share2 } from "lucide-react";
 import { motion } from "motion/react";
+import { toast } from "sonner";
+import QRCode from "react-qr-code";
+import { toPng } from "html-to-image";
+import { useLanguage } from "@/context/LanguageContext";
 
 interface MemberCardDisplayProps {
   name: string;
@@ -12,6 +16,7 @@ interface MemberCardDisplayProps {
   memberId?: string;
   avatarUrl?: string;
   skills?: string[];
+  profileUrl?: string;
 }
 
 /**
@@ -28,10 +33,49 @@ export function MemberCardDisplay({
   memberId = "PUPCL-2024-001",
   avatarUrl,
   skills = ["Next.js", "TypeScript", "React"],
+  profileUrl,
 }: MemberCardDisplayProps) {
   const cardRef = useRef<HTMLDivElement>(null);
   const [tilt, setTilt] = useState({ x: 0, y: 0 });
   const [hovering, setHovering] = useState(false);
+  const [downloading, setDownloading] = useState(false);
+  const { t } = useLanguage();
+
+  const handleDownload = async () => {
+    if (!cardRef.current) return;
+    setDownloading(true);
+    try {
+      const dataUrl = await toPng(cardRef.current, {
+        pixelRatio: 3,
+        cacheBust: true,
+      });
+      const link = document.createElement("a");
+      link.download = `pupcl-member-card-${memberId}.png`;
+      link.href = dataUrl;
+      link.click();
+    } catch {
+      toast.error("Gagal mengunduh kartu. Coba lagi.");
+    } finally {
+      setDownloading(false);
+    }
+  };
+
+  const handleShare = async () => {
+    if (!profileUrl) {
+      toast.error("Link profile belum tersedia.");
+      return;
+    }
+    try {
+      if (navigator.share) {
+        await navigator.share({ title: "PUPCL Member Card", url: profileUrl });
+      } else {
+        await navigator.clipboard.writeText(profileUrl);
+        toast.success("Link profile disalin ke clipboard.");
+      }
+    } catch {
+      // User cancelled the share dialog — nothing to report.
+    }
+  };
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     if (!cardRef.current) return;
@@ -273,6 +317,30 @@ export function MemberCardDisplay({
             ))}
           </div>
 
+          {/* QR code — scan to open the member's public showcase */}
+          {profileUrl && (
+            <div
+              style={{
+                position: "absolute",
+                right: "20px",
+                bottom: "36px",
+                width: "44px",
+                height: "44px",
+                padding: "4px",
+                borderRadius: "8px",
+                backgroundColor: "white",
+                boxShadow: "0 2px 8px rgba(0,0,0,0.3)",
+              }}
+            >
+              <QRCode
+                value={profileUrl}
+                size={36}
+                style={{ display: "block", width: "100%", height: "100%" }}
+                aria-label="Member profile QR code"
+              />
+            </div>
+          )}
+
           {/* Bottom: member ID */}
           <div
             style={{
@@ -315,11 +383,15 @@ export function MemberCardDisplay({
       {/* Action buttons */}
       <div className="flex gap-3">
         <button
-          className="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-semibold transition-all border"
+          type="button"
+          onClick={handleDownload}
+          disabled={downloading}
+          className="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-semibold transition-all border disabled:opacity-60"
           style={{
             borderColor: "#0047BA",
             color: "#0047BA",
             backgroundColor: "transparent",
+            cursor: "pointer",
           }}
           onMouseEnter={(e) => {
             e.currentTarget.style.backgroundColor = "#0047BA";
@@ -331,14 +403,17 @@ export function MemberCardDisplay({
           }}
         >
           <Download size={15} />
-          Download Card
+          {downloading ? "..." : t.dashboard.downloadCard}
         </button>
         <button
+          type="button"
+          onClick={handleShare}
           className="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-semibold transition-all border"
           style={{
             borderColor: "var(--gray-6)",
             color: "var(--gray-11)",
             backgroundColor: "transparent",
+            cursor: "pointer",
           }}
           onMouseEnter={(e) => {
             e.currentTarget.style.borderColor = "var(--gray-9)";
@@ -348,7 +423,7 @@ export function MemberCardDisplay({
           }}
         >
           <Share2 size={15} />
-          Share
+          {t.dashboard.shareCard}
         </button>
       </div>
 
@@ -356,8 +431,7 @@ export function MemberCardDisplay({
       <div
         className="flex items-center gap-2 text-xs text-neutral-500 dark:text-neutral-400"
       >
-        <QrCode size={14} />
-        <span>Scan QR Code untuk verifikasi keanggotaan</span>
+        <span>{t.dashboard.verifyHint}</span>
       </div>
     </div>
   );
